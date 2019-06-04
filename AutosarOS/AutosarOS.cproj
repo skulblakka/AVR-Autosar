@@ -118,8 +118,9 @@
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
   <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
-  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.compiler.optimization.DebugLevel>Maximum (-g3)</avrgcc.compiler.optimization.DebugLevel>
   <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.compiler.miscellaneous.DoNotDeleteTemporaryFiles>True</avrgcc.compiler.miscellaneous.DoNotDeleteTemporaryFiles>
   <avrgcc.linker.libraries.Libraries>
     <ListValues>
       <Value>libm</Value>
