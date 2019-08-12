@@ -25,7 +25,7 @@
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   Name,
 #define OS_CONFIG_TASK_END                                                                                  INVALID_TASK};
 
-#endif
+#endif /* OS_CONFIG_GEN_ENUM */
 
 /* Generate function declarations based on config */
 #ifdef OS_CONFIG_GEN_FUNC_DECL
@@ -34,7 +34,7 @@
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   TASK(Name);
 #define OS_CONFIG_TASK_END
 
-#endif
+#endif /* OS_CONFIG_GEN_FUNC_DECL */
 
 /* Generate data structures based on config */
 #ifdef OS_CONFIG_GEN_DATA_STRUCT
@@ -56,7 +56,7 @@
                                                                                                             };
 #define OS_CONFIG_TASK_END
 
-#endif
+#endif /* OS_CONFIG_GEN_DATA_STRUCT */
 
 /* Undefine current generation defines */
 #ifdef OS_CONFIG_GEN_ENUM
