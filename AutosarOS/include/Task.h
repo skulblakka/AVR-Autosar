@@ -52,4 +52,6 @@ struct task_s {
     OsTaskState curState;
 };
 
+void __attribute__((naked)) schedule();
+
 #endif /* TASK_H_ */

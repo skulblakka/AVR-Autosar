@@ -54,7 +54,7 @@ save_context:
     st      x+, r0
     in      r0, _SFR_IO_ADDR(SPH)
     st      x+, r0
-    
+
 
 .global restore_context
 restore_context:
@@ -98,4 +98,24 @@ restore_context:
     pop     r0                      // Status reg was stored between r1 and r0
     out     _SFR_IO_ADDR(SREG), r0  // Restore status reg
     pop     r0
-    
+
+
+.global init_context
+init_context:
+    pop     r2
+    pop     r3
+    pop     r4
+    pop     r5
+    lds     r28, pxCurrentTCB       // Load address containing SP
+    lds     r29, pxCurrentTCB + 1
+    out     _SFR_IO_ADDR(SPL), r28  // Restore SP
+    out     _SFR_IO_ADDR(SPH), r29
+    lds     r26, pxAdr
+    lds     r27, pxAdr + 1
+    push    r26
+    push    r27
+    push    r5
+    push    r4
+    push    r3
+    push    r2
+    ret

@@ -11,8 +11,10 @@
 
 extern void save_context();
 extern void restore_context();
+extern void init_context();
 
-extern uint16_t pxCurrentTCB;
+extern volatile uint8_t* pxCurrentTCB;
+extern volatile uint8_t* pxAdr;
 
 
 

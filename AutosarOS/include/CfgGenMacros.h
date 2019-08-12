@@ -25,6 +25,8 @@
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   Name,
 #define OS_CONFIG_TASK_END                                                                                  INVALID_TASK};
 
+#define TASK_COUNT     INVALID_TASK
+
 #endif /* OS_CONFIG_GEN_ENUM */
 
 /* Generate function declarations based on config */
@@ -50,13 +52,22 @@
                                                                                                                 .taskType = TaskType, \
                                                                                                                 .taskSchedule = TaskSchedule, \
                                                                                                                 .taskFxn = PTASK(Name), \
-                                                                                                                .context = Task##Name##_stack, \
+                                                                                                                .context = Task##Name##_stack + StackSize, \
                                                                                                                 .curPrio = Prio, \
                                                                                                                 .curState = SUSPENDED \
                                                                                                             };
 #define OS_CONFIG_TASK_END
 
 #endif /* OS_CONFIG_GEN_DATA_STRUCT */
+
+/* Generate OS Task Control Block */ // TODO: Rename
+#ifdef OS_CONFIG_GEN_TCB
+
+#define OS_CONFIG_TASK_BEGIN                                                                                static struct task_s* TCB_Cfg[TASK_COUNT + 1] = {
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   &Task##Name##_s,
+#define OS_CONFIG_TASK_END                                                                                  0};
+
+#endif /* OS_CONFIG_GEN_TCB */
 
 /* Undefine current generation defines */
 #ifdef OS_CONFIG_GEN_ENUM

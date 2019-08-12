@@ -9,18 +9,12 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include "assert.h"
-#include "context.h"
+
+#include "Task.h"
 
 static volatile uint16_t delay = 30;
 
 static volatile uint32_t sysTick = 0;
-
-uint16_t pxCurrentTCB = 0x070F;
-
-void test(void)
-{
-    //PORTB = 0x00;   // keep all LEDs off
-}
 
 
 int main(void)
@@ -44,22 +38,19 @@ int main(void)
     {
         static uint8_t t = 0;
         static int8_t d = 1;
-        PORTB &= ~(1 << t);   // turn LED on
-        _delay_ms(delay);   
-        PORTB |= (1 << t);  // turn LED off 
-        _delay_ms(delay);   
-        
-        t = t + d;
-        if (t == 0)
-            d = 1;
-        else if (t == 7)
-            d = -1;
+        //PORTB &= ~(1 << t);   // turn LED on
+        //_delay_ms(delay);   
+        //PORTB |= (1 << t);  // turn LED off 
+        //_delay_ms(delay);   
+        //
+        //t = t + d;
+        //if (t == 0)
+            //d = 1;
+        //else if (t == 7)
+            //d = -1;
         
        assert(d == 1 || d == -1);
        assert(t >= 0 && t < 8);
-       
-       test();
-      
     }
 }
 
@@ -73,9 +64,13 @@ ISR(INT1_vect)
     delay = delay / 2;
 }
 
-ISR(TIMER0_OVF_vect)
+ISR(TIMER0_OVF_vect, ISR_NAKED)
 {
-    save_context();
+    asm("in     r8, __SREG__");
     sysTick++;
-    restore_context();
+    if ((sysTick % 100) == 0)
+        schedule();
+     
+    asm volatile ("out  __SREG__, r8");
+    asm volatile ("reti");
 }
