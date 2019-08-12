@@ -102,20 +102,20 @@ restore_context:
 
 .global init_context
 init_context:
-    pop     r2
+    pop     r2                      // Get return address to schedule()
     pop     r3
-    pop     r4
+    pop     r4                      // Get return address to ISR
     pop     r5
-    lds     r28, pxCurrentTCB       // Load address containing SP
+    lds     r28, pxCurrentTCB       // Load new SP address
     lds     r29, pxCurrentTCB + 1
-    out     _SFR_IO_ADDR(SPL), r28  // Restore SP
+    out     _SFR_IO_ADDR(SPL), r28  // Change to new SP
     out     _SFR_IO_ADDR(SPH), r29
-    lds     r26, pxAdr
+    lds     r26, pxAdr              // Load address of taskFxn
     lds     r27, pxAdr + 1
-    push    r26
+    push    r26                     // Push "return" to taskFxn
     push    r27
-    push    r5
+    push    r5                      // Push return to ISR
     push    r4
-    push    r3
+    push    r3                      // Push return to schedule()
     push    r2
     ret
