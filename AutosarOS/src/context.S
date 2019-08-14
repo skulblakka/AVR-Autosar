@@ -17,7 +17,7 @@ save_context:
     cli                             // Disable interrupts now that we saved SREG
     push    r0                      // Push SREG
     push    r1
-    clr     r1                      // Compiler generated code assumes R1 is set zero in ISR
+    clr     r1                      // Compiler generated code assumes R1 is set zero
     push    r2
     push    r3
     push    r4
@@ -102,20 +102,127 @@ restore_context:
 
 .global init_context
 init_context:
-    pop     r2                      // Get return address to schedule()
+    /* Get return address to schedule() */
+    pop     r2
     pop     r3
-    pop     r4                      // Get return address to ISR
+
+    /* Get return address to ISR */
+    pop     r4
     pop     r5
+
+    /* Get registers pushed in ISR */
+    pop     r25
+    pop     r24
+    pop     r23
+    pop     r22
+    pop     r21
+    pop     r20
+    pop     r19
+    pop     r18
+    pop     r7
+    pop     r6
+
+    /* Get return address outside of ISR context (will be destroyed) */
+    pop     r28
+    pop     r29
+
+    /* Switch to new task stack */
     lds     r28, pxCurrentTCB       // Load new SP address
     lds     r29, pxCurrentTCB + 1
     out     _SFR_IO_ADDR(SPL), r28  // Change to new SP
     out     _SFR_IO_ADDR(SPH), r29
+
+    /* Place return address to taskFxn */
     lds     r26, pxAdr              // Load address of taskFxn
     lds     r27, pxAdr + 1
     push    r26                     // Push "return" to taskFxn
     push    r27
-    push    r5                      // Push return to ISR
+
+    /* Push registers saved in ISR onto new stack */
+    push    r6
+    push    r7
+    push    r18
+    push    r19
+    push    r20
+    push    r21
+    push    r22
+    push    r23
+    push    r24
+    push    r25
+
+    /* Place return address to ISR */
+    push    r5
     push    r4
-    push    r3                      // Push return to schedule()
+
+    /* Place return address to schedule() */
+    push    r3
     push    r2
     ret
+
+.global TIMER0_OVF_vect
+TIMER0_OVF_vect:
+    /* Push r0 and SREG */
+    push    r0
+    in      r0, _SFR_IO_ADDR(SREG)
+    push    r0
+
+    /* Push work registers r18 to r25 */
+    push    r18
+    push    r19
+    push    r20
+    push    r21
+    push    r22
+    push    r23
+    push    r24
+    push    r25
+
+    /* Load sysTick (uint32_t) */
+    lds     r22, sysTick
+    lds     r23, sysTick + 1
+    lds     r24, sysTick + 2
+    lds     r25, sysTick + 3
+
+    /* Increment sysTick by 1 */
+    ldi     r19, 1
+    add     r22, r19
+    adc     r23, r1
+    adc     r24, r1
+    adc     r25, r1
+
+    /* Store sysTick */
+    sts     sysTick, r22
+    sts     sysTick + 1, r23
+    sts     sysTick + 2, r24
+    sts     sysTick + 3, r25
+
+    /* Perform modulo calculation */
+    ldi     r18, lo8(100)
+    ldi     r19, 0
+    ldi     r20, 0
+    ldi     r21, 0
+    call __udivmodsi4
+
+    /* Compare with 0 */
+    SUBI    r22, 0
+    cpc     r23, r1
+    cpc     r24, r1
+    cpc     r25, r1
+    brne skip
+    call schedule
+skip:
+    /* Restore work registers */
+    pop r25
+    pop r24
+    pop r23
+    pop r22
+    pop r21
+    pop r20
+    pop r19
+    pop r18
+
+    /* Restore SREG and r0 */
+    pop    r0
+    out    _SFR_IO_ADDR(SREG), r0
+    pop    r0
+
+    reti

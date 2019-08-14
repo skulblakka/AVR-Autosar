@@ -14,8 +14,6 @@
 
 static volatile uint16_t delay = 30;
 
-static volatile uint32_t sysTick = 0;
-
 
 int main(void)
 {
@@ -62,15 +60,4 @@ ISR(INT0_vect)
 ISR(INT1_vect)
 {
     delay = delay / 2;
-}
-
-ISR(TIMER0_OVF_vect, ISR_NAKED)
-{
-    asm("in     r8, __SREG__");
-    sysTick++;
-    if ((sysTick % 100) == 0)
-        schedule();
-     
-    asm volatile ("out  __SREG__, r8");
-    asm volatile ("reti");
 }

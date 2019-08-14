@@ -16,6 +16,6 @@ extern void init_context();
 extern volatile uint8_t* pxCurrentTCB;
 extern volatile uint8_t* pxAdr;
 
-
+volatile uint32_t sysTick = 0;
 
 #endif /* CONTEXT_H_ */
