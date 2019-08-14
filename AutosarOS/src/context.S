@@ -195,19 +195,24 @@ TIMER0_OVF_vect:
     sts     sysTick + 2, r24
     sts     sysTick + 3, r25
 
-    /* Perform modulo calculation */
-    ldi     r18, lo8(100)
-    ldi     r19, 0
-    ldi     r20, 0
-    ldi     r21, 0
-    call __udivmodsi4
+    /* Perform modulo (2x32bit integer) calculation */
+    //ldi     r18, lo8(100)
+    //ldi     r19, 0
+    //ldi     r20, 0
+    //ldi     r21, 0
+    //call __udivmodsi4
+
+    /* Perform modulo (integer mod 2^i) calculation */
+    //andi    r23, 0x03
+    //clr     r24
+    //clr     r25
 
     /* Compare with 0 */
-    SUBI    r22, 0
-    cpc     r23, r1
-    cpc     r24, r1
-    cpc     r25, r1
-    brne skip
+    //subi    r22, 0
+    //cpc     r23, r1
+    //cpc     r24, r1
+    //cpc     r25, r1
+    //brne skip
     call schedule
 skip:
     /* Restore work registers */

@@ -27,7 +27,7 @@ int main(void)
     DDRB  = 0xFF;   // PB as output
     PORTB = 0xFF;   // keep all LEDs off
     
-    TCCR0 = 1 << CS01 | 1 << CS00;      // Enable Timer0 with Prescaler 1024
+    TCCR0 = 1 << CS02 | 1 << CS00;      // Enable Timer0 with Prescaler 1024
     TIMSK |= 1 << TOIE0;                // Enable Overflow Interrupt (Timer0)
     
     sei();  //Enable Global Interrupt
