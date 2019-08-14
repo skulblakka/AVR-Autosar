@@ -111,14 +111,10 @@ init_context:
     pop     r5
 
     /* Get registers pushed in ISR */
+    pop     r27
+    pop     r26
     pop     r25
     pop     r24
-    pop     r23
-    pop     r22
-    pop     r21
-    pop     r20
-    pop     r19
-    pop     r18
     pop     r7
     pop     r6
 
@@ -141,14 +137,10 @@ init_context:
     /* Push registers saved in ISR onto new stack */
     push    r6
     push    r7
-    push    r18
-    push    r19
-    push    r20
-    push    r21
-    push    r22
-    push    r23
     push    r24
     push    r25
+    push    r26
+    push    r27
 
     /* Place return address to ISR */
     push    r5
@@ -166,64 +158,36 @@ TIMER0_OVF_vect:
     in      r0, _SFR_IO_ADDR(SREG)
     push    r0
 
-    /* Push work registers r18 to r25 */
-    push    r18
-    push    r19
-    push    r20
-    push    r21
-    push    r22
-    push    r23
+    /* Push work registers r24 to r27 */
     push    r24
     push    r25
+    push    r26
+    push    r27
 
     /* Load sysTick (uint32_t) */
-    lds     r22, sysTick
-    lds     r23, sysTick + 1
-    lds     r24, sysTick + 2
-    lds     r25, sysTick + 3
+    lds     r24, sysTick
+    lds     r25, sysTick + 1
+    lds     r26, sysTick + 2
+    lds     r27, sysTick + 3
 
     /* Increment sysTick by 1 */
-    ldi     r19, 1
-    add     r22, r19
-    adc     r23, r1
-    adc     r24, r1
-    adc     r25, r1
+    adiw    r24, 1
+    adc     r26, r1
+    adc     r27, r1
 
     /* Store sysTick */
-    sts     sysTick, r22
-    sts     sysTick + 1, r23
-    sts     sysTick + 2, r24
-    sts     sysTick + 3, r25
+    sts     sysTick, r24
+    sts     sysTick + 1, r25
+    sts     sysTick + 2, r26
+    sts     sysTick + 3, r27
 
-    /* Perform modulo (2x32bit integer) calculation */
-    //ldi     r18, lo8(100)
-    //ldi     r19, 0
-    //ldi     r20, 0
-    //ldi     r21, 0
-    //call __udivmodsi4
-
-    /* Perform modulo (integer mod 2^i) calculation */
-    //andi    r23, 0x03
-    //clr     r24
-    //clr     r25
-
-    /* Compare with 0 */
-    //subi    r22, 0
-    //cpc     r23, r1
-    //cpc     r24, r1
-    //cpc     r25, r1
-    //brne skip
     call schedule
 skip:
     /* Restore work registers */
-    pop r25
-    pop r24
-    pop r23
-    pop r22
-    pop r21
-    pop r20
-    pop r19
-    pop r18
+    pop     r27
+    pop     r26
+    pop     r25
+    pop     r24
 
     /* Restore SREG and r0 */
     pop    r0
