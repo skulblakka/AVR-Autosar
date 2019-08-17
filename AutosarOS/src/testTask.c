@@ -29,9 +29,8 @@
 
 static volatile uint32_t delay = 1000;
 
-volatile uint8_t* pxAdr;
-volatile uint8_t** pxCurrentTCB;
-
+pTaskFxn pxAdr;
+uint8_t** pxCurrentTCB;
 
 TASK(Idle) 
 {
@@ -65,7 +64,6 @@ TASK(T3)
 
 void __attribute__((naked)) schedule()
 {
-    //TCB_Cfg[1]->taskFxn();
     static uint8_t i = 0;
     if (i == 0) {
         pxCurrentTCB = &(TCB_Cfg[1]->context);

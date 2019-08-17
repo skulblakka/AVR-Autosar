@@ -9,10 +9,9 @@
  #include <avr/io.h>
 
 .section .bss
-var1: .skip 2
-var2: .skip 2
-var3: .skip 2
-var4: .skip 1
+retAddr1: .skip 2
+retAddr2: .skip 2
+tempReg: .skip 1
 
 .global sysTick
 sysTick: .skip 4
@@ -21,15 +20,17 @@ sysTick: .skip 4
 
 .global save_context
 save_context:
+    /* Get address to schedule(); */
     pop     r0
-    sts     var1, r0
+    sts     retAddr1, r0
     pop     r0
-    sts     var1+1,r0
+    sts     retAddr1 + 1, r0
 
+    /* Get address to ISR */
     pop     r0
-    sts     var2, r0
+    sts     retAddr2, r0
     pop     r0
-    sts     var2+1,r0
+    sts     retAddr2 + 1,r0
 
     /* Get registers pushed in ISR */
     pop     r27
@@ -39,15 +40,6 @@ save_context:
     pop     r0
     out    _SFR_IO_ADDR(SREG), r0
     pop     r0
-
-/*    sts     var4, r0
-
-    pop     r0
-    sts     var3, r0
-    pop     r0
-    sts     var3+1,r0
-
-    lds     r0, var4*/
 
     push    r0                      // Push R0 before overwrite with SREG
     in      r0, _SFR_IO_ADDR(SREG)
@@ -92,12 +84,6 @@ save_context:
     in      r0, _SFR_IO_ADDR(SPH)
     st      x+, r0
 
-/*
-    lds     r0,var3+1
-    push    r0
-    lds     r0,var3
-    push    r0*/
-
     /* Push r0 and SREG */
     push    r0
     in      r0, _SFR_IO_ADDR(SREG)
@@ -109,14 +95,16 @@ save_context:
     push    r26
     push    r27
 
-    lds     r0,var2+1
+    /* Push address to ISR */
+    lds     r0, retAddr2 + 1
     push    r0
-    lds     r0,var2
+    lds     r0, retAddr2
     push    r0
     
-    lds     r0,var1+1
+    /* Push address to schedule() */
+    lds     r0, retAddr1 + 1
     push    r0
-    lds     r0,var1
+    lds     r0, retAddr1
     push    r0
 
     ret
@@ -126,15 +114,15 @@ save_context:
 restore_context:
     /* Get return address to schedule() */
     pop     r0
-    sts     var1, r0
+    sts     retAddr1, r0
     pop     r0
-    sts     var1+1,r0
+    sts     retAddr1 + 1, r0
 
     /* Get return address to ISR */
     pop     r0
-    sts     var2, r0
+    sts     retAddr2, r0
     pop     r0
-    sts     var2+1,r0
+    sts     retAddr2 + 1, r0
 
     /* Get registers pushed in ISR */
     pop     r27
@@ -186,7 +174,7 @@ restore_context:
     out     _SFR_IO_ADDR(SREG), r0  // Restore status reg
     pop     r0
 
-    sts     var4, r0
+    sts     tempReg, r0             // Save r0
 
     /* Push r0 and SREG */
     push    r0
@@ -199,18 +187,19 @@ restore_context:
     push    r26
     push    r27
 
-    lds     r0,var2+1
+    /* Push address to ISR */
+    lds     r0, retAddr2 + 1
     push    r0
-    lds     r0,var2
-    push    r0
-
-    lds     r0,var1+1
-    push    r0
-    lds     r0,var1
+    lds     r0, retAddr2
     push    r0
 
-    lds     r0, var4
+    /* Push address to schedule() */
+    lds     r0, retAddr1 + 1
+    push    r0
+    lds     r0, retAddr1
+    push    r0
 
+    lds     r0, tempReg             // Restore r0
 
     ret
 

@@ -9,12 +9,14 @@
 #ifndef CONTEXT_H_
 #define CONTEXT_H_
 
+#include "Task.h"
+
 extern void save_context();
 extern void restore_context();
 extern void init_context();
 
-extern volatile uint8_t** pxCurrentTCB;
-extern volatile uint8_t* pxAdr;
+extern uint8_t** pxCurrentTCB;
+extern pTaskFxn pxAdr;
 
 extern volatile uint32_t sysTick;
 
