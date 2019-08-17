@@ -40,14 +40,14 @@ save_context:
     out    _SFR_IO_ADDR(SREG), r0
     pop     r0
 
-    sts     var4, r0
+/*    sts     var4, r0
 
     pop     r0
     sts     var3, r0
     pop     r0
     sts     var3+1,r0
 
-    lds     r0, var4
+    lds     r0, var4*/
 
     push    r0                      // Push R0 before overwrite with SREG
     in      r0, _SFR_IO_ADDR(SREG)
@@ -92,11 +92,11 @@ save_context:
     in      r0, _SFR_IO_ADDR(SPH)
     st      x+, r0
 
-
+/*
     lds     r0,var3+1
     push    r0
     lds     r0,var3
-    push    r0
+    push    r0*/
 
     /* Push r0 and SREG */
     push    r0
@@ -124,20 +124,17 @@ save_context:
 
 .global restore_context
 restore_context:
-        lds     r26, pxCurrentTCB       // Load address containing SP
-    lds     r27, pxCurrentTCB + 1
-    ld      r28, x+                 // Load SP
-    ld      r29, x+
-    out     _SFR_IO_ADDR(SPL), r28  // Restore SP
-    out     _SFR_IO_ADDR(SPH), r29
-
-        /* Get return address to schedule() */
-    pop     r2
-    pop     r3
+    /* Get return address to schedule() */
+    pop     r0
+    sts     var1, r0
+    pop     r0
+    sts     var1+1,r0
 
     /* Get return address to ISR */
-    pop     r4
-    pop     r5
+    pop     r0
+    sts     var2, r0
+    pop     r0
+    sts     var2+1,r0
 
     /* Get registers pushed in ISR */
     pop     r27
@@ -146,6 +143,13 @@ restore_context:
     pop     r24
     pop     r7
     pop     r6
+
+    lds     r26, pxCurrentTCB       // Load address containing SP
+    lds     r27, pxCurrentTCB + 1
+    ld      r28, x+                 // Load SP
+    ld      r29, x+
+    out     _SFR_IO_ADDR(SPL), r28  // Restore SP
+    out     _SFR_IO_ADDR(SPH), r29
 
     pop     r31
     pop     r30
@@ -181,6 +185,32 @@ restore_context:
     pop     r0                      // Status reg was stored between r1 and r0
     out     _SFR_IO_ADDR(SREG), r0  // Restore status reg
     pop     r0
+
+    sts     var4, r0
+
+    /* Push r0 and SREG */
+    push    r0
+    in      r0, _SFR_IO_ADDR(SREG)
+    push    r0
+
+    /* Push work registers r24 to r27 */
+    push    r24
+    push    r25
+    push    r26
+    push    r27
+
+    lds     r0,var2+1
+    push    r0
+    lds     r0,var2
+    push    r0
+
+    lds     r0,var1+1
+    push    r0
+    lds     r0,var1
+    push    r0
+
+    lds     r0, var4
+
 
     ret
 

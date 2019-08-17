@@ -76,18 +76,22 @@ void __attribute__((naked)) schedule()
         pxCurrentTCB = &(TCB_Cfg[2]->context);
         pxAdr = TCB_Cfg[2]->taskFxn;
         init_context();
-    //} else if (i % 1024 == 0) {
-        //save_context();
-        //pxCurrentTCB = &(TCB_Cfg[1]->context);
-        //pxAdr = TCB_Cfg[1]->taskFxn;
-        //restore_context();
-    //} else {
-        //save_context();
-        //pxCurrentTCB = TCB_Cfg[2]->context;
-        //pxAdr = TCB_Cfg[2]->taskFxn;
-        //restore_context();
+    } else if (i == 2) {
+        save_context();
+        pxCurrentTCB = &(TCB_Cfg[1]->context);
+        pxAdr = TCB_Cfg[1]->taskFxn;
+        restore_context();
+    } else if (i == 128) {
+        save_context();
+        pxCurrentTCB = &(TCB_Cfg[2]->context);
+        pxAdr = TCB_Cfg[2]->taskFxn;
+        restore_context();
     }
-    i++;
+    if (i < 255)
+        i++;
+    else 
+        i = 2;
+    
     
     asm volatile("ret");
 }
