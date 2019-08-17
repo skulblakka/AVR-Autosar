@@ -2,7 +2,7 @@
  * testTask.c
  *
  * Created: 05.08.2019 16:41:20
- *  Author: promahn
+ *  Author: Pascal Romahn
  */ 
 
 #include "Task.h"
@@ -30,7 +30,7 @@
 static volatile uint32_t delay = 1000;
 
 volatile uint8_t* pxAdr;
-volatile uint8_t* pxCurrentTCB;
+volatile uint8_t** pxCurrentTCB;
 
 
 TASK(Idle) 
@@ -60,7 +60,6 @@ TASK(T2)
 
 TASK(T3)
 {
-    
     while(1);
 }
 
@@ -69,16 +68,17 @@ void __attribute__((naked)) schedule()
     //TCB_Cfg[1]->taskFxn();
     static uint8_t i = 0;
     if (i == 0) {
-        pxCurrentTCB = TCB_Cfg[1]->context;
+        pxCurrentTCB = &(TCB_Cfg[1]->context);
         pxAdr = TCB_Cfg[1]->taskFxn;
         init_context();
     } else if (i == 1) {
-        pxCurrentTCB = TCB_Cfg[2]->context;
+        save_context();
+        pxCurrentTCB = &(TCB_Cfg[2]->context);
         pxAdr = TCB_Cfg[2]->taskFxn;
         init_context();
-    //} else if (i % 2 == 0) {
+    //} else if (i % 1024 == 0) {
         //save_context();
-        //pxCurrentTCB = TCB_Cfg[1]->context;
+        //pxCurrentTCB = &(TCB_Cfg[1]->context);
         //pxAdr = TCB_Cfg[1]->taskFxn;
         //restore_context();
     //} else {

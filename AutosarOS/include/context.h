@@ -13,9 +13,9 @@ extern void save_context();
 extern void restore_context();
 extern void init_context();
 
-extern volatile uint8_t* pxCurrentTCB;
+extern volatile uint8_t** pxCurrentTCB;
 extern volatile uint8_t* pxAdr;
 
-volatile uint32_t sysTick = 0;
+extern volatile uint32_t sysTick;
 
 #endif /* CONTEXT_H_ */
