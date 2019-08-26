@@ -17,7 +17,6 @@ static volatile uint16_t delay = 30;
 
 int main(void)
 {
-    
     // Blue D1; White D0
     DDRD  = 0x00;   // PD as input
     PORTD = 0xFF;   // enable PU on PD
