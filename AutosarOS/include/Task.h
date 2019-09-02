@@ -43,7 +43,7 @@ struct task_s {
     const uint16_t stackSize;
     const uint8_t prio;
     const uint8_t numberOfActivations;
-    const uint8_t autostart;
+    const OsTaskAutostart autostart;
     const OsTaskType taskType;
     const OsTaskSchedule taskSchedule;
     const pTaskFxn taskFxn;
