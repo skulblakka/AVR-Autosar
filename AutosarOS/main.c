@@ -1,8 +1,10 @@
-/*
- * AutosarOS.c
+/**
+ * @file
+ * 
+ * @brief   Main loop (Program entry point)
  *
- * Created: 04.06.2019 18:43:30
- * Author : Pascal Romahn
+ * @date    2019-09-02
+ * @author  Pascal Romahn
  */ 
 
 #include <avr/io.h>
