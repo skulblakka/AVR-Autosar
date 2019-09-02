@@ -1,9 +1,11 @@
-/*
-* assert.h
-*
-* Created: 04.06.2019 19:10:48
-*  Author: Pascal Romahn
-*/
+/**
+ * @file
+ * 
+ * @brief   Assert macros and functions.
+ *
+ * @date    2019-09-02
+ * @author  Pascal Romahn
+ */ 
 
 
 #ifndef ASSERT_H_

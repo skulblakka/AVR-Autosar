@@ -1,8 +1,8 @@
-/*
- * Task.h
+/**
+ * @file
  *
- * Created: 05.08.2019 14:50:29
- *  Author: Pascal Romahn
+ * @date    2019-09-02
+ * @author  Pascal Romahn
  */ 
 
 

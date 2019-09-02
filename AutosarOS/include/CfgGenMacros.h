@@ -1,8 +1,10 @@
-/*
- * CfgGenMacros.h
+/**
+ * @file
  *
- * Created: 06.08.2019 15:17:11
- *  Author: Pascal Romahn
+ * @brief   Macros used for generation of system
+ *
+ * @date    2019-09-02
+ * @author  Pascal Romahn
  */ 
 
 #include "Task.h"

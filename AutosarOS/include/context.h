@@ -1,8 +1,10 @@
-/*
- * context.h
+/**
+ * @file
+ * 
+ * @brief   Context switching
  *
- * Created: 05.08.2019 14:35:27
- *  Author: Pascal Romahn
+ * @date    2019-09-02
+ * @author  Pascal Romahn
  */ 
 
 
