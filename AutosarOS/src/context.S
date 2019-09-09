@@ -9,32 +9,32 @@
  #include <avr/io.h>
 
 .section .bss
-retAddr1: .skip 2
-retAddr2: .skip 2
-tempReg: .skip 1
+retAddr1:	.skip 2
+tempSF:		.skip 2
+tempReg:	.skip 1
 
 .global sysTick
-sysTick: .skip 4
+sysTick:	.skip 4
 
 .section .text
 
 .global save_context
 save_context:
-    sts tempReg, r0
+    sts		tempReg, r0				// Save r0
 
-    /* Get address to schedule(); */
+    /* Get return address */
     pop     r0
     sts     retAddr1, r0
     pop     r0
     sts     retAddr1 + 1, r0
 
+	/* Get pushed Stack-Frame */
     pop     r0
-    sts     retAddr2, r0
+    sts     tempSF, r0
     pop     r0
-    sts     retAddr2 + 1, r0
+    sts     tempSF + 1, r0
 
-    lds r0, tempReg
-
+    lds r0, tempReg					// Restore r0
 
     push    r0                      // Push R0 before overwrite with SREG
     in      r0, _SFR_IO_ADDR(SREG)
@@ -79,12 +79,13 @@ save_context:
     in      r0, _SFR_IO_ADDR(SPH)
     st      x+, r0
 
-        lds     r0, retAddr2 + 1
+	/* Push Stack-Frame */
+    lds     r0, tempSF + 1
     push    r0
-    lds     r0, retAddr2
+    lds     r0, tempSF
     push    r0
     
-    /* Push address to schedule() */
+    /* Push return address */
     lds     r0, retAddr1 + 1
     push    r0
     lds     r0, retAddr1
@@ -95,17 +96,17 @@ save_context:
 
 .global restore_context
 restore_context:
-    /* Get return address to schedule() */
+    /* Get return address */
     pop     r0
     sts     retAddr1, r0
     pop     r0
     sts     retAddr1 + 1, r0
 
+	/* Get pushed Stack-Frame */
     pop     r0
-    sts     retAddr2, r0
+    sts     tempSF, r0
     pop     r0
-    sts     retAddr2 + 1, r0
-
+    sts     tempSF + 1, r0
 
     lds     r26, pxCurrentTCB       // Load address containing SP
     lds     r27, pxCurrentTCB + 1
@@ -151,14 +152,13 @@ restore_context:
 
     sts     tempReg, r0             // Save r0
 
-        /* Push address to schedule() */
-    lds     r0, retAddr2 + 1
+    /* Push Stack-Frame */
+    lds     r0, tempSF + 1
     push    r0
-    lds     r0, retAddr2
+    lds     r0, tempSF
     push    r0
 
-
-    /* Push address to schedule() */
+    /* Push return address */
     lds     r0, retAddr1 + 1
     push    r0
     lds     r0, retAddr1
@@ -171,13 +171,13 @@ restore_context:
 
 .global init_context
 init_context:
-    /* Get return address to schedule() */
+    /* Get return address */
     pop     r22
     pop     r23
 
+	/* Get pushed Stack-Frame */
     pop     r28
     pop     r29
-
 
     /* Switch to new task stack */
     lds     r26, pxCurrentTCB       // Load new SP address
@@ -193,10 +193,11 @@ init_context:
     push    r26                     // Push "return" to taskFxn
     push    r27
 
-    push r29
-    push r28
+	/* Push Stack-Frame */
+    push	r29
+    push	r28
 
-    /* Push return address to schedule() */
+    /* Push return address */
     push    r23
     push    r22
 
