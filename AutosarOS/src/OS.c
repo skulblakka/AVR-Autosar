@@ -26,7 +26,7 @@ enum tasks_e currentTask = INVALID_TASK;
 /**
  * @brief   Stack-Pointer saved in current task control block
  */
-uint8_t** pxCurrentTCB;
+uint8_t * volatile * pxCurrentTCB;
 
 /**
  * @brief   Function pointer to current task function

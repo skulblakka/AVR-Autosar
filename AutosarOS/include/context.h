@@ -36,7 +36,7 @@ extern void init_context();
 /**
  * @brief   Stack-Pointer saved in current task control block
  */
-extern uint8_t** pxCurrentTCB;
+extern uint8_t * volatile * pxCurrentTCB;
 
 /**
  * @brief   Function pointer to current task function
