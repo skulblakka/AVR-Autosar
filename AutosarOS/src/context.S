@@ -20,26 +20,21 @@ sysTick: .skip 4
 
 .global save_context
 save_context:
+    sts tempReg, r0
+
     /* Get address to schedule(); */
     pop     r0
     sts     retAddr1, r0
     pop     r0
     sts     retAddr1 + 1, r0
 
-    /* Get address to ISR */
     pop     r0
     sts     retAddr2, r0
     pop     r0
-    sts     retAddr2 + 1,r0
+    sts     retAddr2 + 1, r0
 
-    /* Get registers pushed in ISR */
-    pop     r27
-    pop     r26
-    pop     r25
-    pop     r24
-    pop     r0
-    out    _SFR_IO_ADDR(SREG), r0
-    pop     r0
+    lds r0, tempReg
+
 
     push    r0                      // Push R0 before overwrite with SREG
     in      r0, _SFR_IO_ADDR(SREG)
@@ -84,19 +79,7 @@ save_context:
     in      r0, _SFR_IO_ADDR(SPH)
     st      x+, r0
 
-    /* Push r0 and SREG */
-    push    r0
-    in      r0, _SFR_IO_ADDR(SREG)
-    push    r0
-
-    /* Push work registers r24 to r27 */
-    push    r24
-    push    r25
-    push    r26
-    push    r27
-
-    /* Push address to ISR */
-    lds     r0, retAddr2 + 1
+        lds     r0, retAddr2 + 1
     push    r0
     lds     r0, retAddr2
     push    r0
@@ -118,19 +101,11 @@ restore_context:
     pop     r0
     sts     retAddr1 + 1, r0
 
-    /* Get return address to ISR */
     pop     r0
     sts     retAddr2, r0
     pop     r0
     sts     retAddr2 + 1, r0
 
-    /* Get registers pushed in ISR */
-    pop     r27
-    pop     r26
-    pop     r25
-    pop     r24
-    pop     r7
-    pop     r6
 
     lds     r26, pxCurrentTCB       // Load address containing SP
     lds     r27, pxCurrentTCB + 1
@@ -176,22 +151,12 @@ restore_context:
 
     sts     tempReg, r0             // Save r0
 
-    /* Push r0 and SREG */
-    push    r0
-    in      r0, _SFR_IO_ADDR(SREG)
-    push    r0
-
-    /* Push work registers r24 to r27 */
-    push    r24
-    push    r25
-    push    r26
-    push    r27
-
-    /* Push address to ISR */
+        /* Push address to schedule() */
     lds     r0, retAddr2 + 1
     push    r0
     lds     r0, retAddr2
     push    r0
+
 
     /* Push address to schedule() */
     lds     r0, retAddr1 + 1
@@ -207,24 +172,12 @@ restore_context:
 .global init_context
 init_context:
     /* Get return address to schedule() */
-    pop     r2
-    pop     r3
+    pop     r22
+    pop     r23
 
-    /* Get return address to ISR */
-    pop     r4
-    pop     r5
-
-    /* Get registers pushed in ISR */
-    pop     r27
-    pop     r26
-    pop     r25
-    pop     r24
-    pop     r7
-    pop     r6
-
-    /* Get return address outside of ISR context (will be destroyed) */
     pop     r28
     pop     r29
+
 
     /* Switch to new task stack */
     lds     r26, pxCurrentTCB       // Load new SP address
@@ -240,21 +193,12 @@ init_context:
     push    r26                     // Push "return" to taskFxn
     push    r27
 
-    /* Push registers saved in ISR onto new stack */
-    push    r6
-    push    r7
-    push    r24
-    push    r25
-    push    r26
-    push    r27
+    push r29
+    push r28
 
-    /* Place return address to ISR */
-    push    r5
-    push    r4
-
-    /* Place return address to schedule() */
-    push    r3
-    push    r2
+    /* Push return address to schedule() */
+    push    r23
+    push    r22
 
     clr     r1  // Compiler generated code assumes R1 is set zero
 
@@ -291,7 +235,7 @@ TIMER0_OVF_vect:
     sts     sysTick + 2, r26
     sts     sysTick + 3, r27
 
-    call schedule
+    //call OS_Dispatch
 
     /* Restore work registers */
     pop     r27
