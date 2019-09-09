@@ -84,7 +84,7 @@ extern void OS_Schedule()
     for (uint8_t i = 0; i < TASK_COUNT; i++) {
         if ((TCB_Cfg[i]->curState == PRE_READY || TCB_Cfg[i]->curState == READY || TCB_Cfg[i]->curState == RUNNING)
                 && TCB_Cfg[i]->curPrio > highestPrio) {
-            highestPrio == TCB_Cfg[i]->curPrio;
+            highestPrio = TCB_Cfg[i]->curPrio;
             highestPrioTask = (enum tasks_e) i;
         }
     }
