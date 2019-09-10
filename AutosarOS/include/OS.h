@@ -26,7 +26,12 @@ extern void OS_Dispatch();
 extern void EnableAllInterrupts();
 extern void DisableAllInterrupts();
 
-extern void StartupHook();
+#ifdef STARTUPHOOK
+/**
+ * @brief   Hook function called after Startup of the OS
+ */
+extern void STARTUPHOOK();
+#endif
 
 
 #endif /* OS_H_ */
