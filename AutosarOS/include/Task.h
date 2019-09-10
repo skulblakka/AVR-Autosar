@@ -14,7 +14,6 @@
 
 #include <stdint.h>
 
-void __attribute__((naked)) schedule();
 
 // TODO: Return value
 extern void OS_ActivateTask(enum tasks_e TaskID);

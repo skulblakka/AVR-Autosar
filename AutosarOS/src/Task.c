@@ -8,38 +8,7 @@
 #include "Task.h"
 #include "OS.h"
 
-
-void __attribute__((naked)) schedule()
 {
-    //static uint8_t i = 0;
-    //if (i == 0) {
-        //pxCurrentTCB = &(TCB_Cfg[1]->context);
-        //pxAdr = TCB_Cfg[1]->taskFxn;
-        //init_context();
-    //} else if (i == 1) {
-        //save_context();
-        //pxCurrentTCB = &(TCB_Cfg[2]->context);
-        //pxAdr = TCB_Cfg[2]->taskFxn;
-        //init_context();
-    //} else if (i == 2) {
-        //save_context();
-        //pxCurrentTCB = &(TCB_Cfg[1]->context);
-        //pxAdr = TCB_Cfg[1]->taskFxn;
-        //restore_context();
-    //} else if (i == 128) {
-        //save_context();
-        //pxCurrentTCB = &(TCB_Cfg[2]->context);
-        //pxAdr = TCB_Cfg[2]->taskFxn;
-        //restore_context();
-    //}
-    //if (i < 255)
-        //i++;
-    //else 
-        //i = 2;
-    //
-    //
-    //asm volatile("ret");
-}
 
 extern void OS_ActivateTask(enum tasks_e TaskID)
 {
