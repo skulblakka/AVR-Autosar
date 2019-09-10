@@ -103,8 +103,9 @@ extern void OS_Dispatch()
             save_context();
         }
                     
-        pxCurrentTCB = &(TCB_Cfg[highestPrioTask]->context);
-        pxAdr = TCB_Cfg[highestPrioTask]->taskFxn;
+
+        ptrCurrentStack = &(TCB_Cfg[highestPrioTask]->context);
+        ptrCurrentFxnAddr = TCB_Cfg[highestPrioTask]->taskFxn;
         currentTask = highestPrioTask;
         if (TCB_Cfg[highestPrioTask]->curState == PRE_READY) {
             init_context();

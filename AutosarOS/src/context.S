@@ -72,8 +72,8 @@ save_context:
     push    r29
     push    r30
     push    r31
-    lds     r26, pxCurrentTCB       // Load address for storing current SP
-    lds     r27, pxCurrentTCB + 1
+    lds     r26, ptrCurrentStack       // Load address for storing current SP
+    lds     r27, ptrCurrentStack + 1
     in      r0, _SFR_IO_ADDR(SPL)   // Store SP
     st      x+, r0
     in      r0, _SFR_IO_ADDR(SPH)
@@ -108,9 +108,8 @@ restore_context:
     pop     r0
     sts     tempSF + 1, r0
 
-    lds     r26, pxCurrentTCB       // Load address containing SP
-    lds     r27, pxCurrentTCB + 1
-    ld      r28, x+                 // Load SP
+    lds     r26, ptrCurrentStack        // Load address containing SP
+    lds     r27, ptrCurrentStack + 1
     ld      r29, x+
     out     _SFR_IO_ADDR(SPL), r28  // Restore SP
     out     _SFR_IO_ADDR(SPH), r29
@@ -180,17 +179,16 @@ init_context:
     pop     r29
 
     /* Switch to new task stack */
-    lds     r26, pxCurrentTCB       // Load new SP address
-    lds     r27, pxCurrentTCB + 1
+    lds     r26, ptrCurrentStack        // Load new SP address
+    lds     r27, ptrCurrentStack + 1
     ld      r24, x+
     ld      r25, x
     out     _SFR_IO_ADDR(SPL), r24  // Change to new SP
     out     _SFR_IO_ADDR(SPH), r25
 
     /* Place return address to taskFxn */
-    lds     r26, pxAdr              // Load address of taskFxn
-    lds     r27, pxAdr + 1
-    push    r26                     // Push "return" to taskFxn
+    lds     r26, ptrCurrentFxnAddr      // Load address of taskFxn
+    lds     r27, ptrCurrentFxnAddr + 1
     push    r27
 
 	/* Push Stack-Frame */

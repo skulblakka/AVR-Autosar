@@ -36,11 +36,11 @@ extern void init_context();
 /**
  * @brief   Stack-Pointer saved in current task control block
  */
-extern uint8_t * volatile * pxCurrentTCB;
+extern uint8_t * volatile * ptrCurrentStack;
 
 /**
  * @brief   Function pointer to current task function
  */
-extern pTaskFxn pxAdr;
+extern pTaskFxn ptrCurrentFxnAddr;
 
 #endif /* CONTEXT_H_ */
