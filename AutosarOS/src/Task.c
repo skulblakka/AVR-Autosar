@@ -8,24 +8,29 @@
 #include "Task.h"
 #include "OS.h"
 
+extern StatusType OS_ActivateTask(enum tasks_e TaskID)
 {
+    if (TaskID >= INVALID_TASK) {
+        return E_OS_ID;
+    }
 
-extern void OS_ActivateTask(enum tasks_e TaskID)
-{
     // TODO: Handle multiple activations
     if (TCB_Cfg[TaskID]->curState == SUSPENDED) {
         TCB_Cfg[TaskID]->curState = PRE_READY;
-        
-        OS_Schedule();
     } else if (TCB_Cfg[TaskID]->curState != RUNNING) {
         TCB_Cfg[TaskID]->curState = READY;
-        
-        OS_Schedule();
     }
+
+    OS_Schedule();
+
+    return E_OK;
 }
 
-extern void OS_TerminateTask()
+extern StatusType OS_TerminateTask()
 {
+    // TODO: Check for resources and call-level
     TCB_Cfg[currentTask]->curState = SUSPENDED;
     OS_Schedule();
+
+    return E_OK;
 }
