@@ -1,8 +1,12 @@
-/*
- * AppCfg.h
+/**
+ * @file
  *
- * Created: 06.08.2019 15:58:25
- *  Author: Pascal Romahn
+ * @brief   User application configuration
+ * 
+ * This file contains the configuration for the user application.
+ *
+ * @date    2019-09-02
+ * @author  Pascal Romahn
  */ 
 
 #include "CfgGenMacros.h"
