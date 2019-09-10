@@ -3,7 +3,7 @@
  *
  * @date    2019-09-02
  * @author  Pascal Romahn
- */ 
+ */
 
 #include "OS.h"
 #include "Task.h"
@@ -23,15 +23,16 @@
 static volatile uint32_t sysTick;
 static enum tasks_e highestPrioTask;
 enum tasks_e currentTask = INVALID_TASK;
+
 /**
  * @brief   Stack-Pointer saved in current task control block
  */
-uint8_t * volatile * pxCurrentTCB;
+uint8_t* volatile* ptrCurrentStack;
 
 /**
  * @brief   Function pointer to current task function
  */
-pTaskFxn pxAdr;
+pTaskFxn ptrCurrentFxnAddr;
 
 /************************************************************************/
 /* STATIC FUNCTIONS                                                     */
@@ -59,28 +60,28 @@ extern void OS_StartOS()
             }
         }
     }
-    
-    #ifdef STARTUPHOOK
+
+#ifdef STARTUPHOOK
     STARTUPHOOK();
-    #endif
-    
+#endif
+
     OS_StartSysTimer();
-    
+
     EnableAllInterrupts();
-    
+
     OS_Schedule();
 }
 
 extern void OS_Schedule()
 {
     // TODO Check if called from Cat1 ISR
-    
+
     int16_t highestPrio = -1;
     highestPrioTask = INVALID_TASK;
-    
+
     // Enter critical section
     DisableAllInterrupts();
-    
+
     for (uint8_t i = 0; i < TASK_COUNT; i++) {
         if ((TCB_Cfg[i]->curState == PRE_READY || TCB_Cfg[i]->curState == READY || TCB_Cfg[i]->curState == RUNNING)
                 && TCB_Cfg[i]->curPrio > highestPrio) {
@@ -88,9 +89,9 @@ extern void OS_Schedule()
             highestPrioTask = (enum tasks_e) i;
         }
     }
-    
+
     EnableAllInterrupts();
-    
+
     if (highestPrioTask != INVALID_TASK) {
         OS_Dispatch();
     }
@@ -102,17 +103,17 @@ extern void OS_Dispatch()
         if (currentTask != INVALID_TASK) {
             save_context();
         }
-                    
 
         ptrCurrentStack = &(TCB_Cfg[highestPrioTask]->context);
         ptrCurrentFxnAddr = TCB_Cfg[highestPrioTask]->taskFxn;
         currentTask = highestPrioTask;
+
         if (TCB_Cfg[highestPrioTask]->curState == PRE_READY) {
             init_context();
         } else {
             restore_context();
         }
-    
+
         TCB_Cfg[highestPrioTask]->curState = RUNNING;
     }
 }

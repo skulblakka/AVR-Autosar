@@ -5,7 +5,7 @@
  *
  * @date    2019-09-03
  * @author  Pascal Romahn
- */ 
+ */
 
 
 #ifndef TASKTYPES_H_

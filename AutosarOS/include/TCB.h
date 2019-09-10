@@ -2,12 +2,12 @@
  * @file
  *
  * @brief   Task Control Block
- * 
+ *
  * This contains the task control blocks generated during compilation.
  *
  * @date    2019-09-02
  * @author  Pascal Romahn
- */ 
+ */
 
 
 #ifndef TCB_H_

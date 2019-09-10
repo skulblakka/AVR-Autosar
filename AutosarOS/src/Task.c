@@ -1,9 +1,9 @@
 /**
- * @file
- *
- * @date    2019-09-02
- * @author  Pascal Romahn
- */ 
+* @file
+*
+* @date    2019-09-02
+* @author  Pascal Romahn
+*/
 
 #include "Task.h"
 #include "OS.h"

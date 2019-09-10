@@ -9,18 +9,18 @@
  #include <avr/io.h>
 
 .section .bss
-retAddr1:	.skip 2
-tempSF:		.skip 2
-tempReg:	.skip 1
+retAddr1:   .skip 2
+tempSF:     .skip 2
+tempReg:    .skip 1
 
 .global sysTick
-sysTick:	.skip 4
+sysTick:    .skip 4
 
 .section .text
 
 .global save_context
 save_context:
-    sts		tempReg, r0				// Save r0
+    sts     tempReg, r0             // Save r0
 
     /* Get return address */
     pop     r0
@@ -28,13 +28,13 @@ save_context:
     pop     r0
     sts     retAddr1 + 1, r0
 
-	/* Get pushed Stack-Frame */
+    /* Get pushed Stack-Frame */
     pop     r0
     sts     tempSF, r0
     pop     r0
     sts     tempSF + 1, r0
 
-    lds r0, tempReg					// Restore r0
+    lds r0, tempReg                 // Restore r0
 
     push    r0                      // Push R0 before overwrite with SREG
     in      r0, _SFR_IO_ADDR(SREG)
@@ -79,12 +79,12 @@ save_context:
     in      r0, _SFR_IO_ADDR(SPH)
     st      x+, r0
 
-	/* Push Stack-Frame */
+    /* Push Stack-Frame */
     lds     r0, tempSF + 1
     push    r0
     lds     r0, tempSF
     push    r0
-    
+
     /* Push return address */
     lds     r0, retAddr1 + 1
     push    r0
@@ -102,7 +102,7 @@ restore_context:
     pop     r0
     sts     retAddr1 + 1, r0
 
-	/* Get pushed Stack-Frame */
+    /* Get pushed Stack-Frame */
     pop     r0
     sts     tempSF, r0
     pop     r0
@@ -110,8 +110,9 @@ restore_context:
 
     lds     r26, ptrCurrentStack        // Load address containing SP
     lds     r27, ptrCurrentStack + 1
+    ld      r28, x+                     // Load SP
     ld      r29, x+
-    out     _SFR_IO_ADDR(SPL), r28  // Restore SP
+    out     _SFR_IO_ADDR(SPL), r28      // Restore SP
     out     _SFR_IO_ADDR(SPH), r29
 
     pop     r31
@@ -145,11 +146,11 @@ restore_context:
     pop     r3
     pop     r2
     pop     r1
-    pop     r0                      // Status reg was stored between r1 and r0
-    out     _SFR_IO_ADDR(SREG), r0  // Restore status reg
+    pop     r0                          // Status reg was stored between r1 and r0
+    out     _SFR_IO_ADDR(SREG), r0      // Restore status reg
     pop     r0
 
-    sts     tempReg, r0             // Save r0
+    sts     tempReg, r0                 // Save r0
 
     /* Push Stack-Frame */
     lds     r0, tempSF + 1
@@ -163,7 +164,7 @@ restore_context:
     lds     r0, retAddr1
     push    r0
 
-    lds     r0, tempReg             // Restore r0
+    lds     r0, tempReg                 // Restore r0
 
     ret
 
@@ -174,7 +175,7 @@ init_context:
     pop     r22
     pop     r23
 
-	/* Get pushed Stack-Frame */
+    /* Get pushed Stack-Frame */
     pop     r28
     pop     r29
 
@@ -183,15 +184,16 @@ init_context:
     lds     r27, ptrCurrentStack + 1
     ld      r24, x+
     ld      r25, x
-    out     _SFR_IO_ADDR(SPL), r24  // Change to new SP
+    out     _SFR_IO_ADDR(SPL), r24      // Change to new SP
     out     _SFR_IO_ADDR(SPH), r25
 
     /* Place return address to taskFxn */
     lds     r26, ptrCurrentFxnAddr      // Load address of taskFxn
     lds     r27, ptrCurrentFxnAddr + 1
+    push    r26                         // Push "return" to taskFxn
     push    r27
 
-	/* Push Stack-Frame */
+    /* Push Stack-Frame */
     push	r29
     push	r28
 

@@ -3,7 +3,7 @@
  *
  * @date    2019-09-02
  * @author  Pascal Romahn
- */ 
+ */
 
 
 #ifndef TASK_H_

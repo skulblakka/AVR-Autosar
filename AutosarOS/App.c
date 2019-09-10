@@ -2,12 +2,12 @@
  * @file
  *
  * @brief   User application code
- * 
+ *
  * This file contains code provided by the user.
  *
  * @date    2019-09-02
  * @author  Pascal Romahn
- */ 
+ */
 
 #include "Task.h"
 
@@ -40,20 +40,20 @@ TASK(T2)
         if (t++ == 3) {
             OS_ActivateTask(T3);
         } else if (t == 10) {
-			OS_TerminateTask();
-		}
+            OS_TerminateTask();
+        }
     }
 }
 
 TASK(T3)
 {
-    for(uint8_t i = 0; i < 3; i++) {
+    for (uint8_t i = 0; i < 3; i++) {
         PORTB &= ~(1 << 3);   // turn LED on
         _delay_ms(1000);
         PORTB |= (1 << 3);  // turn LED off
         _delay_ms(1000);
     }
-    
+
     OS_TerminateTask();
 }
 
