@@ -9,6 +9,9 @@
  * @author  Pascal Romahn
  */
 
+#include "assert.h"
+
+#include "OCB.h"
 #include "Task.h"
 
 #include <avr/io.h>
@@ -57,9 +60,50 @@ TASK(T3)
     OS_TerminateTask();
 }
 
+TASK(T4)
+{
+    for (uint8_t i = 0; i < 3; i++) {
+        PORTB &= ~(1 << 4);   // turn LED on
+        _delay_ms(1000);
+        PORTB |= (1 << 4);  // turn LED off
+        _delay_ms(1000);
+    }
+
+    OS_TerminateTask();
+}
+
+TASK(T5)
+{
+    for (uint8_t i = 0; i < 3; i++) {
+        PORTB &= ~(1 << 5);   // turn LED on
+        _delay_ms(1000);
+        PORTB |= (1 << 5);  // turn LED off
+        _delay_ms(1000);
+    }
+
+    OS_TerminateTask();
+}
+
 
 extern void StartupHook()
 {
     DDRB  = 0xFF;   // PB as output
     PORTB = 0xFF;   // keep all LEDs off
+    
+    DDRD  = 0x00;   // PD as input
+    PORTD = 0xFF;   // enable PU on PD
+    GICR  = 1 << INT0 | 1 << INT1;                              // Enable INT0 and INT1
+    MCUCR = 1 << ISC01 | 0 << ISC00 | 1 << ISC11 | 0 << ISC10;  // Trigger INT0 and INT1 on falling edge
+}
+
+ISR(INT0_vect) 
+{
+    assert(isISR == true && isCat2ISR == true);
+    OS_ActivateTask(T4);
+}
+
+ISR(INT1_vect) 
+{
+    assert(isISR == true && isCat2ISR == true);
+    OS_ActivateTask(T5);
 }
