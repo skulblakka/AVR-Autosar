@@ -30,6 +30,7 @@ extern StatusType OS_TerminateTask()
 {
     // TODO: Check for resources and call-level
     TCB_Cfg[currentTask]->curState = SUSPENDED;
+    currentTask = INVALID_TASK;
     OS_Schedule();
 
     return E_OK;
