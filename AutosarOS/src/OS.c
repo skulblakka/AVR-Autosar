@@ -74,7 +74,7 @@ extern void OS_StartOS()
 
 extern void OS_Schedule()
 {
-    // TODO Check if called from Cat1 ISR
+    // TODO Check if called from (Cat1) ISR
 
     int16_t highestPrio = -1;
     highestPrioTask = INVALID_TASK;
@@ -92,7 +92,7 @@ extern void OS_Schedule()
 
     EnableAllInterrupts();
 
-    if (highestPrioTask != INVALID_TASK) {
+    if (highestPrioTask != INVALID_TASK && isISR == false) {
         OS_Dispatch();
     }
 }
