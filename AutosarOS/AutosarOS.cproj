@@ -71,6 +71,7 @@
         <avrgcc.compiler.symbols.DefSymbols>
           <ListValues>
             <Value>F_CPU=14745600UL</Value>
+            <Value>STARTUPHOOK=StartupHook</Value>
             <Value>NDEBUG</Value>
           </ListValues>
         </avrgcc.compiler.symbols.DefSymbols>
@@ -81,10 +82,10 @@
             <Value>..</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
-        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
         <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
         <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
         <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.compiler.miscellaneous.DoNotDeleteTemporaryFiles>False</avrgcc.compiler.miscellaneous.DoNotDeleteTemporaryFiles>
         <avrgcc.linker.libraries.Libraries>
           <ListValues>
             <Value>libm</Value>
@@ -95,6 +96,7 @@
             <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\1.3.300\include</Value>
           </ListValues>
         </avrgcc.assembler.general.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
       </AvrGcc>
     </ToolchainSettings>
   </PropertyGroup>
@@ -112,6 +114,7 @@
         <avrgcc.compiler.symbols.DefSymbols>
           <ListValues>
             <Value>F_CPU=14745600UL</Value>
+            <Value>STARTUPHOOK=StartupHook</Value>
             <Value>DEBUG</Value>
             <Value>ASSERT_BUFFER_SIZE=512</Value>
             <Value>STATIC_ASSERT_BUFFER</Value>
@@ -148,6 +151,9 @@
     <None Include="AppCfg.h">
       <SubType>compile</SubType>
     </None>
+    <Compile Include="App.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\assert.h">
       <SubType>compile</SubType>
     </Compile>
@@ -157,7 +163,19 @@
     <Compile Include="include\context.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\OS.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\Task.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\TaskTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\TCB.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
@@ -169,7 +187,13 @@
     <Compile Include="src\context.S">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\testTask.c">
+    <Compile Include="src\OS.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\TCB.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Task.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

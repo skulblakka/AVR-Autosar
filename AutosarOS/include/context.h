@@ -1,8 +1,10 @@
-/*
- * context.h
+/**
+ * @file
+ * 
+ * @brief   Context switching
  *
- * Created: 05.08.2019 14:35:27
- *  Author: Pascal Romahn
+ * @date    2019-09-02
+ * @author  Pascal Romahn
  */ 
 
 
@@ -10,14 +12,35 @@
 #define CONTEXT_H_
 
 #include "Task.h"
+#include "TCB.h"
 
+#include <stdint.h>
+
+/**
+ * @brief   Save context of current task
+ */
 extern void save_context();
+
+/**
+ * @brief   Restore context of current task
+ */
 extern void restore_context();
+
+/**
+ * @brief   Initialize context of current task
+ * 
+ * This function is used to initialize the context of the current task.
+ */
 extern void init_context();
 
-extern uint8_t** pxCurrentTCB;
-extern pTaskFxn pxAdr;
+/**
+ * @brief   Stack-Pointer saved in current task control block
+ */
+extern uint8_t * volatile * ptrCurrentStack;
 
-extern volatile uint32_t sysTick;
+/**
+ * @brief   Function pointer to current task function
+ */
+extern pTaskFxn ptrCurrentFxnAddr;
 
 #endif /* CONTEXT_H_ */

@@ -1,57 +1,44 @@
-/*
- * Task.h
+/**
+ * @file
  *
- * Created: 05.08.2019 14:50:29
- *  Author: Pascal Romahn
- */ 
+ * @date    2019-09-02
+ * @author  Pascal Romahn
+ */
 
 
 #ifndef TASK_H_
 #define TASK_H_
 
+#include "Types.h"
+#include "TaskTypes.h"
+#include "TCB.h"
+
 #include <stdint.h>
 
-#define TASK(TaskName) void Func ## TaskName(void)
-#define PTASK(TaskName) &Func ## TaskName
+/**
+ * @brief   Activate a task
+ *
+ * The task is transferred from the suspended state into the ready state.
+ * 
+ * @note    ActivateTask will not immediately change the state of the task in case of multiple activation requests. 
+ *          If the task is not suspended, the activation will only be recorded and performed later.
+ *
+ * @param   TaskID  ID of the task to be activated
+ *
+ * @return  E_OK        No error \n
+ *          E_OS_LIMIT  Too many activations of the task \n
+ *          E_OS_ID     TaskID is invalid
+ */
+extern StatusType OS_ActivateTask(enum tasks_e TaskID);
 
-typedef void (*pTaskFxn)(); // TODO: Location and name
-
-typedef enum OsTaskType_e {
-    BASIC = 0,
-    EXTENDED
-} OsTaskType;
-
-typedef enum OsTaskSchedule_e {
-    PREEMPTIVE = 0,
-    NON_PREEMPTIVE
-} OsTaskSchedule;
-
-typedef enum OsTaskState_e {
-    SUSPENDED = 0,
-    READY,
-    RUNNING,
-    WAITING    
-} OsTaskState;
-
-typedef enum OsTaskAutostart_e {
-    NO_AUTOSTART = 0,
-    AUTOSTART
-} OsTaskAutostart;
-
-struct task_s {
-    uint8_t* const stack;
-    const uint16_t stackSize;
-    const uint8_t prio;
-    const uint8_t numberOfActivations;
-    const uint8_t autostart;
-    const OsTaskType taskType;
-    const OsTaskSchedule taskSchedule;
-    const pTaskFxn taskFxn;
-    uint8_t* context;
-    uint8_t curPrio;
-    OsTaskState curState;
-};
-
-void __attribute__((naked)) schedule();
+/**
+ * @brief   Terminate active task
+ *
+ * The calling task is transferred from the running state into the suspended state.
+ *
+ * @return  E_OS_RESOURCE   Task still occupies resources \n
+ *          E_OS_CALLLEVEL  Call at interrupt level
+ */
+extern StatusType OS_TerminateTask();
 
 #endif /* TASK_H_ */
