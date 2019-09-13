@@ -172,7 +172,7 @@
     <Compile Include="include\TaskTypes.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="include\TCB.h">
+    <Compile Include="include\OCB.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\Types.h">
@@ -190,7 +190,7 @@
     <Compile Include="src\OS.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\TCB.c">
+    <Compile Include="src\OCB.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Task.c">

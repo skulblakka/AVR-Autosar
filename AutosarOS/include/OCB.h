@@ -1,17 +1,17 @@
 /**
  * @file
  *
- * @brief   Task Control Block
+ * @brief   Operating System Control Block
  *
- * This contains the task control blocks generated during compilation.
+ * This contains the operating system control blocks generated during compilation.
  *
  * @date    2019-09-02
  * @author  Pascal Romahn
  */
 
 
-#ifndef TCB_H_
-#define TCB_H_
+#ifndef OCB_H_
+#define OCB_H_
 
 #include <stdbool.h>
 #include "Types.h"
@@ -44,4 +44,4 @@ extern volatile bool isCat2ISR;
 extern volatile struct task_s* TCB_Cfg[];
 
 
-#endif /* TCB_H_ */
+#endif /* OCB_H_ */
