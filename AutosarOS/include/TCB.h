@@ -13,6 +13,8 @@
 #ifndef TCB_H_
 #define TCB_H_
 
+#include <stdbool.h>
+#include "Types.h"
 #include "TaskTypes.h"
 
 #include <avr/io.h>
@@ -26,6 +28,19 @@
 #include "AppCfg.h"
 #undef OS_CONFIG_GEN_FUNC_DECL
 
+/**
+ * @brief   Is currently ISR context?
+ */
+extern volatile bool isISR;
+
+/**
+ * @brief   Is currently Cat 2 ISR context?
+ */
+extern volatile bool isCat2ISR;
+
+/**
+ * @brief   Current task control blocks
+ */
 extern volatile struct task_s* TCB_Cfg[];
 
 
