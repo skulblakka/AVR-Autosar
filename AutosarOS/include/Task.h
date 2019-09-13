@@ -19,6 +19,9 @@
  * @brief   Activate a task
  *
  * The task is transferred from the suspended state into the ready state.
+ * 
+ * @note    ActivateTask will not immediately change the state of the task in case of multiple activation requests. 
+ *          If the task is not suspended, the activation will only be recorded and performed later.
  *
  * @param   TaskID  ID of the task to be activated
  *
