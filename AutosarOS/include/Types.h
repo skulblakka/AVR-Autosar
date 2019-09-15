@@ -1,9 +1,11 @@
-/*
- * Types.h
+/**
+ * @file
  *
- * Created: 10.09.2019 15:14:25
- *  Author: pascal
- */
+ * @brief   Type definitions
+ *
+ * @date    2019-09-10
+ * @author  Pascal Romahn
+ */ 
 
 
 #ifndef TYPES_H_
