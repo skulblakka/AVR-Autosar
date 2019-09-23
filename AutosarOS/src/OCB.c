@@ -3,7 +3,7 @@
  *
  * @date    2019-09-02
  * @author  Pascal Romahn
- */ 
+ */
 
 #include "OCB.h"
 #include <avr/interrupt.h>

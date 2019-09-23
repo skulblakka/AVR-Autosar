@@ -89,20 +89,20 @@ extern void StartupHook()
 {
     DDRB  = 0xFF;   // PB as output
     PORTB = 0xFF;   // keep all LEDs off
-    
+
     DDRD  = 0x00;   // PD as input
     PORTD = 0xFF;   // enable PU on PD
     GICR  = 1 << INT0 | 1 << INT1;                              // Enable INT0 and INT1
     MCUCR = 1 << ISC01 | 0 << ISC00 | 1 << ISC11 | 0 << ISC10;  // Trigger INT0 and INT1 on falling edge
 }
 
-ISR(INT0_vect) 
+ISR(INT0_vect)
 {
     assert(isISR == true && isCat2ISR == true);
     OS_ActivateTask(T4);
 }
 
-ISR(INT1_vect) 
+ISR(INT1_vect)
 {
     assert(isISR == true && isCat2ISR == true);
     OS_ActivateTask(T5);

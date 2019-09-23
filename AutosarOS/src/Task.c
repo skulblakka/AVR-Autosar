@@ -31,7 +31,7 @@ extern StatusType OS_TerminateTask()
     if (isISR) { // TODO: Extended error check
         return E_OS_CALLLEVEL;
     }
-    
+
     // TODO: Check for resources on extended error check
     TCB_Cfg[currentTask]->curState = SUSPENDED;
     OS_Schedule();
