@@ -17,6 +17,15 @@
 #ifdef OS_CONFIG_TASK_END
 #undef OS_CONFIG_TASK_END
 #endif
+#ifdef OS_CONFIG_INT_BEGIN
+#undef OS_CONFIG_INT_BEGIN
+#endif
+#ifdef OS_CONFIG_INT_DEF
+#undef OS_CONFIG_INT_DEF
+#endif
+#ifdef OS_CONFIG_INT_END
+#undef OS_CONFIG_INT_END
+#endif
 
 /* Generate enumerations based on config */
 #ifdef OS_CONFIG_GEN_ENUM
@@ -27,6 +36,10 @@
 
 #define TASK_COUNT     INVALID_TASK
 
+#define OS_CONFIG_INT_BEGIN
+#define OS_CONFIG_INT_DEF(Name)
+#define OS_CONFIG_INT_END
+
 #endif /* OS_CONFIG_GEN_ENUM */
 
 /* Generate function declarations based on config */
@@ -36,7 +49,30 @@
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   TASK(Name);
 #define OS_CONFIG_TASK_END
 
+#define OS_CONFIG_INT_BEGIN
+#define OS_CONFIG_INT_DEF(Name)                                                                             extern void Func ## Name(void);
+#define OS_CONFIG_INT_END
+
 #endif /* OS_CONFIG_GEN_FUNC_DECL */
+
+/* Generate functions based on config */
+#ifdef OS_CONFIG_GEN_FUNC
+
+#define OS_CONFIG_TASK_BEGIN                                
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   
+#define OS_CONFIG_TASK_END                                                                             
+
+#define OS_CONFIG_INT_BEGIN
+#define OS_CONFIG_INT_DEF(Name)                                                                             ISR(Name) { \
+                                                                                                                isISR = true; \
+                                                                                                                isCat2ISR = true; \
+                                                                                                                Func ## Name(); \
+                                                                                                                isISR = false; \
+                                                                                                                isCat2ISR = false; \
+                                                                                                            }
+#define OS_CONFIG_INT_END
+
+#endif /* OS_CONFIG_GEN_FUNC */
 
 /* Generate data structures based on config */
 #ifdef OS_CONFIG_GEN_DATA_STRUCT
@@ -58,6 +94,10 @@
                                                                                                             };
 #define OS_CONFIG_TASK_END
 
+#define OS_CONFIG_INT_BEGIN
+#define OS_CONFIG_INT_DEF(Name)
+#define OS_CONFIG_INT_END
+
 #endif /* OS_CONFIG_GEN_DATA_STRUCT */
 
 /* Generate OS Task Control Block */ // TODO: Rename
@@ -66,6 +106,10 @@
 #define OS_CONFIG_TASK_BEGIN                                                                                volatile struct task_s* TCB_Cfg[TASK_COUNT + 1] = {
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   &Task##Name##_s,
 #define OS_CONFIG_TASK_END                                                                                  0};
+
+#define OS_CONFIG_INT_BEGIN
+#define OS_CONFIG_INT_DEF(Name)
+#define OS_CONFIG_INT_END
 
 #endif /* OS_CONFIG_GEN_TCB */
 

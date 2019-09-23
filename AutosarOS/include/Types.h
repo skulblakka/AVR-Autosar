@@ -11,6 +11,10 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
+// TODO: Location for these two might cause problems...
+#undef ISR
+#define ISR(Name) extern void Func ## Name(void)
+
 typedef enum StatusType_e {
     E_OK = 0,
     E_OS_ACCESS,

@@ -28,7 +28,11 @@ extern StatusType OS_ActivateTask(enum tasks_e TaskID)
 
 extern StatusType OS_TerminateTask()
 {
-    // TODO: Check for resources and call-level
+    if (isISR) { // TODO: Extended error check
+        return E_OS_CALLLEVEL;
+    }
+
+    // TODO: Check for resources on extended error check
     TCB_Cfg[currentTask]->curState = SUSPENDED;
     currentTask = INVALID_TASK;
     OS_Schedule();
