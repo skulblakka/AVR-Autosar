@@ -53,6 +53,8 @@ struct task_s {
     uint8_t* context;
     uint8_t curPrio;
     OsTaskState curState;
+    uint32_t curStackUse;
+    uint32_t maxStackUse;
 };
 
 #endif /* TASKTYPES_H_ */
