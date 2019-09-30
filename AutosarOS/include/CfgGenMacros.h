@@ -90,7 +90,9 @@
                                                                                                                 .taskFxn = PTASK(Name), \
                                                                                                                 .context = Task##Name##_stack + StackSize, \
                                                                                                                 .curPrio = Prio, \
-                                                                                                                .curState = SUSPENDED \
+                                                                                                                .curState = SUSPENDED, \
+                                                                                                                .curStackUse = 0, \
+                                                                                                                .maxStackUse = 0 \
                                                                                                             };
 #define OS_CONFIG_TASK_END
 

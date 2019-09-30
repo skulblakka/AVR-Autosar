@@ -10,11 +10,11 @@
 
 .section .bss
 retAddr1:   .skip 2
-tempSF:     .skip 2
 tempReg:    .skip 1
 
 .global sysTick
 sysTick:    .skip 4
+
 
 .section .text
 
@@ -27,12 +27,6 @@ save_context:
     sts     retAddr1, r0
     pop     r0
     sts     retAddr1 + 1, r0
-
-    /* Get pushed Stack-Frame */
-    pop     r0
-    sts     tempSF, r0
-    pop     r0
-    sts     tempSF + 1, r0
 
     lds r0, tempReg                 // Restore r0
 
@@ -79,12 +73,6 @@ save_context:
     in      r0, _SFR_IO_ADDR(SPH)
     st      x+, r0
 
-    /* Push Stack-Frame */
-    lds     r0, tempSF + 1
-    push    r0
-    lds     r0, tempSF
-    push    r0
-
     /* Push return address */
     lds     r0, retAddr1 + 1
     push    r0
@@ -101,12 +89,6 @@ restore_context:
     sts     retAddr1, r0
     pop     r0
     sts     retAddr1 + 1, r0
-
-    /* Get pushed Stack-Frame */
-    pop     r0
-    sts     tempSF, r0
-    pop     r0
-    sts     tempSF + 1, r0
 
     lds     r26, ptrCurrentStack        // Load address containing SP
     lds     r27, ptrCurrentStack + 1
@@ -152,12 +134,6 @@ restore_context:
 
     sts     tempReg, r0                 // Save r0
 
-    /* Push Stack-Frame */
-    lds     r0, tempSF + 1
-    push    r0
-    lds     r0, tempSF
-    push    r0
-
     /* Push return address */
     lds     r0, retAddr1 + 1
     push    r0
@@ -175,10 +151,6 @@ init_context:
     pop     r22
     pop     r23
 
-    /* Get pushed Stack-Frame */
-    pop     r28
-    pop     r29
-
     /* Switch to new task stack */
     lds     r26, ptrCurrentStack        // Load new SP address
     lds     r27, ptrCurrentStack + 1
@@ -192,10 +164,6 @@ init_context:
     lds     r27, ptrCurrentFxnAddr + 1
     push    r26                         // Push "return" to taskFxn
     push    r27
-
-    /* Push Stack-Frame */
-    push	r29
-    push	r28
 
     /* Push return address */
     push    r23
@@ -236,17 +204,15 @@ TIMER0_OVF_vect:
     sts     sysTick + 2, r26
     sts     sysTick + 3, r27
 
-    //call OS_Dispatch
-
-    /* Restore work registers */
     pop     r27
     pop     r26
     pop     r25
     pop     r24
+    
+    pop     r0
+    out     _SFR_IO_ADDR(SREG), r0
+    pop     r0
 
-    /* Restore SREG and r0 */
-    pop    r0
-    out    _SFR_IO_ADDR(SREG), r0
-    pop    r0
+    call OS_Schedule
 
     reti

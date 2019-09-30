@@ -40,9 +40,9 @@ TASK(T2)
         _delay_ms(1000);
         PORTB |= (1 << 2);  // turn LED off
         _delay_ms(1000);
-        if (t++ == 3) {
+        if (t++ % 3 == 0) {
             OS_ActivateTask(T3);
-        } else if (t == 10) {
+        } else if (t == 20) {
             OS_TerminateTask();
         }
     }

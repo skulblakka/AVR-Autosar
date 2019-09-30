@@ -21,7 +21,15 @@
  * @brief   Current system tick
  */
 static volatile uint32_t sysTick;
+
+/**
+ * @brief   Highest priority task in READY state
+ */
 static enum tasks_e highestPrioTask;
+
+/**
+ * @brief   Current task being executed
+ */
 enum tasks_e currentTask = INVALID_TASK;
 
 /**
@@ -65,57 +73,83 @@ extern void OS_StartOS()
     STARTUPHOOK();
 #endif
 
+    EnableAllInterrupts();
+
+    /* Switch to first task */
+    OS_Switch();
+    init_context();
+    TCB_Cfg[currentTask]->curState = RUNNING;
+
     OS_StartSysTimer();
 
-    EnableAllInterrupts();
-
-    OS_Schedule();
+    asm volatile ("ret"); // Force return to prevent function epilogue removing non-existing data from task stack
 }
 
-extern void OS_Schedule()
+extern void __attribute__((naked)) OS_Schedule()
 {
-    // TODO Check if called from (Cat1) ISR
+    save_context();
 
-    int16_t highestPrio = -1;
-    highestPrioTask = INVALID_TASK;
-
-    // Enter critical section
-    DisableAllInterrupts();
-
-    for (uint8_t i = 0; i < TASK_COUNT; i++) {
-        if ((TCB_Cfg[i]->curState == PRE_READY || TCB_Cfg[i]->curState == READY || TCB_Cfg[i]->curState == RUNNING)
-                && TCB_Cfg[i]->curPrio > highestPrio) {
-            highestPrio = TCB_Cfg[i]->curPrio;
-            highestPrioTask = (enum tasks_e) i;
-        }
+    /* Calculate stack usage */
+    TCB_Cfg[currentTask]->curStackUse = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize
+            - TCB_Cfg[currentTask]->context;
+    if (TCB_Cfg[currentTask]->curStackUse > TCB_Cfg[currentTask]->maxStackUse) {
+        TCB_Cfg[currentTask]->maxStackUse = TCB_Cfg[currentTask]->curStackUse;
     }
 
-    EnableAllInterrupts();
+    if (!isISR && TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
+        // Enter critical section
+        DisableAllInterrupts();
 
-    if (highestPrioTask != INVALID_TASK && isISR == false) {
-        OS_Dispatch();
-    }
-}
-
-extern void OS_Dispatch()
-{
-    if (highestPrioTask != currentTask && highestPrioTask != INVALID_TASK) {
-        if (currentTask != INVALID_TASK) {
-            save_context();
+        if (TCB_Cfg[currentTask]->curState == RUNNING) {
+            TCB_Cfg[currentTask]->curState = READY;
         }
 
-        ptrCurrentStack = &(TCB_Cfg[highestPrioTask]->context);
-        ptrCurrentFxnAddr = TCB_Cfg[highestPrioTask]->taskFxn;
-        currentTask = highestPrioTask;
+        OS_Switch();
 
-        if (TCB_Cfg[highestPrioTask]->curState == PRE_READY) {
+        /* Change task state already to prevent changes to SREG */
+        OsTaskState prevState = TCB_Cfg[currentTask]->curState;
+        TCB_Cfg[currentTask]->curState = RUNNING;
+
+        if (prevState == PRE_READY) {
+            TCB_Cfg[currentTask]->context = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize;
             init_context();
         } else {
             restore_context();
         }
 
-        TCB_Cfg[highestPrioTask]->curState = RUNNING;
+        /***********************************************/
+        /* NO CHANGE TO SREG MUST OCCUR AT THIS POINT! */
+        /***********************************************/
+
+        // Leave critical section
+        EnableAllInterrupts();
+    } else {
+        restore_context();
+
+        /***********************************************/
+        /* NO CHANGE TO SREG MUST OCCUR AT THIS POINT! */
+        /***********************************************/
     }
+
+    asm volatile ("ret");
+}
+
+extern void OS_Switch()
+{
+    int16_t highestPrio = -1;
+    highestPrioTask = INVALID_TASK;
+
+    for (uint8_t i = 0; i < TASK_COUNT; i++) {
+        if ((TCB_Cfg[i]->curState == PRE_READY || TCB_Cfg[i]->curState == READY || TCB_Cfg[i]->curState == RUNNING)
+                && TCB_Cfg[i]->curPrio >= highestPrio) {
+            highestPrio = TCB_Cfg[i]->curPrio;
+            highestPrioTask = (enum tasks_e) i;
+        }
+    }
+
+    currentTask = highestPrioTask;
+    ptrCurrentStack = &(TCB_Cfg[currentTask]->context);
+    ptrCurrentFxnAddr = TCB_Cfg[currentTask]->taskFxn;
 }
 
 extern void EnableAllInterrupts()
