@@ -23,12 +23,12 @@
 static volatile uint32_t sysTick;
 
 /**
- * TODO:
+ * @brief   Highest priority task in READY state
  */
 static enum tasks_e highestPrioTask;
 
 /**
- * TODO
+ * @brief   Current task being executed
  */
 enum tasks_e currentTask = INVALID_TASK;
 
@@ -89,6 +89,7 @@ extern void __attribute__((naked)) OS_Schedule()
 {
     save_context();
 
+    /* Calculate stack usage */
     TCB_Cfg[currentTask]->curStackUse = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize
             - TCB_Cfg[currentTask]->context;
     if (TCB_Cfg[currentTask]->curStackUse > TCB_Cfg[currentTask]->maxStackUse) {
