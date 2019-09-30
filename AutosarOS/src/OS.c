@@ -95,7 +95,7 @@ extern void __attribute__((naked)) OS_Schedule()
         TCB_Cfg[currentTask]->maxStackUse = TCB_Cfg[currentTask]->curStackUse;
     }
 
-    if (!isISR) {
+    if (!isISR && TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
         // Enter critical section
         DisableAllInterrupts();
 
