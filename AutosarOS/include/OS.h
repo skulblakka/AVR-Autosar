@@ -17,10 +17,8 @@ extern enum tasks_e currentTask;
 extern void OS_StartOS();
 
 // TODO: Return type
-extern void OS_Schedule();
-
-// TODO
-extern void OS_Dispatch();
+extern void __attribute__((naked)) OS_Schedule();
+extern void OS_Switch();
 
 // TODO Docs and check name conformity with OSEK/Autosar
 extern void EnableAllInterrupts();
