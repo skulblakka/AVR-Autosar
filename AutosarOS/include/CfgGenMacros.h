@@ -27,6 +27,42 @@
 #undef OS_CONFIG_INT_END
 #endif
 
+
+/* Generate documentation */
+#ifdef __DOXYGEN__
+/**
+ * @brief   Beginning of Task definition
+ */
+#define OS_CONFIG_TASK_BEGIN
+
+/**
+ * @brief   Task definition
+ * 
+ * @param   Name                    Name of task
+ * @param   Prio                    Static priority of task
+ * @param   StackSize               Size of task stack in bytes (maximum of UINT16_MAX)
+ * @param   NumberOfActivations     Number of times the task can be activated
+ * @param   Autostart               Set task to autostart (::OsTaskAutostart)
+ * @param   TaskType                Type of task (::OsTaskType)
+ * @param   TaskSchedule            Type of task scheduling (::OsTaskSchedule)
+ * 
+ * This will create a new task and all required data structures. Each task will need a function TASK(Name).
+ */
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)
+
+/**
+ * @brief   Ending of Task definition
+ */
+#define OS_CONFIG_TASK_END
+
+/**
+ * @brief   Count of tasks available
+ */
+#define TASK_COUNT
+
+#endif /* __DOXYGEN__ */
+
+
 /* Generate enumerations based on config */
 #ifdef OS_CONFIG_GEN_ENUM
 
