@@ -60,6 +60,25 @@
  */
 #define TASK_COUNT
 
+/**
+ * @brief   Beginning of Interrupt definitions
+ */
+#define OS_CONFIG_INT_BEGIN
+
+/**
+ * @brief   Interrupt definition
+ *
+ * @param   Name    Name of the interrupt
+ *
+ * This will create a new interrupt and declare its ISR. Each interrupt will need a function ISR(Name).
+ */
+#define OS_CONFIG_INT_DEF(Name)
+
+/**
+ * @brief   Ending of Interrupt definitions
+ */
+#define OS_CONFIG_INT_END
+
 #endif /* __DOXYGEN__ */
 
 
