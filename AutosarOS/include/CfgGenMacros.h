@@ -5,7 +5,7 @@
  *
  * @date    2019-09-02
  * @author  Pascal Romahn
- */ 
+ */
 
 /* Undefine already existing defines for generation */
 #ifdef OS_CONFIG_TASK_BEGIN
@@ -31,13 +31,13 @@
 /* Generate documentation */
 #ifdef __DOXYGEN__
 /**
- * @brief   Beginning of Task definition
+ * @brief   Beginning of Task definitions
  */
 #define OS_CONFIG_TASK_BEGIN
 
 /**
  * @brief   Task definition
- * 
+ *
  * @param   Name                    Name of task
  * @param   Prio                    Static priority of task
  * @param   StackSize               Size of task stack in bytes (maximum of UINT16_MAX)
@@ -45,18 +45,18 @@
  * @param   Autostart               Set task to autostart (::OsTaskAutostart)
  * @param   TaskType                Type of task (::OsTaskType)
  * @param   TaskSchedule            Type of task scheduling (::OsTaskSchedule)
- * 
+ *
  * This will create a new task and all required data structures. Each task will need a function TASK(Name).
  */
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)
 
 /**
- * @brief   Ending of Task definition
+ * @brief   Ending of Task definitions
  */
 #define OS_CONFIG_TASK_END
 
 /**
- * @brief   Count of tasks available
+ * @brief   Count of tasks defined
  */
 #define TASK_COUNT
 
@@ -94,9 +94,9 @@
 /* Generate functions based on config */
 #ifdef OS_CONFIG_GEN_FUNC
 
-#define OS_CONFIG_TASK_BEGIN                                
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   
-#define OS_CONFIG_TASK_END                                                                             
+#define OS_CONFIG_TASK_BEGIN
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)
+#define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
 #define OS_CONFIG_INT_DEF(Name)                                                                             ISR(Name) { \
