@@ -79,7 +79,7 @@
 
 #define OS_CONFIG_TASK_BEGIN
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   uint8_t Task##Name##_stack[StackSize]; \
-                                                                                                            struct task_s Task##Name##_s = { \
+                                                                                                            volatile struct task_s Task##Name##_s = { \
                                                                                                                 .stack = (uint8_t* const) &Task##Name##_stack, \
                                                                                                                 .stackSize = StackSize, \
                                                                                                                 .prio = Prio, \
