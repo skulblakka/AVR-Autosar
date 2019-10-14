@@ -35,6 +35,7 @@ extern StatusType OS_TerminateTask()
     // TODO: Check for resources on extended error check
     TCB_Cfg[currentTask]->curState = SUSPENDED;
     currentTask = INVALID_TASK;
+
     OS_Schedule();
 
     return E_OK;

@@ -90,18 +90,22 @@ extern void __attribute__((naked)) OS_Schedule()
     save_context();
 
     /* Calculate stack usage */
-    TCB_Cfg[currentTask]->curStackUse = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize
-            - TCB_Cfg[currentTask]->context;
-    if (TCB_Cfg[currentTask]->curStackUse > TCB_Cfg[currentTask]->maxStackUse) {
-        TCB_Cfg[currentTask]->maxStackUse = TCB_Cfg[currentTask]->curStackUse;
+    if (currentTask != INVALID_TASK) {
+        TCB_Cfg[currentTask]->curStackUse = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize
+                - TCB_Cfg[currentTask]->context;
+        if (TCB_Cfg[currentTask]->curStackUse > TCB_Cfg[currentTask]->maxStackUse) {
+            TCB_Cfg[currentTask]->maxStackUse = TCB_Cfg[currentTask]->curStackUse;
+        }
     }
 
     if (!isISR && TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
         // Enter critical section
         DisableAllInterrupts();
 
-        if (TCB_Cfg[currentTask]->curState == RUNNING) {
-            TCB_Cfg[currentTask]->curState = READY;
+        if (currentTask != INVALID_TASK) {
+            if (TCB_Cfg[currentTask]->curState == RUNNING) {
+                TCB_Cfg[currentTask]->curState = READY;
+            }
         }
 
         OS_Switch();
