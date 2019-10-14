@@ -94,6 +94,16 @@ extern void StartupHook()
     PORTD = 0xFF;   // enable PU on PD
     GICR  = 1 << INT0 | 1 << INT1;                              // Enable INT0 and INT1
     MCUCR = 1 << ISC01 | 0 << ISC00 | 1 << ISC11 | 0 << ISC10;  // Trigger INT0 and INT1 on falling edge
+
+    uint8_t t = 0;
+
+    while (t < 6) {
+        uint8_t r = PORTB;
+        r ^= (1 << 7);
+        PORTB = r;
+        _delay_ms(50);
+        t++;
+    }
 }
 
 ISR(INT0_vect)
