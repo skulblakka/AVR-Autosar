@@ -60,7 +60,7 @@ static void OS_StartSysTimer()
 extern void OS_StartOS()
 {
     DisableAllInterrupts();
-    
+
     if (TASK_COUNT > 0) {
         assert(TASK_COUNT <= UINT8_MAX);
         /* Start all tasks configured as autostart */
@@ -81,7 +81,7 @@ extern void OS_StartOS()
     TCB_Cfg[currentTask]->curState = RUNNING;
 
     OS_StartSysTimer();
-    
+
     EnableAllInterrupts();
 
     asm volatile ("ret"); // Force return to prevent function epilogue removing non-existing data from task stack
