@@ -100,7 +100,7 @@ extern void __attribute__((naked)) OS_Schedule()
         }
     }
 
-    if (!isISR && TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
+    if (!isISR && (currentTask == INVALID_TASK || TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE)) {
         // Enter critical section
         DisableAllInterrupts();
 
