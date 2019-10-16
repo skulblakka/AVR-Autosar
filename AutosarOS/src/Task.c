@@ -40,3 +40,27 @@ extern StatusType OS_TerminateTask()
 
     return E_OK;
 }
+
+extern StatusType OS_GetTaskID(enum tasks_e* TaskID)
+{
+    *TaskID = currentTask;
+
+    return E_OK;
+}
+
+
+extern StatusType OS_GetTaskState(enum tasks_e TaskID, OsTaskState* State)
+{
+    if (TaskID >= INVALID_TASK) {
+        return E_OS_ID;
+    }
+
+    *State = TCB_Cfg[TaskID]->curState;
+
+    /* Report PRE_READY as READY to conform to OSEK standard */
+    if (*State == PRE_READY) {
+        *State = READY;
+    }
+
+    return E_OK;
+}

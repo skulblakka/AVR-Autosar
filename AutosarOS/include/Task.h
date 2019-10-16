@@ -41,4 +41,23 @@ extern StatusType OS_ActivateTask(enum tasks_e TaskID);
  */
 extern StatusType OS_TerminateTask();
 
+/**
+ * @brief   Return the ID of the task currently running
+ *
+ * @param   TaskID  Reference of the task currently running. INVALID_TASK if no task is in running state.
+ *
+ * @return  E_OK    No error
+ */
+extern StatusType OS_GetTaskID(enum tasks_e* TaskID);
+
+/**
+ * @brief   Return the state of a task
+ *
+ * @param   TaskID  ID of the task to return the state for
+ *
+ * @return  E_OK        No error \n
+ *          E_OS_ID     TaskID is invalid
+ */
+extern StatusType OS_GetTaskState(enum tasks_e TaskID, OsTaskState* State);
+
 #endif /* TASK_H_ */
