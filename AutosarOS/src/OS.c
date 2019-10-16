@@ -112,6 +112,8 @@ extern void __attribute__((naked)) OS_Schedule()
 
         OS_Switch();
 
+        assert(currentTask != INVALID_TASK);
+
         /* Change task state already to prevent changes to SREG */
         OsTaskState prevState = TCB_Cfg[currentTask]->curState;
         TCB_Cfg[currentTask]->curState = RUNNING;
