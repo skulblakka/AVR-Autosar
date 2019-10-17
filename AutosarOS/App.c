@@ -69,7 +69,7 @@ TASK(T4)
         _delay_ms(1000);
     }
 
-    OS_TerminateTask();
+    OS_ChainTask(T5);
 }
 
 TASK(T5)

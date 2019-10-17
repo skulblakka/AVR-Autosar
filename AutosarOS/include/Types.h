@@ -15,6 +15,7 @@
 #undef ISR
 #define ISR(Name) extern void Func ## Name(void)
 
+// TODO: Docu
 typedef enum StatusType_e {
     E_OK = 0,
     E_OS_ACCESS,
