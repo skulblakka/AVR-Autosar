@@ -57,6 +57,16 @@ TASK(T3)
         _delay_ms(1000);
     }
 
+    enum tasks_e taskID = INVALID_TASK;
+    OS_GetTaskID(&taskID);
+    assert(taskID == T3);
+
+    OsTaskState state = SUSPENDED;
+    OS_GetTaskState(T2, &state);
+    assert(state == READY);
+    OS_GetTaskState(T3, &state);
+    assert(state == RUNNING);
+
     OS_TerminateTask();
 }
 
