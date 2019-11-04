@@ -1,10 +1,16 @@
 
-/*
- * context.S
+/**
+ * @file
  *
- * Created: 05.08.2019 15:02:08
- *  Author: Pascal Romahn
- */ 
+ * @brief       Context switching
+ *
+ * @date        2019-08-05
+ * @author      Pascal Romahn
+ * @copyright   This program is free software: you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation, either version 3 of the License, or
+ *              (at your option) any later version.
+ */
 
  #include <avr/io.h>
 
@@ -208,7 +214,7 @@ TIMER0_OVF_vect:
     pop     r26
     pop     r25
     pop     r24
-    
+
     pop     r0
     out     _SFR_IO_ADDR(SREG), r0
     pop     r0
