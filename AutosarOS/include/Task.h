@@ -70,6 +70,7 @@ extern StatusType OS_GetTaskID(enum tasks_e* TaskID);
  * @brief   Return the state of a task
  *
  * @param   TaskID  ID of the task to return the state for
+ * @param   State   Reference of the specified tasks state
  *
  * @return  E_OK        No error \n
  *          E_OS_ID     TaskID is invalid
