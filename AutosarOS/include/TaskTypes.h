@@ -1,10 +1,14 @@
 /**
  * @file
  *
- * @brief   Types used for tasks
+ * @brief       Types used for tasks
  *
- * @date    2019-09-03
- * @author  Pascal Romahn
+ * @date        2019-09-03
+ * @author      Pascal Romahn
+ * @copyright   This program is free software: you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation, either version 3 of the License, or
+ *              (at your option) any later version.
  */
 
 
