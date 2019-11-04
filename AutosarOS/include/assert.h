@@ -1,11 +1,15 @@
 /**
  * @file
- * 
- * @brief   Assert macros and functions.
  *
- * @date    2019-09-02
- * @author  Pascal Romahn
- */ 
+ * @brief       Assert macros and functions.
+ *
+ * @date        2019-09-02
+ * @author      Pascal Romahn
+ * @copyright   This program is free software: you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation, either version 3 of the License, or
+ *              (at your option) any later version.
+ */
 
 
 #ifndef ASSERT_H_
@@ -55,7 +59,7 @@
 *
 * A buffer of the specified size will be created to write the error message
 * into. If the message is longer than the buffer no message will be created.
-* 
+*
 * If not defined no buffer will be created.
 */
 #define ASSERT_BUFFER_SIZE size
@@ -90,7 +94,7 @@
 extern "C" {
 #endif
 
-    extern void __assert(const char* file, const int line, const char* msg);
+extern void __assert(const char* file, const int line, const char* msg);
 
 #ifdef __cplusplus
 }

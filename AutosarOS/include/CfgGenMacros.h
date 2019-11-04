@@ -1,10 +1,14 @@
 /**
  * @file
  *
- * @brief   Macros used for generation of system
+ * @brief       Macros used for generation of system
  *
- * @date    2019-09-02
- * @author  Pascal Romahn
+ * @date        2019-09-02
+ * @author      Pascal Romahn
+ * @copyright   This program is free software: you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation, either version 3 of the License, or
+ *              (at your option) any later version.
  */
 
 /* Undefine already existing defines for generation */
