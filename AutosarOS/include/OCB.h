@@ -47,5 +47,9 @@ extern volatile bool isCat2ISR;
  */
 extern volatile struct task_s* TCB_Cfg[];
 
+/**
+ * @brief   Current system tick
+ */
+extern volatile uint32_t sysTick;
 
 #endif /* OCB_H_ */

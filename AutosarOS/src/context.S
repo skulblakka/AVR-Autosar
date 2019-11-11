@@ -19,7 +19,6 @@ retAddr1:   .skip 2
 tempReg:    .skip 1
 
 .global sysTick
-sysTick:    .skip 4
 
 
 .section .text

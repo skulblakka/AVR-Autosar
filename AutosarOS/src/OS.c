@@ -22,11 +22,6 @@
 /* STATIC VARIABLES                                                     */
 /************************************************************************/
 /**
- * @brief   Current system tick
- */
-static volatile uint32_t sysTick;
-
-/**
  * @brief   Highest priority task in READY state
  */
 static enum tasks_e highestPrioTask;
