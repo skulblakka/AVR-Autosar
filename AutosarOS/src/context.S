@@ -209,6 +209,7 @@ TIMER0_OVF_vect:
     sts     sysTick + 2, r26
     sts     sysTick + 3, r27
 
+    /* Restore work registers r24 to r27 */
     pop     r27
     pop     r26
     pop     r25
