@@ -21,6 +21,16 @@
 #include <stdint.h>
 
 /**
+ * @brief   Stack-Pointer saved in current task control block
+ */
+extern uint8_t* volatile* ptrCurrentStack;
+
+/**
+ * @brief   Function pointer to current task function
+ */
+extern pTaskFxn ptrCurrentFxnAddr;
+
+/**
  * @brief   Save context of current task
  */
 extern void save_context();
@@ -36,15 +46,5 @@ extern void restore_context();
  * This function is used to initialize the context of the current task.
  */
 extern void init_context();
-
-/**
- * @brief   Stack-Pointer saved in current task control block
- */
-extern uint8_t* volatile* ptrCurrentStack;
-
-/**
- * @brief   Function pointer to current task function
- */
-extern pTaskFxn ptrCurrentFxnAddr;
 
 #endif /* CONTEXT_H_ */
