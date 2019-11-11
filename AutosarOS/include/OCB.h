@@ -47,5 +47,17 @@ extern volatile bool isCat2ISR;
  */
 extern volatile struct task_s* TCB_Cfg[];
 
+/**
+ * @brief   Current system tick
+ */
+extern volatile uint32_t sysTick;
+
+/**
+ * @brief   Scheduling needed during timer interrupt
+ *
+ * If set to 0 the system timer will not trigger rescheduling.
+ */
+extern volatile uint8_t needScheduling;
+
 
 #endif /* OCB_H_ */
