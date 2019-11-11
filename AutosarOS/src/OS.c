@@ -111,6 +111,9 @@ extern void __attribute__((naked)) OS_Schedule()
 
         OS_Switch();
 
+        // Reset scheduling state
+        needScheduling = 0;
+
         assert(currentTask != INVALID_TASK);
 
         /* Change task state already to prevent changes to SREG */
@@ -131,6 +134,9 @@ extern void __attribute__((naked)) OS_Schedule()
         // Leave critical section
         EnableAllInterrupts();
     } else {
+        // Reschedule during system timer interrupt
+        needScheduling = 1;
+
         restore_context();
 
         /***********************************************/

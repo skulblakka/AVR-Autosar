@@ -18,6 +18,7 @@
 retAddr1:   .skip 2
 tempReg:    .skip 1
 
+.global needScheduling
 .global sysTick
 
 
@@ -215,10 +216,24 @@ TIMER0_OVF_vect:
     pop     r25
     pop     r24
 
+    /* Test if rescheduling is needed */
+    lds     r0, needScheduling
+    tst     r0
+    breq    noScheduling
+
+    /* Restore r0 and SREG */
     pop     r0
     out     _SFR_IO_ADDR(SREG), r0
     pop     r0
 
     call OS_Schedule
+
+    reti
+
+noScheduling:
+    /* Restore r0 and SREG */
+    pop     r0
+    out     _SFR_IO_ADDR(SREG), r0
+    pop     r0
 
     reti

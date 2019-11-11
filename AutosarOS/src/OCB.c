@@ -16,6 +16,8 @@ volatile bool isISR = false;
 volatile bool isCat2ISR = false;
 
 volatile uint32_t sysTick;
+volatile uint8_t needScheduling;
+
 #define OS_CONFIG_GEN_DATA_STRUCT
 #include "AppCfg.h"
 #undef OS_CONFIG_GEN_DATA_STRUCT
