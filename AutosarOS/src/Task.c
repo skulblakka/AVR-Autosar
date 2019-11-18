@@ -11,6 +11,7 @@
 
 #include "Task.h"
 #include "OS.h"
+#include "assert.h"
 
 extern StatusType OS_ActivateTask(enum tasks_e TaskID)
 {
@@ -18,7 +19,12 @@ extern StatusType OS_ActivateTask(enum tasks_e TaskID)
         return E_OS_ID;
     }
 
-    // TODO: Handle multiple activations
+    if (TCB_Cfg[TaskID]->curNumberOfActivations + 1 > TCB_Cfg[TaskID]->numberOfActivations) {
+        return E_OS_LIMIT;
+    }
+
+    TCB_Cfg[TaskID]->curNumberOfActivations += 1;
+
     if (TCB_Cfg[TaskID]->curState == SUSPENDED) {
         TCB_Cfg[TaskID]->curState = PRE_READY;
     } else if (TCB_Cfg[TaskID]->curState == WAITING) {
@@ -40,11 +46,26 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID)
         return E_OS_ID;
     }
 
-    // TODO: Check for resources on extended error check
-    TCB_Cfg[currentTask]->curState = SUSPENDED;
+    /* Handle multiple activations of chained task */
+    if (TCB_Cfg[TaskID]->curNumberOfActivations + 1 > TCB_Cfg[TaskID]->numberOfActivations && TaskID != currentTask) {
+        return E_OS_LIMIT;
+    }
+
+    TCB_Cfg[TaskID]->curNumberOfActivations += 1;
+
+
+    /* Handle multiple activations of current task */
+    TCB_Cfg[currentTask]->curNumberOfActivations -= 1;
+    assert(TCB_Cfg[currentTask]->curNumberOfActivations >= 0);
+    assert(TCB_Cfg[currentTask]->curNumberOfActivations <= TCB_Cfg[currentTask]->numberOfActivations);
+    if (TCB_Cfg[currentTask]->curNumberOfActivations > 0) {
+        TCB_Cfg[currentTask]->curState = PRE_READY;
+    } else {
+        TCB_Cfg[currentTask]->curState = SUSPENDED;
+    }
+
     currentTask = INVALID_TASK;
 
-    // TODO: Handle multiple activations
     if (TCB_Cfg[TaskID]->curState == SUSPENDED) {
         TCB_Cfg[TaskID]->curState = PRE_READY;
     } else if (TCB_Cfg[TaskID]->curState == WAITING) {
@@ -63,7 +84,16 @@ extern StatusType OS_TerminateTask()
     }
 
     // TODO: Check for resources on extended error check
-    TCB_Cfg[currentTask]->curState = SUSPENDED;
+
+    TCB_Cfg[currentTask]->curNumberOfActivations -= 1;
+    assert(TCB_Cfg[currentTask]->curNumberOfActivations >= 0);
+    assert(TCB_Cfg[currentTask]->curNumberOfActivations <= TCB_Cfg[currentTask]->numberOfActivations);
+    if (TCB_Cfg[currentTask]->curNumberOfActivations > 0) {
+        TCB_Cfg[currentTask]->curState = PRE_READY;
+    } else {
+        TCB_Cfg[currentTask]->curState = SUSPENDED;
+    }
+
     currentTask = INVALID_TASK;
 
     OS_Schedule();
