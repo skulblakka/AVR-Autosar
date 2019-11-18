@@ -56,6 +56,7 @@ struct task_s {
     const pTaskFxn taskFxn;
     uint8_t* context;
     uint8_t curPrio;
+    uint8_t curNumberOfActivations;
     OsTaskState curState;
     uint16_t curStackUse;
     uint16_t maxStackUse;

@@ -47,6 +47,8 @@ TASK(T2)
         if (t++ % 3 == 0) {
             OS_ActivateTask(T3);
         } else if (t == 20) {
+            OS_ChainTask(T2);
+        } else if (t == 30) {
             OS_TerminateTask();
         }
     }
@@ -83,7 +85,9 @@ TASK(T4)
         _delay_ms(1000);
     }
 
-    OS_ChainTask(T5);
+    if (OS_ChainTask(T5) != E_OK) {
+        OS_TerminateTask();
+    }
 }
 
 TASK(T5)

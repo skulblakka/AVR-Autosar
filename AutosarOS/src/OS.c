@@ -78,6 +78,7 @@ extern void OS_StartOS()
     OS_Switch();
     init_context();
     TCB_Cfg[currentTask]->curState = RUNNING;
+    TCB_Cfg[currentTask]->curNumberOfActivations += 1;
 
     OS_StartSysTimer();
 
