@@ -164,9 +164,9 @@
 /* Generate OS Task Control Block */ // TODO: Rename
 #ifdef OS_CONFIG_GEN_TCB
 
-#define OS_CONFIG_TASK_BEGIN                                                                                volatile struct task_s* TCB_Cfg[TASK_COUNT + 1] = {
+#define OS_CONFIG_TASK_BEGIN                                                                                volatile struct task_s* TCB_Cfg[TASK_COUNT] = {
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   &Task##Name##_s,
-#define OS_CONFIG_TASK_END                                                                                  0};
+#define OS_CONFIG_TASK_END                                                                                  };
 
 #define OS_CONFIG_INT_BEGIN
 #define OS_CONFIG_INT_DEF(Name)
