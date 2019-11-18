@@ -83,7 +83,9 @@ TASK(T4)
         _delay_ms(1000);
     }
 
-    OS_ChainTask(T5);
+    if (OS_ChainTask(T5) != E_OK) {
+        OS_TerminateTask();
+    }
 }
 
 TASK(T5)
