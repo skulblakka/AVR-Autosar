@@ -27,8 +27,6 @@ extern StatusType OS_ActivateTask(enum tasks_e TaskID)
 
     if (TCB_Cfg[TaskID]->curState == SUSPENDED) {
         TCB_Cfg[TaskID]->curState = PRE_READY;
-    } else if (TCB_Cfg[TaskID]->curState == WAITING) {
-        TCB_Cfg[TaskID]->curState = READY;
     }
 
     OS_Schedule();
@@ -68,8 +66,6 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID)
 
     if (TCB_Cfg[TaskID]->curState == SUSPENDED) {
         TCB_Cfg[TaskID]->curState = PRE_READY;
-    } else if (TCB_Cfg[TaskID]->curState == WAITING) {
-        TCB_Cfg[TaskID]->curState = READY;
     }
 
     OS_Schedule();
