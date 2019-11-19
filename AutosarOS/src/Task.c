@@ -51,7 +51,6 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID)
 
     TCB_Cfg[TaskID]->curNumberOfActivations += 1;
 
-
     /* Handle multiple activations of current task */
     TCB_Cfg[currentTask]->curNumberOfActivations -= 1;
     assert(TCB_Cfg[currentTask]->curNumberOfActivations >= 0);
