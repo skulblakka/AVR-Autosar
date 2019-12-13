@@ -161,7 +161,7 @@
 
 #endif /* OS_CONFIG_GEN_DATA_STRUCT */
 
-/* Generate OS Task Control Block */ // TODO: Rename
+/* Generate OS Task Control Block */
 #ifdef OS_CONFIG_GEN_TCB
 
 #define OS_CONFIG_TASK_BEGIN                                                                                volatile struct task_s* TCB_Cfg[TASK_COUNT] = {
