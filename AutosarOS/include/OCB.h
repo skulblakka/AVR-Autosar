@@ -17,9 +17,13 @@
 #ifndef OCB_H_
 #define OCB_H_
 
+#include <stddef.h>
+#include <stdint.h>
 #include <stdbool.h>
+
 #include "Types.h"
 #include "TaskTypes.h"
+#include "ResourceTypes.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -58,6 +62,11 @@ extern volatile uint32_t sysTick;
  * If set to 0 the system timer will not trigger rescheduling.
  */
 extern volatile uint8_t needScheduling;
+
+/**
+ * @brief   Current resource control blocks
+ */
+extern volatile struct resource_s* Res_Cfg[];
 
 
 #endif /* OCB_H_ */
