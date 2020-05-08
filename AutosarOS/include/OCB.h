@@ -22,8 +22,6 @@
 #include <stdbool.h>
 
 #include "Types.h"
-#include "TaskTypes.h"
-#include "ResourceTypes.h"
 
 #include <avr/io.h>
 #include <util/delay.h>

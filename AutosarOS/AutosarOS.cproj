@@ -170,19 +170,19 @@
     <Compile Include="include\Resource.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="include\ResourceTypes.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="include\Task.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="include\TaskTypes.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\OCB.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\Types.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types\ResourceTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types\TaskTypes.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
@@ -209,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="include" />
+    <Folder Include="include\Types" />
     <Folder Include="src" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

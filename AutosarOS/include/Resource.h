@@ -16,7 +16,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "ResourceTypes.h"
+#include "Types.h"
 #include "OCB.h"
 
 /**

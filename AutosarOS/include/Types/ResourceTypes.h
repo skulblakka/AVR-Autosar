@@ -1,5 +1,7 @@
 /**
  * @file
+ * 
+ * @brief       Types used for resources
  *
  * @date        2020-04-27
  * @author      Pascal Romahn

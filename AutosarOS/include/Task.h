@@ -14,7 +14,6 @@
 #define TASK_H_
 
 #include "Types.h"
-#include "TaskTypes.h"
 #include "OCB.h"
 
 #include <stdint.h>
