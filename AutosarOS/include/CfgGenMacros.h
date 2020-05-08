@@ -30,12 +30,20 @@
 #ifdef OS_CONFIG_INT_END
 #undef OS_CONFIG_INT_END
 #endif
-
+#ifdef OS_CONFIG_RESOURCE_BEGIN
+#undef OS_CONFIG_RESOURCE_BEGIN
+#endif
+#ifdef OS_CONFIG_RESOURCE_DEF
+#undef OS_CONFIG_RESOURCE_DEF
+#endif
+#ifdef OS_CONFIG_RESOURCE_END
+#undef OS_CONFIG_RESOURCE_END
+#endif
 
 /* Generate documentation */
 #ifdef __DOXYGEN__
 /**
- * @brief   Beginning of Task definitions
+ * @brief   Beginning of task definitions
  */
 #define OS_CONFIG_TASK_BEGIN
 
@@ -55,7 +63,7 @@
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)
 
 /**
- * @brief   Ending of Task definitions
+ * @brief   Ending of task definitions
  */
 #define OS_CONFIG_TASK_END
 
@@ -65,7 +73,7 @@
 #define TASK_COUNT
 
 /**
- * @brief   Beginning of Interrupt definitions
+ * @brief   Beginning of interrupt definitions
  */
 #define OS_CONFIG_INT_BEGIN
 
@@ -79,9 +87,29 @@
 #define OS_CONFIG_INT_DEF(Name)
 
 /**
- * @brief   Ending of Interrupt definitions
+ * @brief   Ending of interrupt definitions
  */
 #define OS_CONFIG_INT_END
+
+/**
+ * @brief   Beginning of resource definitions
+ */
+#define OS_CONFIG_RESOURCE_BEGIN
+
+/**
+ * @brief   Resource definition
+ */
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
+
+/**
+ * @brief   End of resource definitions
+ */
+#define OS_CONFIG_RESOURCE_END
+
+/**
+ * @brief   Count of resources defined
+ */
+#define RESOURCE_COUNT
 
 #endif /* __DOXYGEN__ */
 
@@ -99,6 +127,12 @@
 #define OS_CONFIG_INT_DEF(Name)
 #define OS_CONFIG_INT_END
 
+#define OS_CONFIG_RESOURCE_BEGIN                                                                            enum resources_e {
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)                                                      Name,
+#define OS_CONFIG_RESOURCE_END                                                                              INVALID_RESOURCE};
+
+#define RESOURCE_COUNT  INVALID_RESOURCE
+
 #endif /* OS_CONFIG_GEN_ENUM */
 
 /* Generate function declarations based on config */
@@ -111,6 +145,10 @@
 #define OS_CONFIG_INT_BEGIN
 #define OS_CONFIG_INT_DEF(Name)                                                                             extern void Func ## Name(void);
 #define OS_CONFIG_INT_END
+
+#define OS_CONFIG_RESOURCE_BEGIN
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
+#define OS_CONFIG_RESOURCE_END
 
 #endif /* OS_CONFIG_GEN_FUNC_DECL */
 
@@ -130,6 +168,10 @@
                                                                                                                 isCat2ISR = false; \
                                                                                                             }
 #define OS_CONFIG_INT_END
+
+#define OS_CONFIG_RESOURCE_BEGIN
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
+#define OS_CONFIG_RESOURCE_END
 
 #endif /* OS_CONFIG_GEN_FUNC */
 
@@ -151,13 +193,23 @@
                                                                                                                 .curPrio = Prio, \
                                                                                                                 .curState = SUSPENDED, \
                                                                                                                 .curStackUse = 0, \
-                                                                                                                .maxStackUse = 0 \
+                                                                                                                .maxStackUse = 0, \
+                                                                                                                .resourceQueue = NULL \
                                                                                                             };
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
 #define OS_CONFIG_INT_DEF(Name)
 #define OS_CONFIG_INT_END
+
+#define OS_CONFIG_RESOURCE_BEGIN
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)                                                      volatile struct resource_s Resource##Name##_s = { \
+                                                                                                                .prio = Prio, \
+                                                                                                                .assigned = false, \
+                                                                                                                .isrAllowed = IsrAllowed, \
+                                                                                                                .next = NULL \
+                                                                                                            };
+#define OS_CONFIG_RESOURCE_END
 
 #endif /* OS_CONFIG_GEN_DATA_STRUCT */
 
@@ -171,6 +223,10 @@
 #define OS_CONFIG_INT_BEGIN
 #define OS_CONFIG_INT_DEF(Name)
 #define OS_CONFIG_INT_END
+
+#define OS_CONFIG_RESOURCE_BEGIN                                                                            volatile struct resource_s* Res_Cfg[RESOURCE_COUNT] = {
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)                                                      &Resource##Name##_s,
+#define OS_CONFIG_RESOURCE_END                                                                              };
 
 #endif /* OS_CONFIG_GEN_TCB */
 
