@@ -17,6 +17,7 @@
 
 #include "OCB.h"
 #include "Task.h"
+#include "Resource.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -40,6 +41,14 @@ TASK(T2)
 {
     static uint8_t t = 0;
     while (1) {
+        OS_GetResource(Res1);
+        OS_GetResource(Res2);
+        OS_GetResource(Res3);
+        
+        OS_ReleaseResource(Res3);
+        OS_ReleaseResource(Res2);
+        OS_ReleaseResource(Res1);
+        
         PORTB &= ~(1 << 2);   // turn LED on
         _delay_ms(1000);
         PORTB |= (1 << 2);  // turn LED off
