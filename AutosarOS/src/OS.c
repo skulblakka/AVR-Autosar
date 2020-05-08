@@ -122,7 +122,7 @@ extern void __attribute__((naked)) OS_Schedule()
         TCB_Cfg[currentTask]->curState = RUNNING;
 
         if (prevState == PRE_READY) {
-            TCB_Cfg[currentTask]->context = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize;
+            TCB_Cfg[currentTask]->context = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize - 1;
             init_context();
         } else {
             restore_context();
