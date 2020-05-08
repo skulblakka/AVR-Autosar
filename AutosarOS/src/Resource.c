@@ -18,11 +18,11 @@
 
 extern StatusType OS_GetResource(enum resources_e ResID)
 {
+    if (ResID >= RESOURCE_COUNT) {
+        return E_OS_ID;
+    }
+    
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (ResID >= RESOURCE_COUNT) {
-            return E_OS_ID;
-        }
-
         if (Res_Cfg[ResID]->assigned) {
             return E_OS_ACCESS;
         }
@@ -56,11 +56,11 @@ extern StatusType OS_GetResource(enum resources_e ResID)
 
 extern StatusType OS_ReleaseResource(enum resources_e ResID)
 {
+    if (ResID >= RESOURCE_COUNT) {
+        return E_OS_ID;
+    }
+    
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (ResID >= RESOURCE_COUNT) {
-            return E_OS_ID;
-        }
-
         if (!Res_Cfg[ResID]->assigned) {
             return E_OS_NOFUNC;
         }
