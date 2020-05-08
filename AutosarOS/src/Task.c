@@ -43,6 +43,10 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID)
     if (TaskID >= INVALID_TASK) {
         return E_OS_ID;
     }
+    
+    if (TCB_Cfg[currentTask]->resourceQueue != NULL) { // TODO: Extended error check
+        return E_OS_RESOURCE;
+    }
 
     /* Handle multiple activations of chained task */
     if (TCB_Cfg[TaskID]->curNumberOfActivations + 1 > TCB_Cfg[TaskID]->numberOfActivations && TaskID != currentTask) {
@@ -78,7 +82,9 @@ extern StatusType OS_TerminateTask()
         return E_OS_CALLLEVEL;
     }
 
-    // TODO: Check for resources on extended error check
+    if (TCB_Cfg[currentTask]->resourceQueue != NULL) { // TODO: Extended error check
+        return E_OS_RESOURCE;
+    }
 
     TCB_Cfg[currentTask]->curNumberOfActivations -= 1;
     assert(TCB_Cfg[currentTask]->curNumberOfActivations >= 0);
