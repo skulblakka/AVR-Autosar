@@ -147,7 +147,7 @@
                                                                                                                 .taskType = TaskType, \
                                                                                                                 .taskSchedule = TaskSchedule, \
                                                                                                                 .taskFxn = PTASK(Name), \
-                                                                                                                .context = Task##Name##_stack + StackSize, \
+                                                                                                                .context = Task##Name##_stack + StackSize - 1, \
                                                                                                                 .curPrio = Prio, \
                                                                                                                 .curState = SUSPENDED, \
                                                                                                                 .curStackUse = 0, \
