@@ -34,8 +34,15 @@ extern StatusType OS_GetResource(enum resources_e ResID)
 
         Res_Cfg[ResID]->assigned = true;
         
-        // Set pointer to start of resourceQueue
-        struct resource_s* volatile* resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
+        struct resource_s* volatile* resPtr;
+        
+        if (isCat2ISR) {
+            // Set pointer to start of ISR resourceQueue
+            resPtr = &isrResourceQueue;
+        } else {
+            // Set pointer to start of resourceQueue
+            resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
+        }            
 
         /* Find next empty spot */
         while (*resPtr != NULL) {
@@ -45,10 +52,12 @@ extern StatusType OS_GetResource(enum resources_e ResID)
         // Set requested resource in empty spot found above 
         *resPtr = (struct resource_s*) Res_Cfg[ResID];
 
-        /* Increase current task priority if ceiling priority is higher */
-        if (TCB_Cfg[currentTask]->curPrio < Res_Cfg[ResID]->prio) {
-            TCB_Cfg[currentTask]->curPrio = Res_Cfg[ResID]->prio;
-        }
+        if (!isCat2ISR) {
+            /* Increase current task priority if ceiling priority is higher */
+            if (TCB_Cfg[currentTask]->curPrio < Res_Cfg[ResID]->prio) {
+                TCB_Cfg[currentTask]->curPrio = Res_Cfg[ResID]->prio;
+            }
+        }            
     }
 
     return E_OK;
@@ -70,13 +79,25 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
             return E_OS_ACCESS;
         }
         
-        // Set pointer to start of resourceQueue
-        struct resource_s* volatile* resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
+        uint8_t ceilingPrio;
+        struct resource_s* volatile* resPtr;
         
-        assert(resPtr != NULL);
+        if (isCat2ISR) {
+            // Set pointer to start of ISR resourceQueue and initial ceiling prio to the maximum value
+            resPtr = &isrResourceQueue;
+            ceilingPrio = UINT8_MAX;
+        } else {
+            // Set pointer to start of task resourceQueue and initial ceiling prio to static task prio
+            resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
+            ceilingPrio = TCB_Cfg[currentTask]->prio;
+        }
 
-        /* Find last element in queue */
+        /* Find last element in queue and new ceiling priority */
         while ((*resPtr)->next != NULL) {
+            if (ceilingPrio < (*resPtr)->prio) {
+                ceilingPrio = (*resPtr)->prio;
+            }
+            
             resPtr = &(*resPtr)->next;
         }
         
@@ -89,9 +110,10 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
         
         Res_Cfg[ResID]->assigned = false;
 
-        if (TCB_Cfg[currentTask]->curPrio < Res_Cfg[ResID]->prio) {
-            TCB_Cfg[currentTask]->curPrio = Res_Cfg[ResID]->prio;
-        }
+        if (!isCat2ISR) {
+            // Set new task priority
+            TCB_Cfg[currentTask]->curPrio = ceilingPrio;
+        }        
     }
     
     // Rescheduling might be required because of possible change in priority
