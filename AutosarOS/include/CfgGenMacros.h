@@ -39,6 +39,18 @@
 #ifdef OS_CONFIG_RESOURCE_END
 #undef OS_CONFIG_RESOURCE_END
 #endif
+#ifdef OS_CONFIG_INTERNAL_RESOURCE_BEGIN
+#undef OS_CONFIG_INTERNAL_RESOURCE_BEGIN
+#endif
+#ifdef OS_CONFIG_INTERNAL_RESOURCE_DEF
+#undef OS_CONFIG_INTERNAL_RESOURCE_DEF
+#endif
+#ifdef OS_CONFIG_INTERNAL_RESOURCE_END
+#undef OS_CONFIG_INTERNAL_RESOURCE_END
+#endif
+#ifdef OS_CONFIG_INTERNAL_ASSIGN
+#undef OS_CONFIG_INTERNAL_ASSIGN
+#endif
 
 /* Generate documentation */
 #ifdef __DOXYGEN__
@@ -135,6 +147,10 @@
 #define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)                                                      Name,
 #define OS_CONFIG_RESOURCE_END                                                                              INVALID_RESOURCE};
 
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                   enum internalResources_e {
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         Name,
+#define OS_CONFIG_INTERNAL_RESOURCE_END                                                                     INVALID_INTERNAL_RESOURCE};
+
 #define RESOURCE_COUNT  INVALID_RESOURCE
 
 #endif /* OS_CONFIG_GEN_ENUM */
@@ -153,6 +169,10 @@
 #define OS_CONFIG_RESOURCE_BEGIN
 #define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
 #define OS_CONFIG_RESOURCE_END
+
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
+#define OS_CONFIG_INTERNAL_RESOURCE_END
 
 #endif /* OS_CONFIG_GEN_FUNC_DECL */
 
@@ -176,6 +196,10 @@
 #define OS_CONFIG_RESOURCE_BEGIN
 #define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
 #define OS_CONFIG_RESOURCE_END
+
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
+#define OS_CONFIG_INTERNAL_RESOURCE_END
 
 #endif /* OS_CONFIG_GEN_FUNC */
 
@@ -215,6 +239,13 @@
                                                                                                             };
 #define OS_CONFIG_RESOURCE_END
 
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         volatile struct resource_s IntResource##Name##_s = { \
+                                                                                                                .prio = Prio, \
+                                                                                                                .assigned = false \
+                                                                                                            };
+#define OS_CONFIG_INTERNAL_RESOURCE_END
+
 #endif /* OS_CONFIG_GEN_DATA_STRUCT */
 
 /* Generate OS Task Control Block */
@@ -232,6 +263,10 @@
 #define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)                                                      &Resource##Name##_s,
 #define OS_CONFIG_RESOURCE_END                                                                              };
 
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                   volatile struct resource_s* IntRef_Cfg[] = {
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         &IntResource##Name##_s,
+#define OS_CONFIG_INTERNAL_RESOURCE_END                                                                     };
+
 #endif /* OS_CONFIG_GEN_TCB */
 
 /* Undefine current generation defines */
@@ -243,4 +278,7 @@
 #endif
 #ifdef OS_CONFIG_GEN_DATA_STRUCT
 #undef OS_CONFIG_GEN_DATA_STRUCT
+#endif
+#ifdef OS_CONFIG_GEN_TCB
+#undef OS_CONFIG_GEN_TCB
 #endif
