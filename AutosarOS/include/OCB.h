@@ -26,9 +26,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define OS_CONFIG_GEN_ENUM
-#include "AppCfg.h"
-#undef OS_CONFIG_GEN_ENUM
+
 
 #define OS_CONFIG_GEN_FUNC_DECL
 #include "AppCfg.h"
@@ -70,6 +68,8 @@ extern volatile struct resource_s* Res_Cfg[];
  * @brief   Resource queue for resources taken by Cat2 ISRs
  */
 extern struct resource_s* volatile isrResourceQueue;
+
+extern volatile struct resource_s* const IntRes_Cfg[];
 
 
 #endif /* OCB_H_ */
