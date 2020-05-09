@@ -98,6 +98,10 @@
 
 /**
  * @brief   Resource definition
+ *
+ * @param   Name            Name of resource
+ * @param   Prio            Ceiling priority of resource
+ * @param   IsrAllowed      If true the resource can be used in ISRs; if false the resource can only be used in tasks
  */
 #define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
 

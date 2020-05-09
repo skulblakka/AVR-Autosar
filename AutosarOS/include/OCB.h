@@ -66,5 +66,10 @@ extern volatile uint8_t needScheduling;
  */
 extern volatile struct resource_s* Res_Cfg[];
 
+/**
+ * @brief   Resource queue for resources taken by Cat2 ISRs
+ */
+extern struct resource_s* volatile isrResourceQueue;
+
 
 #endif /* OCB_H_ */
