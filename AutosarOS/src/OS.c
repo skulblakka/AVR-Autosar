@@ -42,6 +42,8 @@ uint8_t* volatile* ptrCurrentStack;
  */
 pTaskFxn ptrCurrentFxnAddr;
 
+bool forceSchedule;
+
 /************************************************************************/
 /* STATIC FUNCTIONS                                                     */
 /************************************************************************/
@@ -102,7 +104,7 @@ extern void __attribute__((naked)) OS_Schedule()
         }
     }
 
-    if (!isISR && (currentTask == INVALID_TASK || TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE)) {
+    if (!isISR && (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceSchedule))) {
         // Enter critical section
         DisableAllInterrupts();
 
@@ -118,6 +120,7 @@ extern void __attribute__((naked)) OS_Schedule()
 
         // Reset scheduling state
         needScheduling = 0;
+        forceSchedule = false;
 
         assert(currentTask != INVALID_TASK);
         

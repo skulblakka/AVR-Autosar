@@ -107,6 +107,26 @@ extern StatusType OS_TerminateTask()
     return E_OK;
 }
 
+extern StatusType Task_Schedule()
+{
+    if (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
+        return E_OK;
+    }
+    
+    if (isISR) { // TODO Extended error check
+        return E_OS_CALLLEVEL;
+    }
+    
+    if (TCB_Cfg[currentTask]->resourceQueue != NULL) { // TODO Extended error check
+        return E_OS_RESOURCE;
+    }
+    
+    forceSchedule = true;
+    OS_Schedule();
+    
+    return E_OK;
+}
+
 extern StatusType OS_GetTaskID(enum tasks_e* TaskID)
 {
     *TaskID = currentTask;
