@@ -28,4 +28,12 @@ struct resource_s {
     bool assigned :1;           /**< If true the resource is currently assigned to a task or ISR */
 };
 
+/**
+ * @brief   Data structure for internal resource
+ */
+struct internalResource_s {
+    const uint8_t prio;         /**< Ceiling priority of resource */
+    bool assigned;              /**< If true the resource is currently assigned to a task */
+};
+
 #endif /* RESOURCETYPES_H_ */
