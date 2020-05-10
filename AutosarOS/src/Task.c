@@ -12,6 +12,7 @@
 #include "Task.h"
 #include "OS.h"
 #include "assert.h"
+#include "Resource.h"
 
 extern StatusType OS_ActivateTask(enum tasks_e TaskID)
 {
@@ -64,6 +65,8 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID)
     } else {
         TCB_Cfg[currentTask]->curState = SUSPENDED;
     }
+    
+    OS_ReleaseInternalResource();
 
     currentTask = INVALID_TASK;
 
@@ -94,6 +97,8 @@ extern StatusType OS_TerminateTask()
     } else {
         TCB_Cfg[currentTask]->curState = SUSPENDED;
     }
+
+    OS_ReleaseInternalResource();
 
     currentTask = INVALID_TASK;
 
