@@ -206,9 +206,6 @@
 /* Generate data structures based on config */
 #ifdef OS_CONFIG_GEN_DATA_STRUCT
 
-//#define (&IntResourceNULL_s) NULL
-struct resource_s* IntResourceNULL_s = NULL;
-
 #define OS_CONFIG_TASK_BEGIN
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   uint8_t Task##Name##_stack[StackSize]; \
                                                                                                             volatile struct task_s Task##Name##_s = { \
@@ -243,7 +240,7 @@ struct resource_s* IntResourceNULL_s = NULL;
                                                                                                             };
 #define OS_CONFIG_RESOURCE_END
 
-#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                   volatile struct resource_s IntResourceNULL_s;
 #define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         volatile struct resource_s IntResource##Name##_s = { \
                                                                                                                 .prio = Prio, \
                                                                                                                 .assigned = false \

@@ -55,7 +55,7 @@ struct task_s {
     const OsTaskType taskType;
     const OsTaskSchedule taskSchedule;
     const pTaskFxn taskFxn;
-    struct resource_s* const internalResource;
+    volatile struct resource_s* const internalResource;
     uint8_t* context;
     uint8_t curPrio;
     uint8_t curNumberOfActivations;
