@@ -69,7 +69,5 @@ extern volatile struct resource_s* Res_Cfg[];
  */
 extern struct resource_s* volatile isrResourceQueue;
 
-extern volatile struct resource_s* const IntRes_Cfg[];
-
 
 #endif /* OCB_H_ */
