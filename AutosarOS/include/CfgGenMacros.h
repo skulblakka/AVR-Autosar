@@ -72,7 +72,7 @@
  *
  * This will create a new task and all required data structures. Each task will need a function TASK(Name).
  */
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)
 
 /**
  * @brief   Ending of task definitions
@@ -134,7 +134,7 @@
 #ifdef OS_CONFIG_GEN_ENUM
 
 #define OS_CONFIG_TASK_BEGIN                                                                                enum tasks_e {
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   Name,
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   Name,
 #define OS_CONFIG_TASK_END                                                                                  INVALID_TASK};
 
 #define TASK_COUNT     INVALID_TASK
@@ -147,11 +147,11 @@
 #define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)                                                      Name,
 #define OS_CONFIG_RESOURCE_END                                                                              INVALID_RESOURCE};
 
-#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                   enum internalResources_e {
-#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         Name,
-#define OS_CONFIG_INTERNAL_RESOURCE_END                                                                     INVALID_INTERNAL_RESOURCE};
-
 #define RESOURCE_COUNT  INVALID_RESOURCE
+
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                   enum internalResources_e { INVALID_INTERNAL_RESOURCE,
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         Name,
+#define OS_CONFIG_INTERNAL_RESOURCE_END                                                                     };
 
 #endif /* OS_CONFIG_GEN_ENUM */
 
@@ -159,7 +159,7 @@
 #ifdef OS_CONFIG_GEN_FUNC_DECL
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   TASK(Name);
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   TASK(Name);
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
@@ -180,7 +180,7 @@
 #ifdef OS_CONFIG_GEN_FUNC
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
@@ -207,7 +207,7 @@
 #ifdef OS_CONFIG_GEN_DATA_STRUCT
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   uint8_t Task##Name##_stack[StackSize]; \
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   uint8_t Task##Name##_stack[StackSize]; \
                                                                                                             volatile struct task_s Task##Name##_s = { \
                                                                                                                 .stack = (uint8_t* const) &Task##Name##_stack, \
                                                                                                                 .stackSize = StackSize, \
@@ -222,7 +222,8 @@
                                                                                                                 .curState = SUSPENDED, \
                                                                                                                 .curStackUse = 0, \
                                                                                                                 .maxStackUse = 0, \
-                                                                                                                .resourceQueue = NULL \
+                                                                                                                .resourceQueue = NULL, \
+                                                                                                                .internalResource = &IntResource##Res##_s, \
                                                                                                             };
 #define OS_CONFIG_TASK_END
 
@@ -239,8 +240,8 @@
                                                                                                             };
 #define OS_CONFIG_RESOURCE_END
 
-#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
-#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         volatile struct resource_s IntResource##Name##_s = { \
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                   volatile struct internalResource_s IntResourceNULL_s;
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         volatile struct internalResource_s IntResource##Name##_s = { \
                                                                                                                 .prio = Prio, \
                                                                                                                 .assigned = false \
                                                                                                             };
@@ -252,7 +253,7 @@
 #ifdef OS_CONFIG_GEN_TCB
 
 #define OS_CONFIG_TASK_BEGIN                                                                                volatile struct task_s* TCB_Cfg[TASK_COUNT] = {
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule)   &Task##Name##_s,
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   &Task##Name##_s,
 #define OS_CONFIG_TASK_END                                                                                  };
 
 #define OS_CONFIG_INT_BEGIN
@@ -263,11 +264,32 @@
 #define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)                                                      &Resource##Name##_s,
 #define OS_CONFIG_RESOURCE_END                                                                              };
 
-#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                   volatile struct resource_s* IntRef_Cfg[] = {
-#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         &IntResource##Name##_s,
-#define OS_CONFIG_INTERNAL_RESOURCE_END                                                                     };
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                 
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                  
+#define OS_CONFIG_INTERNAL_RESOURCE_END                                                                 
 
 #endif /* OS_CONFIG_GEN_TCB */
+
+#ifdef OS_CONFIG_GEN_RES
+
+#define OS_CONFIG_TASK_BEGIN                                                                                
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   
+#define OS_CONFIG_TASK_END                                                                                  
+
+#define OS_CONFIG_INT_BEGIN
+#define OS_CONFIG_INT_DEF(Name)
+#define OS_CONFIG_INT_END
+
+#define OS_CONFIG_RESOURCE_BEGIN
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
+#define OS_CONFIG_RESOURCE_END
+
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
+#define OS_CONFIG_INTERNAL_RESOURCE_END
+
+#endif
+
 
 /* Undefine current generation defines */
 #ifdef OS_CONFIG_GEN_ENUM

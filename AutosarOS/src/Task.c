@@ -12,6 +12,7 @@
 #include "Task.h"
 #include "OS.h"
 #include "assert.h"
+#include "Resource.h"
 
 extern StatusType OS_ActivateTask(enum tasks_e TaskID)
 {
@@ -64,6 +65,8 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID)
     } else {
         TCB_Cfg[currentTask]->curState = SUSPENDED;
     }
+    
+    OS_ReleaseInternalResource();
 
     currentTask = INVALID_TASK;
 
@@ -95,10 +98,32 @@ extern StatusType OS_TerminateTask()
         TCB_Cfg[currentTask]->curState = SUSPENDED;
     }
 
+    OS_ReleaseInternalResource();
+
     currentTask = INVALID_TASK;
 
     OS_Schedule();
 
+    return E_OK;
+}
+
+extern StatusType Task_Schedule()
+{
+    if (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
+        return E_OK;
+    }
+    
+    if (isISR) { // TODO Extended error check
+        return E_OS_CALLLEVEL;
+    }
+    
+    if (TCB_Cfg[currentTask]->resourceQueue != NULL) { // TODO Extended error check
+        return E_OS_RESOURCE;
+    }
+    
+    forceSchedule = true;
+    OS_Schedule();
+    
     return E_OK;
 }
 

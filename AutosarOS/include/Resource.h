@@ -53,5 +53,19 @@ extern StatusType OS_GetResource(enum resources_e ResID);
  */
 extern StatusType OS_ReleaseResource(enum resources_e ResID);
 
+/**
+ * @brief   Get internal resource of the current task if one is assigned
+ *
+ * @warning This function should only be called with interrupts disabled!
+ */
+extern void OS_GetInternalResource();
+
+/**
+ * @brief   Release internal resource of the current task if one is assigned
+ * 
+ * @warning This function should only be called with interrupts disabled!
+ */
+extern void OS_ReleaseInternalResource();
+
 
 #endif /* RESOURCE_H_ */

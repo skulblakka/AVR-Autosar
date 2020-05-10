@@ -121,3 +121,40 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
 
     return E_OK;
 }
+
+extern void OS_GetInternalResource()
+{
+    if (TCB_Cfg[currentTask]->internalResource != INVALID_INTERNAL_RESOURCE) {
+        TCB_Cfg[currentTask]->internalResource->assigned = true;
+
+        if (TCB_Cfg[currentTask]->curPrio < TCB_Cfg[currentTask]->internalResource->prio) {
+            TCB_Cfg[currentTask]->curPrio = TCB_Cfg[currentTask]->internalResource->prio;
+        }
+    }
+}
+
+extern void OS_ReleaseInternalResource()
+{
+    if (TCB_Cfg[currentTask]->internalResource != INVALID_INTERNAL_RESOURCE) {
+        TCB_Cfg[currentTask]->internalResource->assigned = false;
+
+        // Reset task priority
+        TCB_Cfg[currentTask]->curPrio = TCB_Cfg[currentTask]->prio;
+
+        uint8_t ceilingPrio = TCB_Cfg[currentTask]->prio;
+        struct resource_s* volatile* resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
+
+        /* Find ceiling priority */
+        while ((*resPtr)->next != NULL) {
+            if (ceilingPrio < (*resPtr)->prio) {
+                ceilingPrio = (*resPtr)->prio;
+            }
+
+            resPtr = &(*resPtr)->next;
+        }
+
+        // Set new task priority
+        TCB_Cfg[currentTask]->curPrio = ceilingPrio;
+
+    }
+}

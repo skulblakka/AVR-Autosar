@@ -61,6 +61,21 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID);
 extern StatusType OS_TerminateTask();
 
 /**
+ * @brief   Reschedule current task
+ *
+ * If a higher priority task is ready it will be executed. Otherwise the calling task is continued. This allows a 
+ * processor assignment to other tasks with lower or equal priority than the ceiling priority of the current task.
+ * 
+ * This service has no influence on preemptive tasks with no internal resource.
+ * 
+ * @return  E_OK            No error \n
+ *          E_OS_RESOURCE   Task still occupies resources \n
+ *          E_OS_CALLLEVEL  Call at interrupt level
+ *
+ */
+extern StatusType Task_Schedule();
+
+/**
  * @brief   Return the ID of the task currently running
  *
  * @param   TaskID  Reference of the task currently running. INVALID_TASK if no task is in running state.

@@ -92,6 +92,8 @@ TASK(T3)
         _delay_ms(1000);
         PORTB |= (1 << 3);  // turn LED off
         _delay_ms(1000);
+        
+        Task_Schedule();
     }
 
     enum tasks_e taskID = INVALID_TASK;
