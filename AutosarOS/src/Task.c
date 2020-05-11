@@ -121,6 +121,8 @@ extern StatusType Task_Schedule()
         return E_OS_RESOURCE;
     }
     
+    OS_ReleaseInternalResource();
+    
     forceSchedule = true;
     OS_Schedule();
     

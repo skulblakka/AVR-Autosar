@@ -112,8 +112,6 @@ extern void __attribute__((naked)) OS_Schedule()
             if (TCB_Cfg[currentTask]->curState == RUNNING) {
                 TCB_Cfg[currentTask]->curState = READY;
             }
-            
-            OS_ReleaseInternalResource();
         }
 
         OS_Switch();
