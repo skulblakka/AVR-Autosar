@@ -130,6 +130,24 @@
  */
 #define RESOURCE_COUNT
 
+/**
+ * @brief   Beginning of internal resource definitions
+ */
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
+
+/**
+ * @brief   Internal resource definition
+ *
+ * @param   Name            Name of the resource
+ * @param   Prio            Ceiling priority of the resource
+ */
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
+
+/**
+ * @brief   End of internal resource definitions
+ */
+#define OS_CONFIG_INTERNAL_RESOURCE_END
+
 #endif /* __DOXYGEN__ */
 
 
