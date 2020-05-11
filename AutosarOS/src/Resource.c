@@ -89,9 +89,16 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
             resPtr = &isrResourceQueue;
             ceilingPrio = UINT8_MAX;
         } else {
-            // Set pointer to start of task resourceQueue and initial ceiling prio to static task prio
+            // Set pointer to start of task resourceQueue
             resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
-            ceilingPrio = TCB_Cfg[currentTask]->prio;
+            
+            if (TCB_Cfg[currentTask]->internalResource == INVALID_INTERNAL_RESOURCE) {
+                // Set intial prio to static task prio
+                ceilingPrio = TCB_Cfg[currentTask]->prio;
+            } else {
+                // Set intial prio to prio of internal resource
+                ceilingPrio = TCB_Cfg[currentTask]->internalResource->prio;
+            }
         }
 
         /* Find last element in queue and new ceiling priority */
