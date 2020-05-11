@@ -91,11 +91,11 @@
 
 /**
  * @brief   Interrupt definition
- * 
+ *
  * Define an interrupt service routine. The #Name must correspond to an interrupt vector of the processor.
  * The priority is only used for resource management and does not correspond to the priorities used
- * in handling the interrupt vectors. 
- * 
+ * in handling the interrupt vectors.
+ *
  * If the interrupt is triggered and the currently executed task has a higher priority the ISR will not be executed.
  *
  * @param   Name    Name of the interrupt
@@ -139,9 +139,9 @@
 /* Generate enumerations based on config */
 #ifdef OS_CONFIG_GEN_ENUM
 
-#define OS_CONFIG_TASK_BEGIN                                                                                enum tasks_e {
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   Name,
-#define OS_CONFIG_TASK_END                                                                                  INVALID_TASK};
+#define OS_CONFIG_TASK_BEGIN                                                                                    enum tasks_e {
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)  Name,
+#define OS_CONFIG_TASK_END                                                                                      INVALID_TASK};
 
 #define TASK_COUNT     INVALID_TASK
 
@@ -149,15 +149,15 @@
 #define OS_CONFIG_INT_DEF(Name, Prio)
 #define OS_CONFIG_INT_END
 
-#define OS_CONFIG_RESOURCE_BEGIN                                                                            enum resources_e {
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                      Name,
-#define OS_CONFIG_RESOURCE_END                                                                              INVALID_RESOURCE};
+#define OS_CONFIG_RESOURCE_BEGIN                                                                                enum resources_e {
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                                      Name,
+#define OS_CONFIG_RESOURCE_END                                                                                  INVALID_RESOURCE};
 
 #define RESOURCE_COUNT  INVALID_RESOURCE
 
-#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                   enum internalResources_e { INVALID_INTERNAL_RESOURCE,
-#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         Name,
-#define OS_CONFIG_INTERNAL_RESOURCE_END                                                                     };
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                       enum internalResources_e { INVALID_INTERNAL_RESOURCE,
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                             Name,
+#define OS_CONFIG_INTERNAL_RESOURCE_END                                                                         };
 
 #endif /* OS_CONFIG_GEN_ENUM */
 
@@ -165,11 +165,11 @@
 #ifdef OS_CONFIG_GEN_FUNC_DECL
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   TASK(Name);
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)  TASK(Name);
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name, Prio)                                                                        extern void Func ## Name(void);
+#define OS_CONFIG_INT_DEF(Name, Prio)                                                                           extern void Func ## Name(void);
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
@@ -190,15 +190,15 @@
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name, Prio)                                                                       ISR(Name) { \
-                                                                                                                isISR = true; \
-                                                                                                                isCat2ISR = Prio; \
-                                                                                                                assertMsg(isCat2ISR == 0, "ISR prio may not be 0"); \
-                                                                                                                if (currentTask == INVALID_TASK || Prio > TCB_Cfg[currentTask]->curPrio) \
-                                                                                                                    Func ## Name(); \
-                                                                                                                isISR = false; \
-                                                                                                                isCat2ISR = 0; \
-                                                                                                            }
+#define OS_CONFIG_INT_DEF(Name, Prio)                                                                           ISR(Name) { \
+                                                                                                                    isISR = true; \
+                                                                                                                    isCat2ISR = Prio; \
+                                                                                                                    assertMsg(isCat2ISR == 0, "ISR prio may not be 0"); \
+                                                                                                                    if (currentTask == INVALID_TASK || Prio > TCB_Cfg[currentTask]->curPrio) \
+                                                                                                                        Func ## Name(); \
+                                                                                                                    isISR = false; \
+                                                                                                                    isCat2ISR = 0; \
+                                                                                                                }
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
@@ -215,24 +215,24 @@
 #ifdef OS_CONFIG_GEN_DATA_STRUCT
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   uint8_t Task##Name##_stack[StackSize]; \
-                                                                                                            volatile struct task_s Task##Name##_s = { \
-                                                                                                                .stack = (uint8_t* const) &Task##Name##_stack, \
-                                                                                                                .stackSize = StackSize, \
-                                                                                                                .prio = Prio, \
-                                                                                                                .numberOfActivations = NumberOfActivations, \
-                                                                                                                .autostart = Autostart, \
-                                                                                                                .taskType = TaskType, \
-                                                                                                                .taskSchedule = TaskSchedule, \
-                                                                                                                .taskFxn = PTASK(Name), \
-                                                                                                                .context = Task##Name##_stack + StackSize - 1, \
-                                                                                                                .curPrio = Prio, \
-                                                                                                                .curState = SUSPENDED, \
-                                                                                                                .curStackUse = 0, \
-                                                                                                                .maxStackUse = 0, \
-                                                                                                                .resourceQueue = NULL, \
-                                                                                                                .internalResource = &IntResource##Res##_s, \
-                                                                                                            };
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)  uint8_t Task##Name##_stack[StackSize]; \
+                                                                                                                volatile struct task_s Task##Name##_s = { \
+                                                                                                                    .stack = (uint8_t* const) &Task##Name##_stack, \
+                                                                                                                    .stackSize = StackSize, \
+                                                                                                                    .prio = Prio, \
+                                                                                                                    .numberOfActivations = NumberOfActivations, \
+                                                                                                                    .autostart = Autostart, \
+                                                                                                                    .taskType = TaskType, \
+                                                                                                                    .taskSchedule = TaskSchedule, \
+                                                                                                                    .taskFxn = PTASK(Name), \
+                                                                                                                    .context = Task##Name##_stack + StackSize - 1, \
+                                                                                                                    .curPrio = Prio, \
+                                                                                                                    .curState = SUSPENDED, \
+                                                                                                                    .curStackUse = 0, \
+                                                                                                                    .maxStackUse = 0, \
+                                                                                                                    .resourceQueue = NULL, \
+                                                                                                                    .internalResource = &IntResource##Res##_s, \
+                                                                                                                };
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
@@ -240,18 +240,18 @@
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                      volatile struct resource_s Resource##Name##_s = { \
-                                                                                                                .prio = Prio, \
-                                                                                                                .assigned = false, \
-                                                                                                                .next = NULL \
-                                                                                                            };
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                                      volatile struct resource_s Resource##Name##_s = { \
+                                                                                                                    .prio = Prio, \
+                                                                                                                    .assigned = false, \
+                                                                                                                    .next = NULL \
+                                                                                                                };
 #define OS_CONFIG_RESOURCE_END
 
-#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                   volatile struct internalResource_s IntResourceNULL_s;
-#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                         volatile struct internalResource_s IntResource##Name##_s = { \
-                                                                                                                .prio = Prio, \
-                                                                                                                .assigned = false \
-                                                                                                            };
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                       volatile struct internalResource_s IntResourceNULL_s;
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                             volatile struct internalResource_s IntResource##Name##_s = { \
+                                                                                                                    .prio = Prio, \
+                                                                                                                    .assigned = false \
+                                                                                                                };
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
 #endif /* OS_CONFIG_GEN_DATA_STRUCT */
@@ -259,21 +259,21 @@
 /* Generate OS Task Control Block */
 #ifdef OS_CONFIG_GEN_TCB
 
-#define OS_CONFIG_TASK_BEGIN                                                                                volatile struct task_s* TCB_Cfg[TASK_COUNT] = {
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   &Task##Name##_s,
-#define OS_CONFIG_TASK_END                                                                                  };
+#define OS_CONFIG_TASK_BEGIN                                                                                    volatile struct task_s* TCB_Cfg[TASK_COUNT] = {
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)  &Task##Name##_s,
+#define OS_CONFIG_TASK_END                                                                                      };
 
 #define OS_CONFIG_INT_BEGIN
 #define OS_CONFIG_INT_DEF(Name, Prio)
 #define OS_CONFIG_INT_END
 
-#define OS_CONFIG_RESOURCE_BEGIN                                                                            volatile struct resource_s* Res_Cfg[RESOURCE_COUNT] = {
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                      &Resource##Name##_s,
-#define OS_CONFIG_RESOURCE_END                                                                              };
+#define OS_CONFIG_RESOURCE_BEGIN                                                                                volatile struct resource_s* Res_Cfg[RESOURCE_COUNT] = {
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                                      &Resource##Name##_s,
+#define OS_CONFIG_RESOURCE_END                                                                                  };
 
-#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                 
-#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                  
-#define OS_CONFIG_INTERNAL_RESOURCE_END                                                                 
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
+#define OS_CONFIG_INTERNAL_RESOURCE_END
 
 #endif /* OS_CONFIG_GEN_TCB */
 
