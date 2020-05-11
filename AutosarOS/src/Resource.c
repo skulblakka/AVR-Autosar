@@ -28,7 +28,7 @@ extern StatusType OS_GetResource(enum resources_e ResID)
         }
 
         if ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio)
-                || (isCat2ISR && curIsrPrio > Res_Cfg[ResID]->prio)) { // TODO Extended error check
+                || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio)) { // TODO Extended error check
             // Prio of requested resource is lower than static prio of calling task or ISR
             return E_OS_ACCESS;
         }
@@ -76,7 +76,7 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
         }
 
         if ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio) 
-                || (isCat2ISR && curIsrPrio > Res_Cfg[ResID]->prio)) { // TODO Extended error check
+                || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio)) { // TODO Extended error check
             // Prio of requested resource is lower than static prio of calling task or ISR
             return E_OS_ACCESS;
         }

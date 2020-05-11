@@ -192,13 +192,12 @@
 #define OS_CONFIG_INT_BEGIN
 #define OS_CONFIG_INT_DEF(Name, Prio)                                                                       ISR(Name) { \
                                                                                                                 isISR = true; \
-                                                                                                                isCat2ISR = true; \
-                                                                                                                curIsrPrio = Prio; \
-                                                                                                                assertMsg(curIsrPrio == 0, "ISR prio may not be 0"); \
+                                                                                                                isCat2ISR = Prio; \
+                                                                                                                assertMsg(isCat2ISR == 0, "ISR prio may not be 0"); \
                                                                                                                 if (currentTask == INVALID_TASK || Prio > TCB_Cfg[currentTask]->curPrio) \
                                                                                                                     Func ## Name(); \
                                                                                                                 isISR = false; \
-                                                                                                                isCat2ISR = false; \
+                                                                                                                isCat2ISR = 0; \
                                                                                                             }
 #define OS_CONFIG_INT_END
 

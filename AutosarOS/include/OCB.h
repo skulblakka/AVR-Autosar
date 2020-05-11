@@ -38,9 +38,9 @@
 extern volatile bool isISR;
 
 /**
- * @brief   Is currently Cat 2 ISR context?
+ * @brief   Priority of current Cat 2 ISR (zero if not in Cat 2 ISR)
  */
-extern volatile bool isCat2ISR;
+extern volatile uint8_t isCat2ISR;
 
 /**
  * @brief   Current task control blocks
@@ -68,11 +68,6 @@ extern volatile struct resource_s* Res_Cfg[];
  * @brief   Resource queue for resources taken by Cat2 ISRs
  */
 extern struct resource_s* volatile isrResourceQueue;
-
-/**
- * @brief   Statically assigned priority of current Cat ISR
- */
-extern volatile uint8_t curIsrPrio;
 
 
 #endif /* OCB_H_ */
