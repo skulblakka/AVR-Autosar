@@ -10,6 +10,8 @@
  */
 
 #include "OCB.h"
+#include "OS.h"
+#include "assert.h"
 #include <avr/interrupt.h>
 
 volatile bool isISR = false;
@@ -19,6 +21,8 @@ volatile uint32_t sysTick;
 volatile uint8_t needScheduling;
 
 struct resource_s* volatile isrResourceQueue = NULL;
+
+volatile uint8_t curIsrPrio;
 
 #define OS_CONFIG_GEN_DATA_STRUCT
 #include "AppCfg.h"

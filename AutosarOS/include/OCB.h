@@ -69,5 +69,10 @@ extern volatile struct resource_s* Res_Cfg[];
  */
 extern struct resource_s* volatile isrResourceQueue;
 
+/**
+ * @brief   Statically assigned priority of current Cat ISR
+ */
+extern volatile uint8_t curIsrPrio;
+
 
 #endif /* OCB_H_ */

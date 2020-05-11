@@ -91,12 +91,19 @@
 
 /**
  * @brief   Interrupt definition
+ * 
+ * Define an interrupt service routine. The #Name must correspond to an interrupt vector of the processor.
+ * The priority is only used for resource management and does not correspond to the priorities used
+ * in handling the interrupt vectors. 
+ * 
+ * If the interrupt is triggered and the currently executed task has a higher priority the ISR will not be executed.
  *
  * @param   Name    Name of the interrupt
+ * @param   Prio    Priority of the interrupt
  *
  * This will create a new interrupt and declare its ISR. Each interrupt will need a function ISR(Name).
  */
-#define OS_CONFIG_INT_DEF(Name)
+#define OS_CONFIG_INT_DEF(Name, Prio)
 
 /**
  * @brief   Ending of interrupt definitions
@@ -140,7 +147,7 @@
 #define TASK_COUNT     INVALID_TASK
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name)
+#define OS_CONFIG_INT_DEF(Name, Prio)
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN                                                                            enum resources_e {
@@ -163,7 +170,7 @@
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name)                                                                             extern void Func ## Name(void);
+#define OS_CONFIG_INT_DEF(Name, Prio)                                                                        extern void Func ## Name(void);
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
@@ -184,10 +191,13 @@
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name)                                                                             ISR(Name) { \
+#define OS_CONFIG_INT_DEF(Name, Prio)                                                                       ISR(Name) { \
                                                                                                                 isISR = true; \
                                                                                                                 isCat2ISR = true; \
-                                                                                                                Func ## Name(); \
+                                                                                                                curIsrPrio = Prio; \
+                                                                                                                assertMsg(curIsrPrio == 0, "ISR prio may not be 0"); \
+                                                                                                                if (currentTask == INVALID_TASK || Prio > TCB_Cfg[currentTask]->curPrio) \
+                                                                                                                    Func ## Name(); \
                                                                                                                 isISR = false; \
                                                                                                                 isCat2ISR = false; \
                                                                                                             }
@@ -228,7 +238,7 @@
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name)
+#define OS_CONFIG_INT_DEF(Name, Prio)
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
@@ -257,7 +267,7 @@
 #define OS_CONFIG_TASK_END                                                                                  };
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name)
+#define OS_CONFIG_INT_DEF(Name, Prio)
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN                                                                            volatile struct resource_s* Res_Cfg[RESOURCE_COUNT] = {
@@ -277,7 +287,7 @@
 #define OS_CONFIG_TASK_END                                                                                  
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name)
+#define OS_CONFIG_INT_DEF(Name, Prio)
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
