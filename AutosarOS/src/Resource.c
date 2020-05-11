@@ -93,10 +93,10 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
             resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
             
             if (TCB_Cfg[currentTask]->internalResource == INVALID_INTERNAL_RESOURCE) {
-                // Set intial prio to static task prio
+                // Set initial prio to static task prio
                 ceilingPrio = TCB_Cfg[currentTask]->prio;
             } else {
-                // Set intial prio to prio of internal resource
+                // Set initial prio to prio of internal resource
                 ceilingPrio = TCB_Cfg[currentTask]->internalResource->prio;
             }
         }
