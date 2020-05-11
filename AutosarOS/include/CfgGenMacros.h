@@ -120,9 +120,8 @@
  *
  * @param   Name            Name of resource
  * @param   Prio            Ceiling priority of resource
- * @param   IsrAllowed      If true the resource can be used in ISRs; if false the resource can only be used in tasks
  */
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)
 
 /**
  * @brief   End of resource definitions
@@ -151,7 +150,7 @@
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN                                                                            enum resources_e {
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)                                                      Name,
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                      Name,
 #define OS_CONFIG_RESOURCE_END                                                                              INVALID_RESOURCE};
 
 #define RESOURCE_COUNT  INVALID_RESOURCE
@@ -174,7 +173,7 @@
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)
 #define OS_CONFIG_RESOURCE_END
 
 #define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
@@ -204,7 +203,7 @@
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)
 #define OS_CONFIG_RESOURCE_END
 
 #define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
@@ -242,10 +241,9 @@
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)                                                      volatile struct resource_s Resource##Name##_s = { \
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                      volatile struct resource_s Resource##Name##_s = { \
                                                                                                                 .prio = Prio, \
                                                                                                                 .assigned = false, \
-                                                                                                                .isrAllowed = IsrAllowed, \
                                                                                                                 .next = NULL \
                                                                                                             };
 #define OS_CONFIG_RESOURCE_END
@@ -271,7 +269,7 @@
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN                                                                            volatile struct resource_s* Res_Cfg[RESOURCE_COUNT] = {
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)                                                      &Resource##Name##_s,
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                      &Resource##Name##_s,
 #define OS_CONFIG_RESOURCE_END                                                                              };
 
 #define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                 

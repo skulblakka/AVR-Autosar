@@ -23,9 +23,8 @@
  */
 struct resource_s {
     const uint8_t prio;         /**< Ceiling priority of resource */
+    bool assigned;              /**< If true the resource is currently assigned to a task or ISR */
     struct resource_s* next;    /**< Pointer to next resource in resource queue */
-    const bool isrAllowed :1;   /**< If true the resource can be requested by ISRs */
-    bool assigned :1;           /**< If true the resource is currently assigned to a task or ISR */
 };
 
 /**
