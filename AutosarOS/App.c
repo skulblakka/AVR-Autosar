@@ -40,6 +40,9 @@ TASK(T1)
 TASK(T2)
 {
     static uint8_t t = 0;
+    
+    OS_ActivateTask(T6);
+    
     while (1) {
         StatusType stat;
         
@@ -129,6 +132,18 @@ TASK(T5)
         PORTB &= ~(1 << 5);   // turn LED on
         _delay_ms(1000);
         PORTB |= (1 << 5);  // turn LED off
+        _delay_ms(1000);
+    }
+
+    OS_TerminateTask();
+}
+
+TASK(T6)
+{
+    for (uint8_t i = 0; i < 3; i++) {
+        PORTB &= ~(1 << 6);   // turn LED on
+        _delay_ms(1000);
+        PORTB |= (1 << 6);  // turn LED off
         _delay_ms(1000);
     }
 
