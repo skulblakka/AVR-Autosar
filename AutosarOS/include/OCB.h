@@ -26,9 +26,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define OS_CONFIG_GEN_ENUM
-#include "AppCfg.h"
-#undef OS_CONFIG_GEN_ENUM
+
 
 #define OS_CONFIG_GEN_FUNC_DECL
 #include "AppCfg.h"

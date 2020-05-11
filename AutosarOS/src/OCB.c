@@ -31,3 +31,7 @@ struct resource_s* volatile isrResourceQueue = NULL;
 #define OS_CONFIG_GEN_FUNC
 #include "AppCfg.h"
 #undef OS_CONFIG_GEN_FUNC
+
+#define OS_CONFIG_GEN_RES
+#include "AppCfg.h"
+#undef OS_CONFIG_GEN_RES

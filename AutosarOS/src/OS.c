@@ -10,10 +10,11 @@
  */
 
 #include "OS.h"
-#include "Task.h"
 #include "OCB.h"
 #include "assert.h"
 #include "context.h"
+#include "Task.h"
+#include "Resource.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -40,6 +41,8 @@ uint8_t* volatile* ptrCurrentStack;
  * @brief   Function pointer to current task function
  */
 pTaskFxn ptrCurrentFxnAddr;
+
+bool forceSchedule;
 
 /************************************************************************/
 /* STATIC FUNCTIONS                                                     */
@@ -79,6 +82,7 @@ extern void OS_StartOS()
     init_context();
     TCB_Cfg[currentTask]->curState = RUNNING;
     TCB_Cfg[currentTask]->curNumberOfActivations += 1;
+    OS_GetInternalResource();
 
     OS_StartSysTimer();
 
@@ -100,7 +104,7 @@ extern void __attribute__((naked)) OS_Schedule()
         }
     }
 
-    if (!isISR && (currentTask == INVALID_TASK || TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE)) {
+    if (!isISR && (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceSchedule))) {
         // Enter critical section
         DisableAllInterrupts();
 
@@ -108,14 +112,19 @@ extern void __attribute__((naked)) OS_Schedule()
             if (TCB_Cfg[currentTask]->curState == RUNNING) {
                 TCB_Cfg[currentTask]->curState = READY;
             }
+            
+            OS_ReleaseInternalResource();
         }
 
         OS_Switch();
 
         // Reset scheduling state
         needScheduling = 0;
+        forceSchedule = false;
 
         assert(currentTask != INVALID_TASK);
+        
+        OS_GetInternalResource();
 
         /* Change task state already to prevent changes to SREG */
         OsTaskState prevState = TCB_Cfg[currentTask]->curState;
