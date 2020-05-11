@@ -159,7 +159,7 @@ extern void StartupHook()
 
 ISR(INT0_vect)
 {
-    assert(isISR == true && isCat2ISR == true);
+    assert(isISR && isCat2ISR);
     OS_ActivateTask(T4);
     
     OS_GetResource(Res1);
@@ -173,6 +173,6 @@ ISR(INT0_vect)
 
 ISR(INT1_vect)
 {
-    assert(isISR == true && isCat2ISR == true);
+    assert(isISR && isCat2ISR);
     OS_ActivateTask(T5);
 }
