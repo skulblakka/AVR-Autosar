@@ -48,9 +48,6 @@
 #ifdef OS_CONFIG_INTERNAL_RESOURCE_END
 #undef OS_CONFIG_INTERNAL_RESOURCE_END
 #endif
-#ifdef OS_CONFIG_INTERNAL_ASSIGN
-#undef OS_CONFIG_INTERNAL_ASSIGN
-#endif
 
 /* Generate documentation */
 #ifdef __DOXYGEN__
