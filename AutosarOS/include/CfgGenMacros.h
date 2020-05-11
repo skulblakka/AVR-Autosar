@@ -278,26 +278,6 @@
 
 #endif /* OS_CONFIG_GEN_TCB */
 
-#ifdef OS_CONFIG_GEN_RES
-
-#define OS_CONFIG_TASK_BEGIN                                                                                
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)   
-#define OS_CONFIG_TASK_END                                                                                  
-
-#define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name, Prio)
-#define OS_CONFIG_INT_END
-
-#define OS_CONFIG_RESOURCE_BEGIN
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio, IsrAllowed)
-#define OS_CONFIG_RESOURCE_END
-
-#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
-#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
-#define OS_CONFIG_INTERNAL_RESOURCE_END
-
-#endif
-
 
 /* Undefine current generation defines */
 #ifdef OS_CONFIG_GEN_ENUM
