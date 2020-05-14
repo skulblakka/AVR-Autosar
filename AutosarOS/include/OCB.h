@@ -69,5 +69,10 @@ extern volatile struct resource_s* Res_Cfg[];
  */
 extern struct resource_s* volatile isrResourceQueue;
 
+/**
+ * @brief   Internal resource for tasks with no internal resource defined
+ */
+extern volatile struct internalResource_s IntResourceNULL_s;
+
 
 #endif /* OCB_H_ */

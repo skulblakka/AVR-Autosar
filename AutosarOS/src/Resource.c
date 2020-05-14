@@ -92,7 +92,7 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
             // Set pointer to start of task resourceQueue
             resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
             
-            if (TCB_Cfg[currentTask]->internalResource == INVALID_INTERNAL_RESOURCE) {
+            if (TCB_Cfg[currentTask]->internalResource == &IntResourceNULL_s) {
                 // Set initial prio to static task prio
                 ceilingPrio = TCB_Cfg[currentTask]->prio;
             } else {
@@ -133,7 +133,9 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
 
 extern void OS_GetInternalResource()
 {
-    if (TCB_Cfg[currentTask]->internalResource != INVALID_INTERNAL_RESOURCE) {
+    if (TCB_Cfg[currentTask]->internalResource != &IntResourceNULL_s) {
+        assert(TCB_Cfg[currentTask]->internalResource->prio >= TCB_Cfg[currentTask]->prio);
+        
         TCB_Cfg[currentTask]->internalResource->assigned = true;
 
         if (TCB_Cfg[currentTask]->curPrio < TCB_Cfg[currentTask]->internalResource->prio) {
@@ -144,7 +146,9 @@ extern void OS_GetInternalResource()
 
 extern void OS_ReleaseInternalResource()
 {
-    if (TCB_Cfg[currentTask]->internalResource != INVALID_INTERNAL_RESOURCE) {
+    if (TCB_Cfg[currentTask]->internalResource != &IntResourceNULL_s) {
+        assert(TCB_Cfg[currentTask]->internalResource->assigned == true);
+        
         TCB_Cfg[currentTask]->internalResource->assigned = false;
 
         // Reset task priority
