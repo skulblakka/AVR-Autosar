@@ -170,9 +170,9 @@
 
 #define RESOURCE_COUNT  INVALID_RESOURCE
 
-#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                       enum internalResources_e { INVALID_INTERNAL_RESOURCE,
-#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                             Name,
-#define OS_CONFIG_INTERNAL_RESOURCE_END                                                                         };
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
+#define OS_CONFIG_INTERNAL_RESOURCE_END
 
 #endif /* OS_CONFIG_GEN_ENUM */
 
