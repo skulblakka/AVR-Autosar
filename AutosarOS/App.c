@@ -17,6 +17,7 @@
 
 #include "OCB.h"
 #include "Task.h"
+#include "Resource.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -39,7 +40,40 @@ TASK(T1)
 TASK(T2)
 {
     static uint8_t t = 0;
+    
+    OS_ActivateTask(T6);
+    
     while (1) {
+        StatusType stat;
+        
+        /* These tests should succeed */
+        stat = OS_GetResource(Res1);
+        assert(stat == E_OK);
+        stat = OS_GetResource(Res2);
+        assert(stat == E_OK);
+        stat = OS_GetResource(Res3);
+        assert(stat == E_OK);
+        /* Request resource again => should fail */
+        stat = OS_GetResource(Res3);
+        assert(stat == E_OS_ACCESS);
+        /* Request resource with ceiling priority below static task priority => should fail */
+        stat = OS_GetResource(Res4);
+        assert(stat == E_OS_ACCESS);
+        /* Request resource with invalid ID => should fail */
+        stat = OS_GetResource(64);
+        assert(stat == E_OS_ID);
+        
+        /* These tests should succeed */
+        stat = OS_ReleaseResource(Res3);
+        assert(stat == E_OK);
+        stat = OS_ReleaseResource(Res2);
+        assert(stat == E_OK);
+        stat = OS_ReleaseResource(Res1);
+        assert(stat == E_OK);
+        /* Release same resource again => should fail */
+        stat = OS_ReleaseResource(Res1);
+        assert(stat == E_OS_NOFUNC);
+        
         PORTB &= ~(1 << 2);   // turn LED on
         _delay_ms(1000);
         PORTB |= (1 << 2);  // turn LED off
@@ -61,6 +95,8 @@ TASK(T3)
         _delay_ms(1000);
         PORTB |= (1 << 3);  // turn LED off
         _delay_ms(1000);
+        
+        Task_Schedule();
     }
 
     enum tasks_e taskID = INVALID_TASK;
@@ -102,6 +138,18 @@ TASK(T5)
     OS_TerminateTask();
 }
 
+TASK(T6)
+{
+    for (uint8_t i = 0; i < 3; i++) {
+        PORTB &= ~(1 << 6);   // turn LED on
+        _delay_ms(1000);
+        PORTB |= (1 << 6);  // turn LED off
+        _delay_ms(1000);
+    }
+
+    OS_TerminateTask();
+}
+
 
 extern void StartupHook()
 {
@@ -126,12 +174,20 @@ extern void StartupHook()
 
 ISR(INT0_vect)
 {
-    assert(isISR == true && isCat2ISR == true);
+    assert(isISR && isCat2ISR);
     OS_ActivateTask(T4);
+    
+    OS_GetResource(Res1);
+    OS_GetResource(Res2);
+    OS_GetResource(Res3);
+        
+    OS_ReleaseResource(Res3);
+    OS_ReleaseResource(Res2);
+    OS_ReleaseResource(Res1);
 }
 
 ISR(INT1_vect)
 {
-    assert(isISR == true && isCat2ISR == true);
+    assert(isISR && isCat2ISR);
     OS_ActivateTask(T5);
 }

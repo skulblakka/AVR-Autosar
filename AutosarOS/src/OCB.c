@@ -10,13 +10,17 @@
  */
 
 #include "OCB.h"
+#include "OS.h"
+#include "assert.h"
 #include <avr/interrupt.h>
 
 volatile bool isISR = false;
-volatile bool isCat2ISR = false;
+volatile uint8_t isCat2ISR;
 
 volatile uint32_t sysTick;
 volatile uint8_t needScheduling;
+
+struct resource_s* volatile isrResourceQueue = NULL;
 
 #define OS_CONFIG_GEN_DATA_STRUCT
 #include "AppCfg.h"

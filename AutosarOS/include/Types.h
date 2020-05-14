@@ -15,6 +15,13 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
+#include "Types/TaskTypes.h"
+#include "Types/ResourceTypes.h"
+
+#define OS_CONFIG_GEN_ENUM
+#include "AppCfg.h"
+#undef OS_CONFIG_GEN_ENUM
+
 // TODO: Location for these two might cause problems...
 #undef ISR
 #define ISR(Name) extern void Func ## Name(void)

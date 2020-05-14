@@ -16,6 +16,7 @@
 #define TASKTYPES_H_
 
 #include <stdint.h>
+#include "Types.h"
 
 #define TASK(TaskName) extern void Func ## TaskName(void)
 #define PTASK(TaskName) &Func ## TaskName
@@ -54,12 +55,14 @@ struct task_s {
     const OsTaskType taskType;
     const OsTaskSchedule taskSchedule;
     const pTaskFxn taskFxn;
+    volatile struct internalResource_s* const internalResource;
     uint8_t* context;
     uint8_t curPrio;
     uint8_t curNumberOfActivations;
     OsTaskState curState;
     uint16_t curStackUse;
     uint16_t maxStackUse;
+    struct resource_s* resourceQueue;
 };
 
 #endif /* TASKTYPES_H_ */

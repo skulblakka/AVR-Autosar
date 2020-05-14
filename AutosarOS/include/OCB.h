@@ -17,16 +17,16 @@
 #ifndef OCB_H_
 #define OCB_H_
 
+#include <stddef.h>
+#include <stdint.h>
 #include <stdbool.h>
+
 #include "Types.h"
-#include "TaskTypes.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define OS_CONFIG_GEN_ENUM
-#include "AppCfg.h"
-#undef OS_CONFIG_GEN_ENUM
+
 
 #define OS_CONFIG_GEN_FUNC_DECL
 #include "AppCfg.h"
@@ -38,9 +38,9 @@
 extern volatile bool isISR;
 
 /**
- * @brief   Is currently Cat 2 ISR context?
+ * @brief   Priority of current Cat 2 ISR (zero if not in Cat 2 ISR)
  */
-extern volatile bool isCat2ISR;
+extern volatile uint8_t isCat2ISR;
 
 /**
  * @brief   Current task control blocks
@@ -58,6 +58,16 @@ extern volatile uint32_t sysTick;
  * If set to 0 the system timer will not trigger rescheduling.
  */
 extern volatile uint8_t needScheduling;
+
+/**
+ * @brief   Current resource control blocks
+ */
+extern volatile struct resource_s* Res_Cfg[];
+
+/**
+ * @brief   Resource queue for resources taken by Cat2 ISRs
+ */
+extern struct resource_s* volatile isrResourceQueue;
 
 
 #endif /* OCB_H_ */

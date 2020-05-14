@@ -13,6 +13,8 @@
 #ifndef OS_H_
 #define OS_H_
 
+#include <stdbool.h>
+
 extern enum tasks_e currentTask;
 
 
@@ -27,6 +29,16 @@ extern void OS_Switch();
 // TODO Docs and check name conformity with OSEK/Autosar
 extern void EnableAllInterrupts();
 extern void DisableAllInterrupts();
+
+/**
+ * @brief   Force the next rescheduling
+ * 
+ * If set to true the next call of #OS_Schedule will perform a rescheduling
+ * even if current task is marked as non-preemptive. 
+ * 
+ * This should only be set immediately before #OS_Schedule is called.
+ */
+extern bool forceSchedule;
 
 #ifdef STARTUPHOOK
 /**
