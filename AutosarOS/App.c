@@ -40,12 +40,12 @@ TASK(T1)
 TASK(T2)
 {
     static uint8_t t = 0;
-    
+
     OS_ActivateTask(T6);
-    
+
     while (1) {
         StatusType stat;
-        
+
         /* These tests should succeed */
         stat = OS_GetResource(Res1);
         assert(stat == E_OK);
@@ -62,7 +62,7 @@ TASK(T2)
         /* Request resource with invalid ID => should fail */
         stat = OS_GetResource(64);
         assert(stat == E_OS_ID);
-        
+
         /* These tests should succeed */
         stat = OS_ReleaseResource(Res3);
         assert(stat == E_OK);
@@ -73,7 +73,7 @@ TASK(T2)
         /* Release same resource again => should fail */
         stat = OS_ReleaseResource(Res1);
         assert(stat == E_OS_NOFUNC);
-        
+
         PORTB &= ~(1 << 2);   // turn LED on
         _delay_ms(1000);
         PORTB |= (1 << 2);  // turn LED off
@@ -95,7 +95,7 @@ TASK(T3)
         _delay_ms(1000);
         PORTB |= (1 << 3);  // turn LED off
         _delay_ms(1000);
-        
+
         Task_Schedule();
     }
 
@@ -176,11 +176,11 @@ ISR(INT0_vect)
 {
     assert(isISR && isCat2ISR);
     OS_ActivateTask(T4);
-    
+
     OS_GetResource(Res1);
     OS_GetResource(Res2);
     OS_GetResource(Res3);
-        
+
     OS_ReleaseResource(Res3);
     OS_ReleaseResource(Res2);
     OS_ReleaseResource(Res1);

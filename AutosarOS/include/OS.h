@@ -32,10 +32,10 @@ extern void DisableAllInterrupts();
 
 /**
  * @brief   Force the next rescheduling
- * 
+ *
  * If set to true the next call of #OS_Schedule will perform a rescheduling
- * even if current task is marked as non-preemptive. 
- * 
+ * even if current task is marked as non-preemptive.
+ *
  * This should only be set immediately before #OS_Schedule is called.
  */
 extern bool forceSchedule;

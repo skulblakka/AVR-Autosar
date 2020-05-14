@@ -121,7 +121,7 @@ extern void __attribute__((naked)) OS_Schedule()
         forceSchedule = false;
 
         assert(currentTask != INVALID_TASK);
-        
+
         OS_GetInternalResource();
 
         /* Change task state already to prevent changes to SREG */

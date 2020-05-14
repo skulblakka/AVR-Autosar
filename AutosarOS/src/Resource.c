@@ -21,7 +21,7 @@ extern StatusType OS_GetResource(enum resources_e ResID)
     if (ResID >= RESOURCE_COUNT) {
         return E_OS_ID;
     }
-    
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (Res_Cfg[ResID]->assigned) {
             return E_OS_ACCESS;
@@ -34,23 +34,23 @@ extern StatusType OS_GetResource(enum resources_e ResID)
         }
 
         Res_Cfg[ResID]->assigned = true;
-        
+
         struct resource_s* volatile* resPtr;
-        
+
         if (isCat2ISR) {
             // Set pointer to start of ISR resourceQueue
             resPtr = &isrResourceQueue;
         } else {
             // Set pointer to start of resourceQueue
             resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
-        }            
+        }
 
         /* Find next empty spot */
         while (*resPtr != NULL) {
             resPtr = &(*resPtr)->next;
         }
-        
-        // Set requested resource in empty spot found above 
+
+        // Set requested resource in empty spot found above
         *resPtr = (struct resource_s*) Res_Cfg[ResID];
 
         if (!isCat2ISR) {
@@ -58,7 +58,7 @@ extern StatusType OS_GetResource(enum resources_e ResID)
             if (TCB_Cfg[currentTask]->curPrio < Res_Cfg[ResID]->prio) {
                 TCB_Cfg[currentTask]->curPrio = Res_Cfg[ResID]->prio;
             }
-        }            
+        }
     }
 
     return E_OK;
@@ -69,21 +69,21 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
     if (ResID >= RESOURCE_COUNT) {
         return E_OS_ID;
     }
-    
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (!Res_Cfg[ResID]->assigned) {
             return E_OS_NOFUNC;
         }
 
-        if ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio) 
+        if ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio)
                 || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio)) { // TODO Extended error check
             // Prio of requested resource is lower than static prio of calling task or ISR
             return E_OS_ACCESS;
         }
-        
+
         uint8_t ceilingPrio;
         struct resource_s* volatile* resPtr;
-        
+
         if (isCat2ISR) {
             // Set pointer to start of ISR resourceQueue and initial ceiling prio to the maximum value
             resPtr = &isrResourceQueue;
@@ -91,7 +91,7 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
         } else {
             // Set pointer to start of task resourceQueue
             resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
-            
+
             if (TCB_Cfg[currentTask]->internalResource == &IntResourceNULL_s) {
                 // Set initial prio to static task prio
                 ceilingPrio = TCB_Cfg[currentTask]->prio;
@@ -106,25 +106,25 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
             if (ceilingPrio < (*resPtr)->prio) {
                 ceilingPrio = (*resPtr)->prio;
             }
-            
+
             resPtr = &(*resPtr)->next;
         }
-        
+
         if (*resPtr != Res_Cfg[ResID]) { // TODO Extended error check
             return E_OS_NOFUNC;
         }
-     
+
         // Remove element from queue
         *resPtr = NULL;
-        
+
         Res_Cfg[ResID]->assigned = false;
 
         if (!isCat2ISR) {
             // Set new task priority
             TCB_Cfg[currentTask]->curPrio = ceilingPrio;
-        }        
+        }
     }
-    
+
     // Rescheduling might be required because of possible change in priority
     OS_Schedule();
 
@@ -135,7 +135,7 @@ extern void OS_GetInternalResource()
 {
     if (TCB_Cfg[currentTask]->internalResource != &IntResourceNULL_s) {
         assert(TCB_Cfg[currentTask]->internalResource->prio >= TCB_Cfg[currentTask]->prio);
-        
+
         TCB_Cfg[currentTask]->internalResource->assigned = true;
 
         if (TCB_Cfg[currentTask]->curPrio < TCB_Cfg[currentTask]->internalResource->prio) {
@@ -148,7 +148,7 @@ extern void OS_ReleaseInternalResource()
 {
     if (TCB_Cfg[currentTask]->internalResource != &IntResourceNULL_s) {
         assert(TCB_Cfg[currentTask]->internalResource->assigned == true);
-        
+
         TCB_Cfg[currentTask]->internalResource->assigned = false;
 
         // Reset task priority
@@ -168,6 +168,5 @@ extern void OS_ReleaseInternalResource()
 
         // Set new task priority
         TCB_Cfg[currentTask]->curPrio = ceilingPrio;
-
     }
 }

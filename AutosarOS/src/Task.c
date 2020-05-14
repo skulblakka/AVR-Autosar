@@ -44,7 +44,7 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID)
     if (TaskID >= INVALID_TASK) {
         return E_OS_ID;
     }
-    
+
     if (TCB_Cfg[currentTask]->resourceQueue != NULL) { // TODO: Extended error check
         return E_OS_RESOURCE;
     }
@@ -65,7 +65,7 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID)
     } else {
         TCB_Cfg[currentTask]->curState = SUSPENDED;
     }
-    
+
     OS_ReleaseInternalResource();
 
     currentTask = INVALID_TASK;
@@ -112,20 +112,20 @@ extern StatusType Task_Schedule()
     if (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
         return E_OK;
     }
-    
+
     if (isISR) { // TODO Extended error check
         return E_OS_CALLLEVEL;
     }
-    
+
     if (TCB_Cfg[currentTask]->resourceQueue != NULL) { // TODO Extended error check
         return E_OS_RESOURCE;
     }
-    
+
     OS_ReleaseInternalResource();
-    
+
     forceSchedule = true;
     OS_Schedule();
-    
+
     return E_OK;
 }
 
