@@ -66,6 +66,7 @@
  * @param   Autostart               Set task to autostart (::OsTaskAutostart)
  * @param   TaskType                Type of task (::OsTaskType)
  * @param   TaskSchedule            Type of task scheduling (::OsTaskSchedule)
+ * @param   Res                     Internal resource assigned to task
  *
  * This will create a new task and all required data structures. Each task will need a function TASK(Name).
  */
@@ -89,7 +90,7 @@
 /**
  * @brief   Interrupt definition
  *
- * Define an interrupt service routine. The #Name must correspond to an interrupt vector of the processor.
+ * Define an interrupt service routine. The name must correspond to an interrupt vector of the processor.
  * The priority is only used for resource management and does not correspond to the priorities used
  * in handling the interrupt vectors.
  *
