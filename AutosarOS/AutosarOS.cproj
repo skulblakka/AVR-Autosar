@@ -164,6 +164,9 @@
     <Compile Include="include\context.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\Events.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\OS.h">
       <SubType>compile</SubType>
     </Compile>
@@ -195,6 +198,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\context.S">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Events.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\OS.c">
