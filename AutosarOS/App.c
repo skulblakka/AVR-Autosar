@@ -188,6 +188,5 @@ ISR(INT0_vect)
 
 ISR(INT1_vect)
 {
-    assert(isISR && isCat2ISR);
-    OS_ActivateTask(T5);
+    assert(isISR && !isCat2ISR);
 }

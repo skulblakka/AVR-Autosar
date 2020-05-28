@@ -92,12 +92,13 @@
  *
  * Define an interrupt service routine. The name must correspond to an interrupt vector of the processor.
  * The priority is only used for resource management and does not correspond to the priorities used
- * in handling the interrupt vectors.
+ * in handling the interrupt vectors. Category 1 ISRs must have have a priority of zero. Priority of category 2 ISRs
+ * must be at least one.
  *
  * If the interrupt is triggered and the currently executed task has a higher priority the ISR will not be executed.
  *
  * @param   Name    Name of the interrupt
- * @param   Prio    Priority of the interrupt
+ * @param   Prio    Priority of the interrupt (0 for Cat. 1 ISR; >0 for Cat. 2 ISR)
  *
  * This will create a new interrupt and declare its ISR. Each interrupt will need a function ISR(Name).
  */
@@ -209,8 +210,7 @@
 #define OS_CONFIG_INT_DEF(Name, Prio)                                                                           ISR(Name) { \
                                                                                                                     isISR = true; \
                                                                                                                     isCat2ISR = Prio; \
-                                                                                                                    assertMsg(isCat2ISR != 0, "ISR prio may not be 0"); \
-                                                                                                                    if (currentTask == INVALID_TASK || Prio > TCB_Cfg[currentTask]->curPrio) \
+                                                                                                                    if (currentTask == INVALID_TASK || Prio == 0 || Prio > TCB_Cfg[currentTask]->curPrio) \
                                                                                                                         Func ## Name(); \
                                                                                                                     isISR = false; \
                                                                                                                     isCat2ISR = 0; \
