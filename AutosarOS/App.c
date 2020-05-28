@@ -97,6 +97,9 @@ TASK(T3)
         _delay_ms(1000);
         
         Events_WaitEvent(0x01);
+        EventMaskType ev = 0;
+        Events_GetEvent(T3, &ev);
+        assert(ev == 0x01);
         Events_ClearEvent(0x01);
         
         PORTB |= (1 << 3);  // turn LED off
@@ -194,5 +197,5 @@ ISR(INT1_vect)
 {
     assert(isISR && isCat2ISR);
     
-    Events_SetEvent(T3, 0x01);
+    Events_SetEvent(T3, 0b11);
 }
