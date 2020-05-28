@@ -67,10 +67,11 @@
  * @param   TaskType                Type of task (::OsTaskType)
  * @param   TaskSchedule            Type of task scheduling (::OsTaskSchedule)
  * @param   Res                     Internal resource assigned to task
+ * @param   Events                  Events for this task (only applicable if TaskType equals #EXTENDED_TASK)
  *
  * This will create a new task and all required data structures. Each task will need a function TASK(Name).
  */
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)
 
 /**
  * @brief   Ending of task definitions
@@ -157,7 +158,7 @@
 #ifdef OS_CONFIG_GEN_ENUM
 
 #define OS_CONFIG_TASK_BEGIN                                                                                    enum tasks_e {
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)  Name,
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)  Name,
 #define OS_CONFIG_TASK_END                                                                                      INVALID_TASK};
 
 #define TASK_COUNT     INVALID_TASK
@@ -182,7 +183,7 @@
 #ifdef OS_CONFIG_GEN_FUNC_DECL
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)  TASK(Name);
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)  TASK(Name);
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
@@ -203,7 +204,7 @@
 #ifdef OS_CONFIG_GEN_FUNC
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
@@ -231,7 +232,7 @@
 #ifdef OS_CONFIG_GEN_DATA_STRUCT
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)  uint8_t Task##Name##_stack[StackSize]; \
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)  uint8_t Task##Name##_stack[StackSize]; \
                                                                                                                 volatile struct task_s Task##Name##_s = { \
                                                                                                                     .stack = (uint8_t* const) &Task##Name##_stack, \
                                                                                                                     .stackSize = StackSize, \
@@ -248,6 +249,7 @@
                                                                                                                     .maxStackUse = 0, \
                                                                                                                     .resourceQueue = NULL, \
                                                                                                                     .internalResource = &IntResource##Res##_s, \
+                                                                                                                    .events = Events, \
                                                                                                                 };
 #define OS_CONFIG_TASK_END
 
@@ -276,7 +278,7 @@
 #ifdef OS_CONFIG_GEN_TCB
 
 #define OS_CONFIG_TASK_BEGIN                                                                                    volatile struct task_s* TCB_Cfg[TASK_COUNT] = {
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res)  &Task##Name##_s,
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)  &Task##Name##_s,
 #define OS_CONFIG_TASK_END                                                                                      };
 
 #define OS_CONFIG_INT_BEGIN
