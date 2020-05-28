@@ -30,7 +30,7 @@ static enum tasks_e highestPrioTask;
 /**
  * @brief   Current task being executed
  */
-enum tasks_e currentTask = INVALID_TASK;
+volatile enum tasks_e currentTask = INVALID_TASK;
 
 /**
  * @brief   Stack-Pointer saved in current task control block

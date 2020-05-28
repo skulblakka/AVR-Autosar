@@ -15,7 +15,7 @@
 
 #include <stdbool.h>
 
-extern enum tasks_e currentTask;
+extern volatile enum tasks_e currentTask;
 
 
 // TODO: Return type
