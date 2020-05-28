@@ -84,6 +84,7 @@
 
 #ifdef NDEBUG
 #define assert(exp)         ((void)0)
+#define assertMsg(exp, msg) ((void)0)
 #else
 #define assert(exp)         ((exp) ? (void)0 : __assert(__FILE__, __LINE__, #exp))
 #define assertMsg(exp, msg) ((exp) ? (void)0 : __assert(__FILE__, __LINE__, msg))
