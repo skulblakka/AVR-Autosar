@@ -3,7 +3,7 @@
  *
  * @brief       Types used for events
  *
- * @date        2020-04-27
+ * @date        2020-05-28
  * @author      Pascal Romahn
  * @copyright   This program is free software: you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
