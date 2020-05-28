@@ -179,6 +179,9 @@
     <Compile Include="include\Types.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\Types\EventTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\Types\ResourceTypes.h">
       <SubType>compile</SubType>
     </Compile>
