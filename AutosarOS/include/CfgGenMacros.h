@@ -67,7 +67,7 @@
  * @param   TaskType                Type of task (::OsTaskType)
  * @param   TaskSchedule            Type of task scheduling (::OsTaskSchedule)
  * @param   Res                     Internal resource assigned to task
- * @param   Events                  Events for this task (only applicable if TaskType equals #EXTENDED_TASK)
+ * @param   Events                  Events for this task (only applicable if TaskType equals #EXTENDED)
  *
  * This will create a new task and all required data structures. Each task will need a function TASK(Name).
  */
