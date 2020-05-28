@@ -30,7 +30,7 @@
  * If the specified was waiting for at least one of the events specified it will
  * be transferred to the ready state.
  *
- * @param   taskID      ID of the task to set the events for
+ * @param   TaskID      ID of the task to set the events for
  * @param   events      Mask of the events to set
  *
  * @return  E_OK            No error \n
@@ -60,6 +60,9 @@ extern StatusType Events_ClearEvent(EventMaskType events);
  * @brief   Get events
  *
  * Get current event state of task.
+ * 
+ * @param   TaskID      ID of the task to request event state from
+ * @param   events      Pointer to write event state to
  *
  * @return  E_OK            No error \n
  *          E_OS_ID         TaskID is invalid \n
