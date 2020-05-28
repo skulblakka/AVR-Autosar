@@ -16,7 +16,7 @@
 #define TASKTYPES_H_
 
 #include <stdint.h>
-#include "Types.h"
+#include "EventTypes.h"
 
 #define TASK(TaskName) extern void Func ## TaskName(void)
 #define PTASK(TaskName) &Func ## TaskName
@@ -56,6 +56,7 @@ struct task_s {
     const OsTaskSchedule taskSchedule;
     const pTaskFxn taskFxn;
     volatile struct internalResource_s* const internalResource;
+    const EventMaskType events;
     uint8_t* context;
     uint8_t curPrio;
     uint8_t curNumberOfActivations;
@@ -63,6 +64,8 @@ struct task_s {
     uint16_t curStackUse;
     uint16_t maxStackUse;
     struct resource_s* resourceQueue;
+    EventMaskType waitEvents;
+    EventMaskType pendingEvents;
 };
 
 #endif /* TASKTYPES_H_ */

@@ -18,6 +18,7 @@
 #include "OCB.h"
 #include "Task.h"
 #include "Resource.h"
+#include "Events.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -74,6 +75,7 @@ TASK(T2)
         stat = OS_ReleaseResource(Res1);
         assert(stat == E_OS_NOFUNC);
 
+
         PORTB &= ~(1 << 2);   // turn LED on
         _delay_ms(1000);
         PORTB |= (1 << 2);  // turn LED off
@@ -93,6 +95,13 @@ TASK(T3)
     for (uint8_t i = 0; i < 3; i++) {
         PORTB &= ~(1 << 3);   // turn LED on
         _delay_ms(1000);
+        
+        Events_WaitEvent(0x01);
+        EventMaskType ev = 0;
+        Events_GetEvent(T3, &ev);
+        assert(ev == 0x01);
+        Events_ClearEvent(0x01);
+        
         PORTB |= (1 << 3);  // turn LED off
         _delay_ms(1000);
 
@@ -104,8 +113,6 @@ TASK(T3)
     assert(taskID == T3);
 
     OsTaskState state = SUSPENDED;
-    OS_GetTaskState(T2, &state);
-    assert(state == READY);
     OS_GetTaskState(T3, &state);
     assert(state == RUNNING);
 
@@ -188,5 +195,7 @@ ISR(INT0_vect)
 
 ISR(INT1_vect)
 {
-    assert(isISR && !isCat2ISR);
+    assert(isISR && isCat2ISR);
+    
+    Events_SetEvent(T3, 0b11);
 }
