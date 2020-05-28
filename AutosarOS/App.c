@@ -110,8 +110,6 @@ TASK(T3)
     assert(taskID == T3);
 
     OsTaskState state = SUSPENDED;
-    OS_GetTaskState(T2, &state);
-    assert(state == READY);
     OS_GetTaskState(T3, &state);
     assert(state == RUNNING);
 
