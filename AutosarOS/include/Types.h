@@ -19,6 +19,7 @@
 #include "Types/ResourceTypes.h"
 #include "Types/EventTypes.h"
 #include "Types/CounterTypes.h"
+#include "Types/AlarmTypes.h"
 
 #define OS_CONFIG_GEN_ENUM
 #include "AppCfg.h"
