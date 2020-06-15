@@ -48,6 +48,15 @@
 #ifdef OS_CONFIG_INTERNAL_RESOURCE_END
 #undef OS_CONFIG_INTERNAL_RESOURCE_END
 #endif
+#ifdef OS_CONFIG_COUNTER_BEGIN
+#undef OS_CONFIG_COUNTER_BEGIN
+#endif
+#ifdef OS_CONFIG_COUNTER_DEF
+#undef OS_CONFIG_COUNTER_DEF
+#endif
+#ifdef OS_CONFIG_COUNTER_END
+#undef OS_CONFIG_COUNTER_END
+#endif
 
 /* Generate documentation */
 #ifdef __DOXYGEN__
@@ -151,6 +160,33 @@
  */
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
+/**
+ * @brief   Begin of counter definitions
+ */
+#define OS_CONFIG_COUNTER_BEGIN
+
+/**
+ * @brief   Counter definition
+ *
+ * @param   Name            Name of the counter
+ * @param   MaxAllowedValue Maximum allowed counter value
+ * @param   MinCycle        Smallest allowed value for the cycle-parameter of cyclic alarms
+ * @param   TicksPerBase    Number of ticks required to reach a counter-specific unit
+ * @param   Type            Type of the counter in #counterType_e
+ * @param   SecondsPerTick  Time of one counter tick in seconds
+ */
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)
+
+/**
+ * @brief   End of counter definitions
+ */
+#define OS_CONFIG_COUNTER_END
+
+/**
+ * @brief   Count of counters defined
+ */
+#define COUNTER_COUNT
+
 #endif /* __DOXYGEN__ */
 
 
@@ -177,6 +213,12 @@
 #define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
+#define OS_CONFIG_COUNTER_BEGIN                                                                                 enum counters_e {
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)              Name,
+#define OS_CONFIG_COUNTER_END                                                                                   INVALID_COUNTER};
+
+#define COUNTER_COUNT   INVALID_COUNTER
+
 #endif /* OS_CONFIG_GEN_ENUM */
 
 /* Generate function declarations based on config */
@@ -197,6 +239,10 @@
 #define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
 #define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
 #define OS_CONFIG_INTERNAL_RESOURCE_END
+
+#define OS_CONFIG_COUNTER_BEGIN
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)
+#define OS_CONFIG_COUNTER_END
 
 #endif /* OS_CONFIG_GEN_FUNC_DECL */
 
@@ -225,6 +271,10 @@
 #define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
 #define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
 #define OS_CONFIG_INTERNAL_RESOURCE_END
+
+#define OS_CONFIG_COUNTER_BEGIN
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)
+#define OS_CONFIG_COUNTER_END
 
 #endif /* OS_CONFIG_GEN_FUNC */
 
@@ -272,6 +322,17 @@
                                                                                                                 };
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
+#define OS_CONFIG_COUNTER_BEGIN
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)              volatile struct counter_s Counter##Name##_s = {\
+                                                                                                                    .maxallowedvalue = MaxAllowedValue, \
+                                                                                                                    .mincycle = MinCycle, \
+                                                                                                                    .ticksperbase = TicksPerBase, \
+                                                                                                                    .type = Type, \
+                                                                                                                    .secondspertick = SecondsPerTick, \
+                                                                                                                    .value = 0 \
+                                                                                                                };
+#define OS_CONFIG_COUNTER_END
+
 #endif /* OS_CONFIG_GEN_DATA_STRUCT */
 
 /* Generate OS Task Control Block */
@@ -292,6 +353,10 @@
 #define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
 #define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
 #define OS_CONFIG_INTERNAL_RESOURCE_END
+
+#define OS_CONFIG_COUNTER_BEGIN                                                                                 volatile struct counter_s* Counter_Cfg[COUNTER_COUNT] = {
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)              &Counter##Name##_s,
+#define OS_CONFIG_COUNTER_END                                                                                   };
 
 #endif /* OS_CONFIG_GEN_TCB */
 
