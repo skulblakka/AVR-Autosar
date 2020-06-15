@@ -24,26 +24,26 @@
 typedef void (*pTaskFxn)();
 
 typedef enum OsTaskType_e {
-    BASIC = 0,      /*!< The task is a basic task, thus unable to wait on an event */
-    EXTENDED        /*!< The task is a extended task */
+    BASIC = 0,      /**< The task is a basic task, thus unable to wait on an event */
+    EXTENDED        /**< The task is a extended task */
 } OsTaskType;
 
 typedef enum OsTaskSchedule_e {
-    PREEMPTIVE = 0, /*!< The task may be preempted by another task */
-    NON_PREEMPTIVE  /*!< The task may not be preempted */
+    PREEMPTIVE = 0, /**< The task may be preempted by another task */
+    NON_PREEMPTIVE  /**< The task may not be preempted */
 } OsTaskSchedule;
 
 typedef enum OsTaskState_e {
-    SUSPENDED = 0,  /*!< The task is suspended and will not be scheduled */
-    PRE_READY,      /*!< The task is ready but its stack is uninitialized */
-    READY,          /*!< The task is ready to be scheduled */
-    RUNNING,        /*!< The task is currently running */
-    WAITING         /*!< The task is waiting for an event */
+    SUSPENDED = 0,  /**< The task is suspended and will not be scheduled */
+    PRE_READY,      /**< The task is ready but its stack is uninitialized */
+    READY,          /**< The task is ready to be scheduled */
+    RUNNING,        /**< The task is currently running */
+    WAITING         /**< The task is waiting for an event */
 } OsTaskState;
 
 typedef enum OsTaskAutostart_e {
-    NO_AUTOSTART = 0, /*!< Do not autostart task */
-    AUTOSTART         /*!< Autostart task */
+    NO_AUTOSTART = 0, /**< Do not autostart task */
+    AUTOSTART         /**< Autostart task */
 } OsTaskAutostart;
 
 struct task_s {
