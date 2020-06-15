@@ -155,6 +155,9 @@
     <Compile Include="App.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\Alarm.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\assert.h">
       <SubType>compile</SubType>
     </Compile>
@@ -201,6 +204,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Alarm.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\assert.c">
