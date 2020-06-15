@@ -44,7 +44,11 @@ extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType val
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        *value = Counter_Cfg[counterID]->value;
+        if (counterID == SysTick) {
+            *value = sysTick;
+        } else {
+            *value = Counter_Cfg[counterID]->value;
+        }
     }
 
     return E_OK;
@@ -59,7 +63,11 @@ extern StatusType Counter_GetElapsedValue(CounterType counterID, TickRefType val
     TickType currentValue = 0;
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        currentValue = Counter_Cfg[counterID]->value;
+        if (counterID == SysTick) {
+            currentValue = sysTick;
+        } else {
+            currentValue = Counter_Cfg[counterID]->value;
+        }
     }
 
     if (currentValue >= *value) {
