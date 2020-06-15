@@ -74,5 +74,10 @@ extern struct resource_s* volatile isrResourceQueue;
  */
 extern volatile struct internalResource_s IntResourceNULL_s;
 
+/**
+ * @brief   Current counter control blocks
+ */
+extern volatile struct counter_s* Counter_Cfg[];
+
 
 #endif /* OCB_H_ */
