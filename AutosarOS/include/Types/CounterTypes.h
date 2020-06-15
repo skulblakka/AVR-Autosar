@@ -15,8 +15,19 @@
 #ifndef COUNTERTYPES_H_
 #define COUNTERTYPES_H_
 
+/**
+ * @brief   Data type of counter values
+ */
 typedef uint64_t TickType;
+
+/**
+ * @brief   Reference to counter values
+ * 
+ * References #TickType
+ */
 typedef TickType* TickRefType;
+
+typedef enum counters_e CounterType;
 
 enum counterType_e {
     HARDWARE,
@@ -24,13 +35,12 @@ enum counterType_e {
 };
 
 struct counter_s {
-    TickType maxallowedvalue;
-    TickType mincycle;
-    TickType ticksperbase;
-    enum counterType_e type;
-    float secondspertick;
+    const TickType maxallowedvalue; /** Maximum allowed value of counter */
+    const TickType mincycle;        /** Smallest allowed value for the cycle-parameter of cyclic alarms */ 
+    const TickType ticksperbase;    /** Number of ticks required to reach a counter-specific unit */
+    const enum counterType_e type;  /** Type of counter */
+    const float secondspertick;     /** Time of one counter tick in seconds */
+    TickType value;                 /** Current tick value of counter */
 };
-
-
 
 #endif /* COUNTERTYPES_H_ */
