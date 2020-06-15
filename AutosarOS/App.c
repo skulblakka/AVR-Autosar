@@ -19,6 +19,7 @@
 #include "Task.h"
 #include "Resource.h"
 #include "Events.h"
+#include "Counter.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -43,6 +44,38 @@ TASK(T2)
     static uint8_t t = 0;
 
     OS_ActivateTask(T6);
+
+    if (t == 0) {
+        StatusType stat;
+        for (uint64_t i = 0; i < 10; i++) {
+            stat = Counter_IncrementCounter(C1);
+            assert(stat == E_OK);
+        }
+
+        TickType tick = 0;
+        TickType eTick = 0;
+        stat = Counter_GetCounterValue(C1, &tick);
+        assert(stat == E_OK && tick == 10);
+        stat = Counter_IncrementCounter(C1);
+        assert(stat == E_OK);
+        stat = Counter_GetCounterValue(C1, &tick);
+        assert(stat == E_OK && tick == 0);
+
+        for (uint64_t i = 0; i < 5; i++) {
+            stat = Counter_IncrementCounter(C1);
+            assert(stat == E_OK);
+        }
+        stat = Counter_GetElapsedValue(C1, &tick, &eTick);
+        assert(stat == E_OK && tick == 5 && eTick == 5);
+
+        for (uint64_t i = 0; i < 7; i++) {
+            stat = Counter_IncrementCounter(C1);
+            assert(stat == E_OK);
+        }
+        stat = Counter_GetElapsedValue(C1, &tick, &eTick);
+        assert(stat == E_OK && tick == 1 && eTick == 7);
+    }
+
 
     while (1) {
         StatusType stat;
