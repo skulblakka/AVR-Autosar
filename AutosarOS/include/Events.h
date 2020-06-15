@@ -3,8 +3,6 @@
  *
  * @brief       Event management
  *
- * This contains the operating system control blocks generated during compilation.
- *
  * @date        2020-05-28
  * @author      Pascal Romahn
  * @copyright   This program is free software: you can redistribute it and/or modify
