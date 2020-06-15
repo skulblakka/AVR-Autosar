@@ -22,6 +22,8 @@ typedef uint8_t EventMaskType;
 
 /**
  * @brief   Reference to an event mask
+ *
+ * Reference an #EventMaskType
  */
 typedef EventMaskType* EventMaskRefType;
 
