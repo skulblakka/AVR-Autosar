@@ -18,6 +18,7 @@
 #include "Types/TaskTypes.h"
 #include "Types/ResourceTypes.h"
 #include "Types/EventTypes.h"
+#include "Types/CounterTypes.h"
 
 #define OS_CONFIG_GEN_ENUM
 #include "AppCfg.h"
