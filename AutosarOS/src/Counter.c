@@ -13,6 +13,7 @@
 
 #include "Counter.h"
 #include "OCB.h"
+#include "Alarm.h"
 
 #include <util/atomic.h>
 
@@ -33,6 +34,8 @@ extern StatusType Counter_IncrementCounter(CounterType counterID)
             Counter_Cfg[counterID]->value += 1;
         }
     }
+
+    Alarm_evaluateAlarm();
 
     return E_OK;
 }
