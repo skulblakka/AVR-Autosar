@@ -57,6 +57,18 @@
 #ifdef OS_CONFIG_COUNTER_END
 #undef OS_CONFIG_COUNTER_END
 #endif
+#ifdef OS_CONFIG_ALARM_BEGIN
+#undef OS_CONFIG_ALARM_BEGIN
+#endif
+#ifdef OS_CONFIG_ALARM_DEF
+#undef OS_CONFIG_ALARM_DEF
+#endif
+#ifdef OS_CONFIG_ALARM_END
+#undef OS_CONFIG_ALARM_END
+#endif
+#ifdef OS_CONFIG_ALARM_CALLBACK
+#undef OS_CONFIG_ALARM_CALLBACK
+#endif
 
 /* Generate documentation */
 #ifdef __DOXYGEN__
@@ -106,6 +118,7 @@
  * must be at least one.
  *
  * If the interrupt is triggered and the currently executed task has a higher priority the ISR will not be executed.
+ * Note that in this case interrupts will be skipped not deferred!
  *
  * @param   Name    Name of the interrupt
  * @param   Prio    Priority of the interrupt (0 for Cat. 1 ISR; >0 for Cat. 2 ISR)
@@ -187,6 +200,53 @@
  */
 #define COUNTER_COUNT
 
+/**
+ * @brief   Begin of alarm definitions
+ */
+#define OS_CONFIG_ALARM_BEGIN
+
+/**
+ * @brief   Alarm definition
+ *
+ * Define an alarm.
+ *
+ * The value of Action must be according to the type of the alarm. \n
+ * If Type is #ALARM_ACTION_TASK, Action must be the task to be activated. \n
+ * If Type is #ALARM_ACTION_EVENT, Action must be the task of which the Event should be set. \n
+ * If Type is #ALARM_ACTION_CALLBACK, Action must be a pointer to the callback function. \n
+ * If Type is #ALARM_ACTION_COUNTER, Action must be the counter to be incremented.
+ *
+ * @param   Name            Name of the alarm
+ * @param   Base            Counter used as alarm base
+ * @param   AutoStart       Set alarm to autostart
+ * @param   Event           Event to set (only applicable when Type is #ALARM_ACTION_EVENT)
+ * @param   Type            Type of alarm (see #alarmActionType_e)
+ * @param   Action          Action to be performed
+ * @param   Expiration      Expiration value of alarm (must be between zero and the maximum allowed value of the base)
+ * @param   Cycle           Cycle of the alarm (must be zero or between minCycle and maximum allowed value of the base)
+ */
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)
+
+/**
+ * @brief   End of alarm definitions
+ */
+#define OS_CONFIG_ALARM_END
+
+/**
+ * @brief   Count of alarm defined
+ */
+#define ALARM_COUNT
+
+/**
+ * @brief   Definition of alarm callback
+ *
+ * Define a callback function to be used with an alarm of #ALARM_ACTION_CALLBACK type. The definition must
+ * must be made before the alarm is defined.
+ *
+ * @param   Name            Name of the callback function
+ */
+#define OS_CONFIG_ALARM_CALLBACK(Name)
+
 #endif /* __DOXYGEN__ */
 
 
@@ -220,6 +280,14 @@
 
 #define COUNTER_COUNT   INVALID_COUNTER
 
+#define OS_CONFIG_ALARM_BEGIN                                                                                   enum alarm_e {
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)                      Name,
+#define OS_CONFIG_ALARM_END                                                                                     INVALID_ALARM};
+
+#define ALARM_COUNT     INVALID_ALARM
+
+#define OS_CONFIG_ALARM_CALLBACK(Name)
+
 #endif /* OS_CONFIG_GEN_ENUM */
 
 /* Generate function declarations based on config */
@@ -244,6 +312,12 @@
 #define OS_CONFIG_COUNTER_BEGIN
 #define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)
 #define OS_CONFIG_COUNTER_END
+
+#define OS_CONFIG_ALARM_BEGIN
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)
+#define OS_CONFIG_ALARM_END
+
+#define OS_CONFIG_ALARM_CALLBACK(Name)                                                                          extern void Name(void);
 
 #endif /* OS_CONFIG_GEN_FUNC_DECL */
 
@@ -276,6 +350,12 @@
 #define OS_CONFIG_COUNTER_BEGIN
 #define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)
 #define OS_CONFIG_COUNTER_END
+
+#define OS_CONFIG_ALARM_BEGIN
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)
+#define OS_CONFIG_ALARM_END
+
+#define OS_CONFIG_ALARM_CALLBACK(Name)
 
 #endif /* OS_CONFIG_GEN_FUNC */
 
@@ -341,6 +421,20 @@
                                                                                                                 };
 #define OS_CONFIG_COUNTER_END
 
+#define OS_CONFIG_ALARM_BEGIN
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)                      volatile struct alarm_s Alarm##Name##_s = { \
+                                                                                                                    .alarmBase = &Counter##Base##_s, \
+                                                                                                                    .event = Event, \
+                                                                                                                    .actionType = Type, \
+                                                                                                                    .action.action = (void*) Action, \
+                                                                                                                    .running = AutoStart, \
+                                                                                                                    .expiration = Expiration, \
+                                                                                                                    .cycle = Cycle \
+                                                                                                                };
+#define OS_CONFIG_ALARM_END
+
+#define OS_CONFIG_ALARM_CALLBACK(Name)
+
 #endif /* OS_CONFIG_GEN_DATA_STRUCT */
 
 /* Generate OS Task Control Block */
@@ -366,6 +460,12 @@
                                                                                                                 &CounterSysTick_s,
 #define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)              &Counter##Name##_s,
 #define OS_CONFIG_COUNTER_END                                                                                   };
+
+#define OS_CONFIG_ALARM_BEGIN                                                                                   volatile struct alarm_s* Alarm_Cfg[ALARM_COUNT] = {
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)                      &Alarm##Name##_s,
+#define OS_CONFIG_ALARM_END                                                                                     };
+
+#define OS_CONFIG_ALARM_CALLBACK(Name)
 
 #endif /* OS_CONFIG_GEN_TCB */
 
