@@ -15,15 +15,15 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
+#define OS_CONFIG_GEN_ENUM
+#include "AppCfg.h"
+#undef OS_CONFIG_GEN_ENUM
+
 #include "Types/TaskTypes.h"
 #include "Types/ResourceTypes.h"
 #include "Types/EventTypes.h"
 #include "Types/CounterTypes.h"
 #include "Types/AlarmTypes.h"
-
-#define OS_CONFIG_GEN_ENUM
-#include "AppCfg.h"
-#undef OS_CONFIG_GEN_ENUM
 
 // TODO: Location for these two might cause problems...
 #undef ISR
