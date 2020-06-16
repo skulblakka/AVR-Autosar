@@ -79,5 +79,9 @@ extern volatile struct internalResource_s IntResourceNULL_s;
  */
 extern volatile struct counter_s* Counter_Cfg[];
 
+/**
+ * @brief   Current alarm control blocks
+ */
+extern volatile struct alarm_s* Alarm_Cfg[];
 
 #endif /* OCB_H_ */
