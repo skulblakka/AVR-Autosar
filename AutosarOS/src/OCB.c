@@ -21,6 +21,7 @@ volatile uint8_t isCat2ISR;
 
 volatile uint32_t sysTick;
 volatile uint8_t needScheduling;
+volatile uint8_t blockScheduling;
 
 struct resource_s* volatile isrResourceQueue = NULL;
 

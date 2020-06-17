@@ -227,6 +227,9 @@
     <Compile Include="src\OCB.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\OS_asm.S">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\Resource.c">
       <SubType>compile</SubType>
     </Compile>
