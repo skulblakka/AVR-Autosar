@@ -64,10 +64,15 @@ extern StatusType Alarm_GetAlarm(AlarmType alarmID, TickRefType tick)
         }
 
         *tick = Alarm_Cfg[alarmID]->expiration;
-        currentTick = Alarm_Cfg[alarmID]->alarmBase->value;
+
+        if (Alarm_Cfg[alarmID]->alarmBase == Counter_Cfg[SYSTEM_COUNTER]) {
+            currentTick = sysTick;
+        } else {
+            currentTick = Alarm_Cfg[alarmID]->alarmBase->value;
+        }
     }
 
-    if (*tick > currentTick) {
+    if (*tick >= currentTick) {
         *tick = *tick - currentTick;
     } else {
         *tick = Alarm_Cfg[alarmID]->alarmBase->maxallowedvalue - currentTick + *tick + 1;
