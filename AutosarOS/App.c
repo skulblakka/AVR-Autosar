@@ -20,6 +20,7 @@
 #include "Resource.h"
 #include "Events.h"
 #include "Counter.h"
+#include "Alarm.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -190,6 +191,75 @@ TASK(T6)
     OS_TerminateTask();
 }
 
+TASK(T7)
+{
+    Alarm_CancelAlarm(Alarm3);
+
+    StatusType stat = Alarm_SetAbsAlarm(Alarm3, 10, 0);
+    assert(stat == E_OK);
+
+    Events_WaitEvent(0x01);
+    EventMaskType ev = 0;
+    Events_GetEvent(T7, &ev);
+    assert(ev == 0x01);
+    Events_ClearEvent(0x01);
+
+    stat = Alarm_SetAbsAlarm(Alarm3, 15, 5);
+    assert(stat == E_OK);
+
+    Events_WaitEvent(0x01);
+    ev = 0;
+    Events_GetEvent(T7, &ev);
+    assert(ev == 0x01);
+    Events_ClearEvent(0x01);
+
+    Events_WaitEvent(0x01);
+    ev = 0;
+    Events_GetEvent(T7, &ev);
+    assert(ev == 0x01);
+    Events_ClearEvent(0x01);
+
+    stat = Alarm_CancelAlarm(Alarm3);
+    assert(stat == E_OK);
+
+    stat = Alarm_SetRelAlarm(Alarm8, 6840, 0);
+    assert(stat == E_OK);
+
+    Events_WaitEvent(0x02);
+    ev = 0;
+    Events_GetEvent(T7, &ev);
+    assert(ev == 0x02);
+    Events_ClearEvent(0x02);
+
+    stat = Alarm_SetRelAlarm(Alarm3, 3, 0);
+    assert(stat == E_OK);
+
+    for (uint8_t i = 0; i < 5; i++) {
+        PORTB &= ~(1 << 7);   // turn LED on
+        _delay_ms(1000);
+
+        Events_WaitEvent(0x01);
+        ev = 0;
+        Events_GetEvent(T7, &ev);
+        assert(ev == 0x01);
+        Events_ClearEvent(0x01);
+
+        stat = Alarm_CancelAlarm(Alarm3);
+        stat = Alarm_SetRelAlarm(Alarm3, 10, 15);
+        assert(stat == E_OK);
+
+        PORTB |= (1 << 7);  // turn LED off
+        _delay_ms(1000);
+
+        Events_WaitEvent(0x01);
+        ev = 0;
+        Events_GetEvent(T7, &ev);
+        assert(ev == 0x01);
+        Events_ClearEvent(0x01);
+    }
+
+    OS_TerminateTask();
+}
 
 extern void StartupHook()
 {
@@ -245,6 +315,16 @@ ISR(INT0_vect)
 ISR(INT1_vect)
 {
     assert(isISR && isCat2ISR);
-    
+
     Events_SetEvent(T3, 0b11);
+}
+
+ISR(TIMER1_COMPA_vect)
+{
+    Counter_IncrementCounter(C2);
+}
+
+ALARMCALLBACK(AlarmCb)
+{
+    OS_ActivateTask(T7);
 }
