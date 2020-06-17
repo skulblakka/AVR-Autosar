@@ -60,6 +60,13 @@ extern volatile uint32_t sysTick;
 extern volatile uint8_t needScheduling;
 
 /**
+ * @brief   Block scheduling
+ * 
+ * While set to a value different from zero all scheduling will be blocked.
+ */
+extern volatile uint8_t blockScheduling;
+
+/**
  * @brief   Current resource control blocks
  */
 extern volatile struct resource_s* Res_Cfg[];

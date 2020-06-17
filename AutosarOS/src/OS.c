@@ -93,7 +93,7 @@ extern void OS_StartOS()
     asm volatile ("ret"); // Force return to prevent function epilogue removing non-existing data from task stack
 }
 
-extern void __attribute__((naked)) OS_Schedule()
+extern void __attribute__((naked)) OS_ScheduleC()
 {
     save_context();
 

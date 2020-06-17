@@ -274,7 +274,7 @@
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
 #define OS_CONFIG_COUNTER_BEGIN                                                                                 enum counters_e { \
-                                                                                                                SysTick,
+                                                                                                                SYSTEM_COUNTER,
 #define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)              Name,
 #define OS_CONFIG_COUNTER_END                                                                                   INVALID_COUNTER};
 
@@ -403,7 +403,7 @@
                                                                                                                 };
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
-#define OS_CONFIG_COUNTER_BEGIN                                                                                 volatile struct counter_s CounterSysTick_s = { \
+#define OS_CONFIG_COUNTER_BEGIN                                                                                 volatile struct counter_s CounterSYSTEM_COUNTER_s = { \
                                                                                                                     .maxallowedvalue = UINT32_MAX, \
                                                                                                                     .mincycle = 1, \
                                                                                                                     .ticksperbase = 57, \
@@ -457,7 +457,7 @@
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
 #define OS_CONFIG_COUNTER_BEGIN                                                                                 volatile struct counter_s* Counter_Cfg[COUNTER_COUNT] = { \
-                                                                                                                &CounterSysTick_s,
+                                                                                                                &CounterSYSTEM_COUNTER_s,
 #define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)              &Counter##Name##_s,
 #define OS_CONFIG_COUNTER_END                                                                                   };
 

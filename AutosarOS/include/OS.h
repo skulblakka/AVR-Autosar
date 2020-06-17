@@ -25,7 +25,8 @@ extern volatile enum tasks_e currentTask;
 extern void OS_StartOS();
 
 // TODO: Return type
-extern void __attribute__((naked)) OS_Schedule();
+extern void OS_Schedule(void);
+extern void __attribute__((naked)) OS_ScheduleC();
 extern void OS_Switch();
 
 // TODO Docs and check name conformity with OSEK/Autosar

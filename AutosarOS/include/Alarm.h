@@ -92,12 +92,19 @@ extern StatusType Alarm_SetAbsAlarm(AlarmType alarmID, TickType start, TickType 
 extern StatusType Alarm_CancelAlarm(AlarmType alarmID);
 
 /**
- * @brief   Evaluate alarm
+ * @brief   Evaluate alarms with user generated counter
  *
- * This will evaluate all defined alarms and handle expiration if necessary.
+ * This will evaluate all alarms with a user generated counter and handle expiration if necessary.
  */
 extern void Alarm_evaluateAlarm(void);
 
+/**
+ * @brief   Evaluate alarm with SYSTEM_COUNTER
+ * 
+ * This will evaluate all alarms with the SYSTEM_COUNTER as their base and handle expiration
+ * if necessary.
+ */
+extern void Alarm_evaluateSysTickAlarm(void);
 
 
 #endif /* ALARM_H_ */
