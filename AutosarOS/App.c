@@ -71,7 +71,7 @@ TASK(T2)
             stat = Counter_IncrementCounter(C1);
             assert(stat == E_OK);
         }
-        
+
         tick = 0;
         stat = Counter_GetElapsedValue(C1, &tick, &eTick);
         assert(stat == E_OK && tick == 5 && eTick == 5);
@@ -90,7 +90,7 @@ TASK(T2)
             stat = Counter_IncrementCounter(C1);
             assert(stat == E_OK);
         }
-        
+
         tick = 5;
         stat = Counter_GetElapsedValue(C1, &tick, &eTick);
         assert(stat == E_OK && tick == 1 && eTick == 7);
@@ -100,13 +100,13 @@ TASK(T2)
 
         stat = Alarm_CancelAlarm(Alarm9);
         assert(stat == E_OK);
-        
+
         AlarmBaseType info;
         Alarm_GetAlarmBase(Alarm5, &info);
         assert(info.type == HARDWARE);
         assert(info.maxallowedvalue == UINT32_MAX);
         assert(info.mincycle == 1);
-        assert(info.ticksperbase == 57);
+        assert(info.ticksperbase == test);
         assert(info.secondspertick == 0.017778);
     }
 
@@ -161,13 +161,13 @@ TASK(T3)
     for (uint8_t i = 0; i < 3; i++) {
         PORTB &= ~(1 << 3);   // turn LED on
         _delay_ms(1000);
-        
+
         Events_WaitEvent(0x01);
         EventMaskType ev = 0;
         Events_GetEvent(T3, &ev);
         assert(ev == 0x01);
         Events_ClearEvent(0x01);
-        
+
         PORTB |= (1 << 3);  // turn LED off
         _delay_ms(1000);
 
