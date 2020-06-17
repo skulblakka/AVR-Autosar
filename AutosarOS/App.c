@@ -206,9 +206,15 @@ extern void StartupHook()
     EICRA = 1 << ISC11 | 1 << ISC10 | 1 << ISC01 | 1 << ISC00;  // Trigger INT0 and INT1 on falling edge
     EIMSK |= 1 << INT1 | 1 << INT0;                             // Enable INT0 and INT1
 
+    /* Reset counter 1 */
+    TCCR1A = 0;
+    TCCR1B = 0;
+    TCNT1 = 0;
+
+    OCR1A = 14400;                                              // Set compare-match value for 1Hz
+    TCCR1B |= (1 << WGM12);                                     // Enable CTC mode
     TCCR1B |= (1 << CS12) | (1 << CS10);                        // Set prescaler to 1024
-    TCNT1 = 62656;                                              // Preload value to achieve 1Hz cycle
-    TIMSK |= 1 << TOIE1;                                        // Enable overflow interrupt
+    TIMSK |= (1 << OCIE1A);                                     // Enable interrupt on compare match
 #endif
 
     uint8_t t = 0;
