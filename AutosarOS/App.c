@@ -62,21 +62,53 @@ TASK(T2)
         stat = Counter_GetCounterValue(C1, &tick);
         assert(stat == E_OK && tick == 0);
 
+        stat = Alarm_SetAbsAlarm(Alarm9, 3, 5);
+        assert(stat == E_OK);
+        stat = Alarm_GetAlarm(Alarm9, &tick);
+        assert(stat == E_OK && tick == 3);
+
         for (uint64_t i = 0; i < 5; i++) {
             stat = Counter_IncrementCounter(C1);
             assert(stat == E_OK);
         }
+        
+        tick = 0;
         stat = Counter_GetElapsedValue(C1, &tick, &eTick);
         assert(stat == E_OK && tick == 5 && eTick == 5);
+
+        stat = Alarm_GetAlarm(Alarm9, &tick);
+        assert(stat == E_OK && tick == 3);
+
+        stat = Alarm_CancelAlarm(Alarm9);
+        assert(stat == E_OK);
+        stat = Alarm_SetAbsAlarm(Alarm9, 1, 3);
+        assert(stat == E_OK);
+        stat = Alarm_GetAlarm(Alarm9, &tick);
+        assert(stat == E_OK && tick == 7);
 
         for (uint64_t i = 0; i < 7; i++) {
             stat = Counter_IncrementCounter(C1);
             assert(stat == E_OK);
         }
+        
+        tick = 5;
         stat = Counter_GetElapsedValue(C1, &tick, &eTick);
         assert(stat == E_OK && tick == 1 && eTick == 7);
-    }
 
+        stat = Alarm_GetAlarm(Alarm9, &tick);
+        assert(stat == E_OK && tick == 3);
+
+        stat = Alarm_CancelAlarm(Alarm9);
+        assert(stat == E_OK);
+        
+        AlarmBaseType info;
+        Alarm_GetAlarmBase(Alarm5, &info);
+        assert(info.type == HARDWARE);
+        assert(info.maxallowedvalue == UINT32_MAX);
+        assert(info.mincycle == 1);
+        assert(info.ticksperbase == 57);
+        assert(info.secondspertick == 0.017778);
+    }
 
     while (1) {
         StatusType stat;
