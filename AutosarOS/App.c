@@ -198,8 +198,18 @@ extern void StartupHook()
 
     DDRD  = 0x00;   // PD as input
     PORTD = 0xFF;   // enable PU on PD
+
+#if defined (__AVR_ATmega32__)
     GICR  = 1 << INT0 | 1 << INT1;                              // Enable INT0 and INT1
     MCUCR = 1 << ISC01 | 0 << ISC00 | 1 << ISC11 | 0 << ISC10;  // Trigger INT0 and INT1 on falling edge
+#elif defined (__AVR_ATmega128__)
+    EICRA = 1 << ISC11 | 1 << ISC10 | 1 << ISC01 | 1 << ISC00;  // Trigger INT0 and INT1 on falling edge
+    EIMSK |= 1 << INT1 | 1 << INT0;                             // Enable INT0 and INT1
+
+    TCCR1B |= (1 << CS12) | (1 << CS10);                        // Set prescaler to 1024
+    TCNT1 = 62656;                                              // Preload value to achieve 1Hz cycle
+    TIMSK |= 1 << TOIE1;                                        // Enable overflow interrupt
+#endif
 
     uint8_t t = 0;
 
