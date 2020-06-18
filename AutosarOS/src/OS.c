@@ -104,6 +104,8 @@ extern void __attribute__((naked)) OS_ScheduleC()
         if (TCB_Cfg[currentTask]->curStackUse > TCB_Cfg[currentTask]->maxStackUse) {
             TCB_Cfg[currentTask]->maxStackUse = TCB_Cfg[currentTask]->curStackUse;
         }
+
+        assert(TCB_Cfg[currentTask]->maxStackUse <= TCB_Cfg[currentTask]->stackSize);
     }
 
     if (!isISR && (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceSchedule))) {
