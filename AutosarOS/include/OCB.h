@@ -72,6 +72,16 @@ extern volatile uint8_t needScheduling;
 extern volatile uint8_t blockScheduling;
 
 /**
+ * @brief   Force the next rescheduling
+ *
+ * If set to true the next call of OS_Schedule() will perform a rescheduling
+ * even if current task is marked as non-preemptive.
+ *
+ * This should only be set immediately before OS_Schedule() is called.
+ */
+extern bool forceScheduling;
+
+/**
  * @brief   Current resource control blocks
  */
 extern volatile struct resource_s* Res_Cfg[];

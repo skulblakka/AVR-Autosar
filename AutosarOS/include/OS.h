@@ -20,7 +20,6 @@
 
 #include <stdbool.h>
 
-
 /**
  * @brief   Start operating system
  *
@@ -134,16 +133,6 @@ extern void OS_ResumeOSInterrupts(void);
  * @warning Nesting is only supported up to 8 levels!
  */
 extern void OS_SuspendOSInterrupts(void);
-
-/**
- * @brief   Force the next rescheduling
- *
- * If set to true the next call of OS_Schedule() will perform a rescheduling
- * even if current task is marked as non-preemptive.
- *
- * This should only be set immediately before OS_Schedule() is called.
- */
-extern bool forceSchedule;
 
 #if defined(OS_CONFIG_HOOK_STARTUP) && OS_CONFIG_HOOK_STARTUP == true
 /**

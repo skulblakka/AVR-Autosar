@@ -120,7 +120,7 @@ extern StatusType Events_WaitEvent(EventMaskType events)
 
             Resource_ReleaseInternalResource();
 
-            forceSchedule = true;
+            forceScheduling = true;
             OS_Schedule();
         }
     }
