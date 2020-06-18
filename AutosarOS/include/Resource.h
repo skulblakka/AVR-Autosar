@@ -27,7 +27,7 @@
  * This call serves to enter critical sections in the code that are assigned to the resource referenced by ResID.
  * A critical section shall always be left using Resource_ReleaseResource().
  *
- * @param   ResID   Reference to resource
+ * @param   ResID           Reference to resource
  *
  * @return  E_OK            No error \n
  *          E_OS_ID         Invalid resource ID \n
@@ -43,7 +43,7 @@ extern StatusType Resource_GetResource(enum resources_e ResID);
  * This function is the counterpart of Resource_GetResource() and serves to leave critical sections
  * in the code that are assigned to the resource referenced by ResID.
  *
- * @param   ResID   Reference to resource
+ * @param   ResID           Reference to resource
  *
  * @return  E_OK            No error \n
  *          E_OS_ID         Invalid resource ID \n

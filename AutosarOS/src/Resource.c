@@ -1,6 +1,6 @@
 /**
  * @file
- * 
+ *
  * @brief       Implementation of resource management
  *
  * @date        2020-04-27

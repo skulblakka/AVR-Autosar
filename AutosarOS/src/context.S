@@ -26,7 +26,7 @@ tempReg:    .skip 1
 
 .global save_context
 save_context:
-    sts     tempReg, r0             // Save r0
+    sts     tempReg, r0                 // Save r0
 
     /* Get return address */
     pop     r0
@@ -34,14 +34,14 @@ save_context:
     pop     r0
     sts     retAddr1 + 1, r0
 
-    lds r0, tempReg                 // Restore r0
+    lds r0, tempReg                     // Restore r0
 
-    push    r0                      // Push R0 before overwrite with SREG
+    push    r0                          // Push R0 before overwrite with SREG
     in      r0, _SFR_IO_ADDR(SREG)
-    cli                             // Disable interrupts now that we saved SREG
-    push    r0                      // Push SREG
+    cli                                 // Disable interrupts now that we saved SREG
+    push    r0                          // Push SREG
     push    r1
-    clr     r1                      // Compiler generated code assumes R1 is set zero
+    clr     r1                          // Compiler generated code assumes R1 is set zero
     push    r2
     push    r3
     push    r4
@@ -175,7 +175,7 @@ init_context:
     push    r23
     push    r22
 
-    clr     r1  // Compiler generated code assumes R1 is set zero
+    clr     r1                          // Compiler generated code assumes R1 is set zero
 
     ret
 

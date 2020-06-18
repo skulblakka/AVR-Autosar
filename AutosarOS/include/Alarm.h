@@ -100,7 +100,7 @@ extern void Alarm_evaluateAlarm(void);
 
 /**
  * @brief   Evaluate alarm with SYSTEM_COUNTER
- * 
+ *
  * This will evaluate all alarms with the SYSTEM_COUNTER as their base and handle expiration
  * if necessary.
  */

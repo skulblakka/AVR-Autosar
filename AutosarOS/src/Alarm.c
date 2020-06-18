@@ -233,4 +233,3 @@ static void Alarm_handleAlarmExpiration(AlarmType alarmID)
         }
     }
 }
-

@@ -22,7 +22,7 @@ typedef uint64_t TickType;
 
 /**
  * @brief   Reference to counter values
- * 
+ *
  * References #TickType
  */
 typedef TickType* TickRefType;

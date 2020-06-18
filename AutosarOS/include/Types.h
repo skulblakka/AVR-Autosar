@@ -25,7 +25,6 @@
 #include "Types/CounterTypes.h"
 #include "Types/AlarmTypes.h"
 
-// TODO: Location for these two might cause problems...
 #undef ISR
 /**
  * @brief   Define implementation for interrupt service routine

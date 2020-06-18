@@ -28,11 +28,11 @@
  * @note    ActivateTask will not immediately change the state of the task in case of multiple activation requests.
  *          If the task is not suspended, the activation will only be recorded and performed later.
  *
- * @param   TaskID      ID of the task to be activated
+ * @param   TaskID          ID of the task to be activated
  *
- * @return  E_OK        No error \n
- *          E_OS_LIMIT  Too many activations of the task \n
- *          E_OS_ID     TaskID is invalid
+ * @return  E_OK            No error \n
+ *          E_OS_LIMIT      Too many activations of the task \n
+ *          E_OS_ID         TaskID is invalid
  */
 extern StatusType Task_ActivateTask(enum tasks_e TaskID);
 
@@ -89,11 +89,11 @@ extern StatusType Task_GetTaskID(enum tasks_e* TaskID);
 /**
  * @brief   Return the state of a task
  *
- * @param   TaskID  ID of the task to return the state for
- * @param   State   Reference of the specified tasks state
+ * @param   TaskID          ID of the task to return the state for
+ * @param   State           Reference of the specified tasks state
  *
- * @return  E_OK        No error \n
- *          E_OS_ID     TaskID is invalid
+ * @return  E_OK            No error \n
+ *          E_OS_ID         TaskID is invalid
  */
 extern StatusType Task_GetTaskState(enum tasks_e TaskID, OsTaskState* State);
 
