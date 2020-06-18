@@ -173,6 +173,9 @@
     <Compile Include="include\OS.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\OS_API.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\Resource.h">
       <SubType>compile</SubType>
     </Compile>
