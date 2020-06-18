@@ -106,7 +106,7 @@ TASK(T2)
         assert(info.type == HARDWARE);
         assert(info.maxallowedvalue == UINT32_MAX);
         assert(info.mincycle == 1);
-        assert(info.ticksperbase == test);
+        assert(info.ticksperbase == 57);
         assert(info.secondspertick == 0.017778);
     }
 
