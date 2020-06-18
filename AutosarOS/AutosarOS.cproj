@@ -194,6 +194,9 @@
     <Compile Include="include\Types\AlarmTypes.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\Types\ErrorTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\Types\EventTypes.h">
       <SubType>compile</SubType>
     </Compile>
