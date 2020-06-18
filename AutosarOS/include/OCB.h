@@ -43,6 +43,11 @@ extern volatile bool isISR;
 extern volatile uint8_t isCat2ISR;
 
 /**
+ * @brief   Task currently being executed
+ */
+extern volatile enum tasks_e currentTask;
+
+/**
  * @brief   Current task control blocks
  */
 extern volatile struct task_s* TCB_Cfg[];

@@ -1,6 +1,6 @@
 /**
  * @file
- * 
+ *
  * @brief       Implementation of operating system control functions
  *
  * @date        2019-09-02
@@ -12,7 +12,6 @@
  */
 
 #include "OS.h"
-#include "OCB.h"
 #include "assert.h"
 #include "context.h"
 #include "Task.h"
@@ -29,11 +28,9 @@
  */
 static enum tasks_e highestPrioTask;
 
-/**
- * @brief   Current task being executed
- */
-volatile enum tasks_e currentTask = INVALID_TASK;
-
+/************************************************************************/
+/* EXTERNAL VARIABLES                                                   */
+/************************************************************************/
 /**
  * @brief   Stack-Pointer saved in current task control block
  */
@@ -61,7 +58,7 @@ static void OS_StartSysTimer()
 /************************************************************************/
 /* EXTERN FUNCTIONS                                                     */
 /************************************************************************/
-extern void OS_StartOS()
+extern void OS_StartOS(AppModeType mode)
 {
     DisableAllInterrupts();
 
@@ -75,8 +72,8 @@ extern void OS_StartOS()
         }
     }
 
-#ifdef STARTUPHOOK
-    STARTUPHOOK();
+#if defined(OS_CONFIG_HOOK_STARTUP) && OS_CONFIG_HOOK_STARTUP == true
+    StartupHook();
 #endif
 
     /* Switch to first task */
@@ -91,6 +88,17 @@ extern void OS_StartOS()
     EnableAllInterrupts();
 
     asm volatile ("ret"); // Force return to prevent function epilogue removing non-existing data from task stack
+}
+
+extern void OS_ShutdownOS(StatusType error)
+{
+    DisableAllInterrupts();
+
+#if defined(OS_CONFIG_HOOK_SHUTDOWN) && OS_CONFIG_HOOK_SHUTDOWN == true
+    ShutdownHook(error);
+#endif
+
+    while (1);
 }
 
 extern void __attribute__((naked)) OS_ScheduleC()
@@ -116,6 +124,10 @@ extern void __attribute__((naked)) OS_ScheduleC()
             if (TCB_Cfg[currentTask]->curState == RUNNING) {
                 TCB_Cfg[currentTask]->curState = READY;
             }
+
+#if defined(OS_CONFIG_HOOK_PRE_TASK) && OS_CONFIG_HOOK_PRE_TASK == true
+            PreTaskHook();
+#endif
         }
 
         OS_Switch();
@@ -131,6 +143,10 @@ extern void __attribute__((naked)) OS_ScheduleC()
         /* Change task state already to prevent changes to SREG */
         OsTaskState prevState = TCB_Cfg[currentTask]->curState;
         TCB_Cfg[currentTask]->curState = RUNNING;
+
+#if defined(OS_CONFIG_HOOK_POST_TASK) && OS_CONFIG_HOOK_POST_TASK == true
+        PostTaskHook();
+#endif
 
         if (prevState == PRE_READY) {
             TCB_Cfg[currentTask]->context = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize - 1;

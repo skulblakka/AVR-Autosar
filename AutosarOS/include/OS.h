@@ -15,14 +15,36 @@
 #ifndef OS_H_
 #define OS_H_
 
+#include "Types.h"
+#include "OCB.h"
+
 #include <stdbool.h>
 
-extern volatile enum tasks_e currentTask;
 
+/**
+ * @brief   Start operating system
+ * 
+ * This service starts the operating system in the specified application mode. The default
+ * application mode is #OSDEFAULTAPPMODE.
+ * 
+ * @note    Calls to this functions are only allowed outside of the operating system. This call does not
+ *          return.
+ *          
+ * @note    This implementation only supports the default mode.
+ * 
+ * @param   mode        Application mode
+ */
+extern void OS_StartOS(AppModeType mode);
 
-// TODO: Return type
-// TODO: Application mode
-extern void OS_StartOS();
+/**
+ * @brief   Shutdown operating system
+ *
+ * This service shuts down the operating system and does not return. If a ShutdownHook is configured
+ * it will be called before the system is terminated.
+ * 
+ * @param   error       Error occurred
+ */
+extern void OS_ShutdownOS(StatusType error);
 
 // TODO: Return type
 extern void OS_Schedule(void);
@@ -43,12 +65,44 @@ extern void DisableAllInterrupts();
  */
 extern bool forceSchedule;
 
-#ifdef STARTUPHOOK
+#if defined(OS_CONFIG_HOOK_STARTUP) && OS_CONFIG_HOOK_STARTUP == true
 /**
- * @brief   Hook function called after Startup of the OS
+ * @brief   Hook function for startup
+ * 
+ * This hook function is called after system startup and before the scheduler is running.
  */
-extern void STARTUPHOOK();
+extern void StartupHook(void);
 #endif
 
+#if defined(OS_CONFIG_HOOK_SHUTDOWN) && OS_CONFIG_HOOK_SHUTDOWN == true
+/**
+ * @brief   Hook function for shutdown
+ * 
+ * This hook function is called before the system is shutdown.
+ * 
+ * @param   error       Error passed to OS_ShutdownOS()
+ */
+extern void ShutdownHook(StatusType error);
+#endif
+
+#if (defined(OS_CONFIG_HOOK_PRE_TASK) && OS_CONFIG_HOOK_PRE_TASK == true) || defined(__DOXYGEN__)
+/**
+ * @brief   PreTask hook function
+ * 
+ * This hook function is called after a new task has entered the running state but before
+ * it is executed. The ID of the task can be evaluated using OS_GetTaskID()
+ */
+extern void PreTaskHook();
+#endif
+
+#if (defined(OS_CONFIG_HOOK_POST_TASK) && OS_CONFIG_HOOK_POST_TASK == true) || defined(__DOXYGEN__)
+/**
+ * @brief   PostTask hook function
+ * 
+ * This hook function is called before a task leaves the running state but before
+ * a new task is selected. The ID of the task can be evaluated using OS_GetTaskID()
+ */
+extern void PostTaskHook();
+#endif
 
 #endif /* OS_H_ */

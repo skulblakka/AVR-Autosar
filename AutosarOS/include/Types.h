@@ -42,6 +42,12 @@ typedef enum StatusType_e {
     E_OS_VALUE
 } StatusType;
 
+/**
+ * @brief   Type for application mode
+ */
+typedef enum applicationMode_e {
+    OSDEFAULTAPPMODE
+} AppModeType;
 
 
 #endif /* TYPES_H_ */

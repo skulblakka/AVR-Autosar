@@ -19,6 +19,8 @@
 volatile bool isISR = false;
 volatile uint8_t isCat2ISR;
 
+volatile enum tasks_e currentTask = INVALID_TASK;
+
 volatile uint32_t sysTick;
 volatile uint8_t needScheduling;
 volatile uint8_t blockScheduling;
