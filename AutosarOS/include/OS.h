@@ -51,9 +51,23 @@ extern void OS_Schedule(void);
 extern void __attribute__((naked)) OS_ScheduleC();
 extern void OS_Switch();
 
-// TODO Docs and check name conformity with OSEK/Autosar
-extern void EnableAllInterrupts();
-extern void DisableAllInterrupts();
+/**
+ * @brief   Enable all interrupts
+ *
+ * This service enables all interrupts. It is the counterpart to OS_DisableAllInterrupts().
+ *
+ * Nesting is not supported by this call.
+ */
+extern void OS_EnableAllInterrupts(void);
+
+/**
+ * @brief   Disable all interrupts
+ *
+ * This service disables all interrupts. It is the counterpart to OS_EnableAllInterrupts().
+ *
+ * Nesting is not supported by this call.
+ */
+extern void OS_DisableAllInterrupts(void);
 
 /**
  * @brief   Force the next rescheduling

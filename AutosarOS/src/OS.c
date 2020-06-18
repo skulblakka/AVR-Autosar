@@ -60,7 +60,7 @@ static void OS_StartSysTimer()
 /************************************************************************/
 extern void OS_StartOS(AppModeType mode)
 {
-    DisableAllInterrupts();
+    OS_DisableAllInterrupts();
 
     if (TASK_COUNT > 0) {
         assert(TASK_COUNT <= UINT8_MAX);
@@ -85,14 +85,14 @@ extern void OS_StartOS(AppModeType mode)
 
     OS_StartSysTimer();
 
-    EnableAllInterrupts();
+    OS_EnableAllInterrupts();
 
     asm volatile ("ret"); // Force return to prevent function epilogue removing non-existing data from task stack
 }
 
 extern void OS_ShutdownOS(StatusType error)
 {
-    DisableAllInterrupts();
+    OS_DisableAllInterrupts();
 
 #if defined(OS_CONFIG_HOOK_SHUTDOWN) && OS_CONFIG_HOOK_SHUTDOWN == true
     ShutdownHook(error);
@@ -118,7 +118,7 @@ extern void __attribute__((naked)) OS_ScheduleC()
 
     if (!isISR && (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceSchedule))) {
         // Enter critical section
-        DisableAllInterrupts();
+        OS_DisableAllInterrupts();
 
         if (currentTask != INVALID_TASK) {
             if (TCB_Cfg[currentTask]->curState == RUNNING) {
@@ -160,7 +160,7 @@ extern void __attribute__((naked)) OS_ScheduleC()
         /***********************************************/
 
         // Leave critical section
-        EnableAllInterrupts();
+        OS_EnableAllInterrupts();
     } else {
         // Reschedule during system timer interrupt
         needScheduling = 1;
@@ -193,12 +193,12 @@ extern void OS_Switch()
     ptrCurrentFxnAddr = TCB_Cfg[currentTask]->taskFxn;
 }
 
-extern void EnableAllInterrupts()
+extern inline void OS_EnableAllInterrupts(void)
 {
     sei(); // Global interrupt enable
 }
 
-extern void DisableAllInterrupts()
+extern inline void OS_DisableAllInterrupts(void)
 {
     cli(); // Global interrupt disable
 }
