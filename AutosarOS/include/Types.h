@@ -27,9 +27,14 @@
 
 // TODO: Location for these two might cause problems...
 #undef ISR
+/**
+ * @brief   Define implementation for interrupt service routine
+ */
 #define ISR(Name) extern void Func ## Name(void)
 
-// TODO: Docu
+/**
+ * @brief   Type for status
+ */
 typedef enum StatusType_e {
     E_OK = 0,
     E_OS_ACCESS,

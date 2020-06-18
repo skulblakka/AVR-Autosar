@@ -46,9 +46,29 @@ extern void OS_StartOS(AppModeType mode);
  */
 extern void OS_ShutdownOS(StatusType error);
 
-// TODO: Return type
+/**
+ * @brief   Schedule task
+ *
+ * This function calls OS_ScheduleC() unless scheduling is currently blocked. This is basically the
+ * entry point to the scheduler and should be called if scheduling is required or wanted.
+ */
 extern void OS_Schedule(void);
+
+/**
+ * @brief   Task switch
+ *
+ * This function performs the actual scheduling. It selects a new task to be executed and switches
+ * the current context accordingly. It should not be called directly and instead be used with
+ * OS_Schedule().
+ */
 extern void __attribute__((naked)) OS_ScheduleC();
+
+/**
+ * @brief   Switch to new task
+ *
+ * Select the task with the highest priority that is ready and change the state for the context
+ * switch.
+ */
 extern void OS_Switch();
 
 /**
