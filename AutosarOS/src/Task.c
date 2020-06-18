@@ -1,6 +1,6 @@
 /**
  * @file
- * 
+ *
  * @brief       Implementation of task management
  *
  * @date        2019-09-02
