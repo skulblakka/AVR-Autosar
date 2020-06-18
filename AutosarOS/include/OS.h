@@ -51,9 +51,69 @@ extern void OS_Schedule(void);
 extern void __attribute__((naked)) OS_ScheduleC();
 extern void OS_Switch();
 
-// TODO Docs and check name conformity with OSEK/Autosar
-extern void EnableAllInterrupts();
-extern void DisableAllInterrupts();
+/**
+ * @brief   Enable all interrupts
+ *
+ * This service enables all interrupts. It is the counterpart to OS_DisableAllInterrupts().
+ *
+ * Nesting is not supported by this call.
+ */
+extern void OS_EnableAllInterrupts(void);
+
+/**
+ * @brief   Disable all interrupts
+ *
+ * This service disables all interrupts. It is the counterpart to OS_EnableAllInterrupts().
+ *
+ * Nesting is not supported by this call.
+ */
+extern void OS_DisableAllInterrupts(void);
+
+/**
+ * @brief   Resume all interrupts
+ *
+ * This service resumes all interrupts disabled by the previous call to OS_SuspendAllInterrupts().
+ *
+ * Nesting is supported by this call.
+ */
+extern void OS_ResumeAllInterrupts(void);
+
+/**
+ * @brief   Suspend all interrupts
+ *
+ * This service suspends all interrupts. It is the counterpart to OS_ResumeAllInterrupts().
+ *
+ * Nesting is supported by this call
+ */
+extern void OS_SuspendAllInterrupts(void);
+
+/**
+ * @brief   Resume OS interrupts
+ *
+ * This service resumes OS interrupts disabled by the privious call to OS_SuspendOSInterrupts().
+ *
+ * Nesting is supported by this call.
+ *
+ * @note    Because of hardware limitations there is no difference between this function and
+ *          OS_ResumeAllInterrupts(). However the correct counterpart must be used.
+ *
+ * @warning Nesting is only supported up to 8 levels!
+ */
+extern void OS_ResumeOSInterrupts(void);
+
+/**
+ * @brief   Suspend OS interrupts
+ *
+ * This service suspends all OS interrupts. It is the counterpart to OS_ResumeOSInterrupts().
+ *
+ * Nesting is supported by this call.
+ *
+ * @note    Because of hardware limitation there is no difference between this function and
+ *          OS_SuspendAllInterrupts(). However the correct counterpart must be used.
+ *
+ * @warning Nesting is only supported up to 8 levels!
+ */
+extern void OS_SuspendOSInterrupts(void);
 
 /**
  * @brief   Force the next rescheduling
