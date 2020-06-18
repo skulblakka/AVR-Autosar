@@ -125,7 +125,7 @@ extern StatusType Task_Schedule()
 
     Resource_ReleaseInternalResource();
 
-    forceSchedule = true;
+    forceScheduling = true;
     OS_Schedule();
 
     return E_OK;

@@ -20,7 +20,6 @@
 
 #include <stdbool.h>
 
-
 /**
  * @brief   Start operating system
  *
@@ -136,14 +135,11 @@ extern void OS_ResumeOSInterrupts(void);
 extern void OS_SuspendOSInterrupts(void);
 
 /**
- * @brief   Force the next rescheduling
- *
- * If set to true the next call of OS_Schedule() will perform a rescheduling
- * even if current task is marked as non-preemptive.
- *
- * This should only be set immediately before OS_Schedule() is called.
+ * @brief   Get currently active application mode
+ * 
+ * @return  Current application mode
  */
-extern bool forceSchedule;
+extern AppModeType OS_GetActiveApplicationMode(void);
 
 #if defined(OS_CONFIG_HOOK_STARTUP) && OS_CONFIG_HOOK_STARTUP == true
 /**

@@ -44,6 +44,11 @@ static uint8_t intStates;
  */
 static uint8_t osIntStates;
 
+/**
+ * @brief   Currently active application mode
+ */
+static AppModeType activeApplicationMode;
+
 /************************************************************************/
 /* EXTERNAL VARIABLES                                                   */
 /************************************************************************/
@@ -56,8 +61,6 @@ uint8_t* volatile* ptrCurrentStack;
  * @brief   Function pointer to current task function
  */
 pTaskFxn ptrCurrentFxnAddr;
-
-bool forceSchedule;
 
 /************************************************************************/
 /* STATIC FUNCTIONS                                                     */
@@ -77,6 +80,8 @@ static void OS_StartSysTimer()
 extern void OS_StartOS(AppModeType mode)
 {
     OS_DisableAllInterrupts();
+    
+    activeApplicationMode = mode;
 
     if (TASK_COUNT > 0) {
         assert(TASK_COUNT <= UINT8_MAX);
@@ -132,7 +137,7 @@ extern void __attribute__((naked)) OS_ScheduleC()
         assert(TCB_Cfg[currentTask]->maxStackUse <= TCB_Cfg[currentTask]->stackSize);
     }
 
-    if (!isISR && (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceSchedule))) {
+    if (!isISR && (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceScheduling))) {
         // Enter critical section
         OS_DisableAllInterrupts();
 
@@ -150,7 +155,7 @@ extern void __attribute__((naked)) OS_ScheduleC()
 
         // Reset scheduling state
         needScheduling = 0;
-        forceSchedule = false;
+        forceScheduling = false;
 
         assert(currentTask != INVALID_TASK);
 
@@ -248,4 +253,9 @@ extern void OS_SuspendOSInterrupts(void)
     osIntStates = (osIntStates << 1) | ((SREG >> SREG_I) & 0b1);
 
     OS_DisableAllInterrupts();
+}
+
+extern AppModeType OS_GetActiveApplicationMode(void)
+{
+    return activeApplicationMode;
 }
