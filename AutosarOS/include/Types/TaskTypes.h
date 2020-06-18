@@ -46,26 +46,29 @@ typedef enum OsTaskAutostart_e {
     AUTOSTART         /**< Autostart task */
 } OsTaskAutostart;
 
+/**
+ * @brief   Data structure for task
+ */
 struct task_s {
-    uint8_t* const stack;
-    const uint16_t stackSize;
-    const uint8_t prio;
-    const uint8_t numberOfActivations;
-    const OsTaskAutostart autostart;
-    const OsTaskType taskType;
-    const OsTaskSchedule taskSchedule;
-    const pTaskFxn taskFxn;
-    volatile struct internalResource_s* const internalResource;
-    const EventMaskType events;
-    uint8_t* context;
-    uint8_t curPrio;
-    uint8_t curNumberOfActivations;
-    OsTaskState curState;
-    uint16_t curStackUse;
-    uint16_t maxStackUse;
-    struct resource_s* resourceQueue;
-    EventMaskType waitEvents;
-    EventMaskType pendingEvents;
+    uint8_t* const stack;                                       /**< Pointer to stack base */
+    const uint16_t stackSize;                                   /**< Size of stack in bytes */
+    const uint8_t prio;                                         /**< Static priority of the task */
+    const uint8_t numberOfActivations;                          /**< Number of simultaneous activations */
+    const OsTaskAutostart autostart;                            /**< Whether or not to start the task during startup */
+    const OsTaskType taskType;                                  /**< Type of task */
+    const OsTaskSchedule taskSchedule;                          /**< Scheduling-type of task */
+    const pTaskFxn taskFxn;                                     /**< Pointer to task function */
+    volatile struct internalResource_s* const internalResource; /**< Pointer to internal resource */
+    const EventMaskType events;                                 /**< Mask of assigned task events */
+    uint8_t* context;                                           /**< Current context/stack pointer */
+    uint8_t curPrio;                                            /**< Current priority */
+    uint8_t curNumberOfActivations;                             /**< Current number of activations */
+    OsTaskState curState;                                       /**< Current state of the task */
+    uint16_t curStackUse;                                       /**< Current stack usage */
+    uint16_t maxStackUse;                                       /**< Maximum recorded stack usage */
+    struct resource_s* resourceQueue;                           /**< Current queue of allocated resources */
+    EventMaskType waitEvents;                                   /**< Mask of events the task is currently waiting on */
+    EventMaskType pendingEvents;                                /**< Mask of currently pending events */
 };
 
 #endif /* TASKTYPES_H_ */

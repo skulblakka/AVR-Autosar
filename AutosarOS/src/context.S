@@ -12,7 +12,7 @@
  *              (at your option) any later version.
  */
 
- #include <avr/io.h>
+#include <avr/io.h>
 
 .section .bss
 retAddr1:   .skip 2
@@ -72,9 +72,9 @@ save_context:
     push    r29
     push    r30
     push    r31
-    lds     r26, ptrCurrentStack       // Load address for storing current SP
+    lds     r26, ptrCurrentStack        // Load address for storing current SP
     lds     r27, ptrCurrentStack + 1
-    in      r0, _SFR_IO_ADDR(SPL)   // Store SP
+    in      r0, _SFR_IO_ADDR(SPL)       // Store SP
     st      x+, r0
     in      r0, _SFR_IO_ADDR(SPH)
     st      x+, r0
