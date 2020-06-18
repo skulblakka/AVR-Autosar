@@ -28,8 +28,8 @@
  * If the specified was waiting for at least one of the events specified it will
  * be transferred to the ready state.
  *
- * @param   TaskID      ID of the task to set the events for
- * @param   events      Mask of the events to set
+ * @param   TaskID          ID of the task to set the events for
+ * @param   events          Mask of the events to set
  *
  * @return  E_OK            No error \n
  *          E_OS_ID         TaskID is invalid \n
@@ -46,7 +46,7 @@ extern StatusType Events_SetEvent(enum tasks_e TaskID, EventMaskType events);
  * Events can only be cleared by extended tasks. Tasks can only clear their
  * own events.
  *
- * @param   events      Mask of events to clear
+ * @param   events          Mask of events to clear
  *
  * @return  E_OK            No error \n
  *          E_OS_ACCESS     Call not from extended task \n
@@ -58,9 +58,9 @@ extern StatusType Events_ClearEvent(EventMaskType events);
  * @brief   Get events
  *
  * Get current event state of task.
- * 
- * @param   TaskID      ID of the task to request event state from
- * @param   events      Pointer to write event state to
+ *
+ * @param   TaskID          ID of the task to request event state from
+ * @param   events          Pointer to write event state to
  *
  * @return  E_OK            No error \n
  *          E_OS_ID         TaskID is invalid \n
@@ -81,7 +81,7 @@ extern StatusType Events_GetEvent(enum tasks_e TaskID, EventMaskRefType events);
  *
  * This service shall only be called from the extended task owning the events.
  *
- * @param   events      Mask of events to wait for
+ * @param   events          Mask of events to wait for
  *
  * @return  E_OK            No error \n
  *          E_OS_ACCESS     Calling task is not an extended task \n

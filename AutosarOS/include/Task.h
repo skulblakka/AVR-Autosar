@@ -28,13 +28,13 @@
  * @note    ActivateTask will not immediately change the state of the task in case of multiple activation requests.
  *          If the task is not suspended, the activation will only be recorded and performed later.
  *
- * @param   TaskID      ID of the task to be activated
+ * @param   TaskID          ID of the task to be activated
  *
- * @return  E_OK        No error \n
- *          E_OS_LIMIT  Too many activations of the task \n
- *          E_OS_ID     TaskID is invalid
+ * @return  E_OK            No error \n
+ *          E_OS_LIMIT      Too many activations of the task \n
+ *          E_OS_ID         TaskID is invalid
  */
-extern StatusType OS_ActivateTask(enum tasks_e TaskID);
+extern StatusType Task_ActivateTask(enum tasks_e TaskID);
 
 /**
  * @brief   Chain task
@@ -50,7 +50,7 @@ extern StatusType OS_ActivateTask(enum tasks_e TaskID);
  *          E_OS_RESOURCE   Task still occupies resources \n
  *          E_OS_CALLLEVEL  Call at interrupt level
  */
-extern StatusType OS_ChainTask(enum tasks_e TaskID);
+extern StatusType Task_ChainTask(enum tasks_e TaskID);
 
 /**
  * @brief   Terminate active task
@@ -60,7 +60,7 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID);
  * @return  E_OS_RESOURCE   Task still occupies resources \n
  *          E_OS_CALLLEVEL  Call at interrupt level
  */
-extern StatusType OS_TerminateTask();
+extern StatusType Task_TerminateTask();
 
 /**
  * @brief   Reschedule current task
@@ -84,17 +84,17 @@ extern StatusType Task_Schedule();
  *
  * @return  E_OK    No error
  */
-extern StatusType OS_GetTaskID(enum tasks_e* TaskID);
+extern StatusType Task_GetTaskID(enum tasks_e* TaskID);
 
 /**
  * @brief   Return the state of a task
  *
- * @param   TaskID  ID of the task to return the state for
- * @param   State   Reference of the specified tasks state
+ * @param   TaskID          ID of the task to return the state for
+ * @param   State           Reference of the specified tasks state
  *
- * @return  E_OK        No error \n
- *          E_OS_ID     TaskID is invalid
+ * @return  E_OK            No error \n
+ *          E_OS_ID         TaskID is invalid
  */
-extern StatusType OS_GetTaskState(enum tasks_e TaskID, OsTaskState* State);
+extern StatusType Task_GetTaskState(enum tasks_e TaskID, OsTaskState* State);
 
 #endif /* TASK_H_ */

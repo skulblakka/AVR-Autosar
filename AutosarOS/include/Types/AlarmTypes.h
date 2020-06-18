@@ -44,6 +44,9 @@ typedef volatile struct counter_s AlarmBaseType;
  */
 typedef AlarmBaseType* AlarmBaseRefType;
 
+/**
+ * @brief   Type for alarm reference
+ */
 typedef enum alarm_e AlarmType;
 
 /**

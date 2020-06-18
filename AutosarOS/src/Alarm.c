@@ -206,7 +206,7 @@ static void Alarm_handleAlarmExpiration(AlarmType alarmID)
     /* Perform configured action */
     switch (Alarm_Cfg[alarmID]->actionType) {
     case ALARM_ACTION_TASK:
-        OS_ActivateTask(Alarm_Cfg[alarmID]->action.task);
+        Task_ActivateTask(Alarm_Cfg[alarmID]->action.task);
         break;
     case ALARM_ACTION_EVENT:
         Events_SetEvent(Alarm_Cfg[alarmID]->action.task, Alarm_Cfg[alarmID]->event);
@@ -233,4 +233,3 @@ static void Alarm_handleAlarmExpiration(AlarmType alarmID)
         }
     }
 }
-

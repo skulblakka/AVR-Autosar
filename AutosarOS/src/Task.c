@@ -16,7 +16,7 @@
 #include "assert.h"
 #include "Resource.h"
 
-extern StatusType OS_ActivateTask(enum tasks_e TaskID)
+extern StatusType Task_ActivateTask(enum tasks_e TaskID)
 {
     if (TaskID >= INVALID_TASK) {
         return E_OS_ID;
@@ -37,7 +37,7 @@ extern StatusType OS_ActivateTask(enum tasks_e TaskID)
     return E_OK;
 }
 
-extern StatusType OS_ChainTask(enum tasks_e TaskID)
+extern StatusType Task_ChainTask(enum tasks_e TaskID)
 {
     if (isISR) { // TODO: Extended error check
         return E_OS_CALLLEVEL;
@@ -68,7 +68,7 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID)
         TCB_Cfg[currentTask]->curState = SUSPENDED;
     }
 
-    OS_ReleaseInternalResource();
+    Resource_ReleaseInternalResource();
 
     currentTask = INVALID_TASK;
 
@@ -81,7 +81,7 @@ extern StatusType OS_ChainTask(enum tasks_e TaskID)
     return E_OK;
 }
 
-extern StatusType OS_TerminateTask()
+extern StatusType Task_TerminateTask()
 {
     if (isISR) { // TODO: Extended error check
         return E_OS_CALLLEVEL;
@@ -100,7 +100,7 @@ extern StatusType OS_TerminateTask()
         TCB_Cfg[currentTask]->curState = SUSPENDED;
     }
 
-    OS_ReleaseInternalResource();
+    Resource_ReleaseInternalResource();
 
     currentTask = INVALID_TASK;
 
@@ -123,7 +123,7 @@ extern StatusType Task_Schedule()
         return E_OS_RESOURCE;
     }
 
-    OS_ReleaseInternalResource();
+    Resource_ReleaseInternalResource();
 
     forceSchedule = true;
     OS_Schedule();
@@ -131,7 +131,7 @@ extern StatusType Task_Schedule()
     return E_OK;
 }
 
-extern StatusType OS_GetTaskID(enum tasks_e* TaskID)
+extern StatusType Task_GetTaskID(enum tasks_e* TaskID)
 {
     *TaskID = currentTask;
 
@@ -139,7 +139,7 @@ extern StatusType OS_GetTaskID(enum tasks_e* TaskID)
 }
 
 
-extern StatusType OS_GetTaskState(enum tasks_e TaskID, OsTaskState* State)
+extern StatusType Task_GetTaskState(enum tasks_e TaskID, OsTaskState* State)
 {
     if (TaskID >= INVALID_TASK) {
         return E_OS_ID;

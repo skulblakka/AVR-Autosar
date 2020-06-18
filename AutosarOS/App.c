@@ -45,7 +45,8 @@ TASK(T2)
 {
     static uint8_t t = 0;
 
-    OS_ActivateTask(T6);
+    Task_ActivateTask(T6);
+
     OS_SuspendAllInterrupts();
     OS_ResumeAllInterrupts();
 
@@ -120,31 +121,31 @@ TASK(T2)
         StatusType stat;
 
         /* These tests should succeed */
-        stat = OS_GetResource(Res1);
+        stat = Resource_GetResource(Res1);
         assert(stat == E_OK);
-        stat = OS_GetResource(Res2);
+        stat = Resource_GetResource(Res2);
         assert(stat == E_OK);
-        stat = OS_GetResource(Res3);
+        stat = Resource_GetResource(Res3);
         assert(stat == E_OK);
         /* Request resource again => should fail */
-        stat = OS_GetResource(Res3);
+        stat = Resource_GetResource(Res3);
         assert(stat == E_OS_ACCESS);
         /* Request resource with ceiling priority below static task priority => should fail */
-        stat = OS_GetResource(Res4);
+        stat = Resource_GetResource(Res4);
         assert(stat == E_OS_ACCESS);
         /* Request resource with invalid ID => should fail */
-        stat = OS_GetResource(64);
+        stat = Resource_GetResource(64);
         assert(stat == E_OS_ID);
 
         /* These tests should succeed */
-        stat = OS_ReleaseResource(Res3);
+        stat = Resource_ReleaseResource(Res3);
         assert(stat == E_OK);
-        stat = OS_ReleaseResource(Res2);
+        stat = Resource_ReleaseResource(Res2);
         assert(stat == E_OK);
-        stat = OS_ReleaseResource(Res1);
+        stat = Resource_ReleaseResource(Res1);
         assert(stat == E_OK);
         /* Release same resource again => should fail */
-        stat = OS_ReleaseResource(Res1);
+        stat = Resource_ReleaseResource(Res1);
         assert(stat == E_OS_NOFUNC);
 
 
@@ -153,11 +154,11 @@ TASK(T2)
         PORTB |= (1 << 2);  // turn LED off
         _delay_ms(1000);
         if (t++ % 3 == 0) {
-            OS_ActivateTask(T3);
+            Task_ActivateTask(T3);
         } else if (t == 20) {
-            OS_ChainTask(T2);
+            Task_ChainTask(T2);
         } else if (t == 30) {
-            OS_TerminateTask();
+            Task_TerminateTask();
         }
     }
 }
@@ -181,14 +182,14 @@ TASK(T3)
     }
 
     enum tasks_e taskID = INVALID_TASK;
-    OS_GetTaskID(&taskID);
+    Task_GetTaskID(&taskID);
     assert(taskID == T3);
 
     OsTaskState state = SUSPENDED;
-    OS_GetTaskState(T3, &state);
+    Task_GetTaskState(T3, &state);
     assert(state == RUNNING);
 
-    OS_TerminateTask();
+    Task_TerminateTask();
 }
 
 TASK(T4)
@@ -200,8 +201,8 @@ TASK(T4)
         _delay_ms(1000);
     }
 
-    if (OS_ChainTask(T5) != E_OK) {
-        OS_TerminateTask();
+    if (Task_ChainTask(T5) != E_OK) {
+        Task_TerminateTask();
     }
 }
 
@@ -214,7 +215,7 @@ TASK(T5)
         _delay_ms(1000);
     }
 
-    OS_TerminateTask();
+    Task_TerminateTask();
 }
 
 TASK(T6)
@@ -226,7 +227,7 @@ TASK(T6)
         _delay_ms(1000);
     }
 
-    OS_TerminateTask();
+    Task_TerminateTask();
 }
 
 TASK(T7)
@@ -296,7 +297,7 @@ TASK(T7)
         Events_ClearEvent(0x01);
     }
 
-    OS_TerminateTask();
+    Task_TerminateTask();
 }
 
 extern void StartupHook(void)
@@ -350,27 +351,27 @@ extern void ShutdownHook(StatusType error)
 extern void PreTaskHook(void)
 {
     enum tasks_e task;
-    OS_GetTaskID(&task);
+    Task_GetTaskID(&task);
 }
 
 extern void PostTaskHook(void)
 {
     enum tasks_e task;
-    OS_GetTaskID(&task);
+    Task_GetTaskID(&task);
 }
 
 ISR(INT0_vect)
 {
     assert(isISR && isCat2ISR);
-    OS_ActivateTask(T4);
+    Task_ActivateTask(T4);
 
-    OS_GetResource(Res1);
-    OS_GetResource(Res2);
-    OS_GetResource(Res3);
+    Resource_GetResource(Res1);
+    Resource_GetResource(Res2);
+    Resource_GetResource(Res3);
 
-    OS_ReleaseResource(Res3);
-    OS_ReleaseResource(Res2);
-    OS_ReleaseResource(Res1);
+    Resource_ReleaseResource(Res3);
+    Resource_ReleaseResource(Res2);
+    Resource_ReleaseResource(Res1);
 }
 
 ISR(INT1_vect)
@@ -387,5 +388,5 @@ ISR(TIMER1_COMPA_vect)
 
 ALARMCALLBACK(AlarmCb)
 {
-    OS_ActivateTask(T7);
+    Task_ActivateTask(T7);
 }
