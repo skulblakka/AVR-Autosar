@@ -18,7 +18,7 @@
 
 #include <util/atomic.h>
 
-extern StatusType OS_GetResource(enum resources_e ResID)
+extern StatusType Resource_GetResource(enum resources_e ResID)
 {
     if (ResID >= RESOURCE_COUNT) {
         return E_OS_ID;
@@ -66,7 +66,7 @@ extern StatusType OS_GetResource(enum resources_e ResID)
     return E_OK;
 }
 
-extern StatusType OS_ReleaseResource(enum resources_e ResID)
+extern StatusType Resource_ReleaseResource(enum resources_e ResID)
 {
     if (ResID >= RESOURCE_COUNT) {
         return E_OS_ID;
@@ -133,7 +133,7 @@ extern StatusType OS_ReleaseResource(enum resources_e ResID)
     return E_OK;
 }
 
-extern void OS_GetInternalResource()
+extern void Resource_GetInternalResource()
 {
     if (TCB_Cfg[currentTask]->internalResource != &IntResourceNULL_s) {
         assert(TCB_Cfg[currentTask]->internalResource->prio >= TCB_Cfg[currentTask]->prio);
@@ -146,7 +146,7 @@ extern void OS_GetInternalResource()
     }
 }
 
-extern void OS_ReleaseInternalResource()
+extern void Resource_ReleaseInternalResource()
 {
     if (TCB_Cfg[currentTask]->internalResource != &IntResourceNULL_s) {
         assert(TCB_Cfg[currentTask]->internalResource->assigned == true);

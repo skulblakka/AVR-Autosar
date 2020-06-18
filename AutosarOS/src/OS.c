@@ -97,7 +97,7 @@ extern void OS_StartOS(AppModeType mode)
     init_context();
     TCB_Cfg[currentTask]->curState = RUNNING;
     TCB_Cfg[currentTask]->curNumberOfActivations += 1;
-    OS_GetInternalResource();
+    Resource_GetInternalResource();
 
     OS_StartSysTimer();
 
@@ -154,7 +154,7 @@ extern void __attribute__((naked)) OS_ScheduleC()
 
         assert(currentTask != INVALID_TASK);
 
-        OS_GetInternalResource();
+        Resource_GetInternalResource();
 
         /* Change task state already to prevent changes to SREG */
         OsTaskState prevState = TCB_Cfg[currentTask]->curState;

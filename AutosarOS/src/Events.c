@@ -118,7 +118,7 @@ extern StatusType Events_WaitEvent(EventMaskType events)
             /* None of the requested events is pending => transfer to WAITING state */
             TCB_Cfg[currentTask]->curState = WAITING;
 
-            OS_ReleaseInternalResource();
+            Resource_ReleaseInternalResource();
 
             forceSchedule = true;
             OS_Schedule();

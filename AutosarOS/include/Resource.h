@@ -25,7 +25,7 @@
  * @brief   Request a resource
  *
  * This call serves to enter critical sections in the code that are assigned to the resource referenced by ResID.
- * A critical section shall always be left using #OS_ReleaseResource.
+ * A critical section shall always be left using Resource_ReleaseResource().
  *
  * @param   ResID   Reference to resource
  *
@@ -35,13 +35,13 @@
  *                          or the statically assigned priority of the calling task or interrupt
  *                          routine is higher than the calculated ceiling priority
  */
-extern StatusType OS_GetResource(enum resources_e ResID);
+extern StatusType Resource_GetResource(enum resources_e ResID);
 
 /**
  * @brief   Release a resource
  *
- * #OS_ReleaseResource is the counterpart of #OS_GetResource and serves to leave critical sections in the code
- * that are assigned to the resource referenced by ResID.
+ * This function is the counterpart of Resource_GetResource() and serves to leave critical sections
+ * in the code that are assigned to the resource referenced by ResID.
  *
  * @param   ResID   Reference to resource
  *
@@ -53,21 +53,21 @@ extern StatusType OS_GetResource(enum resources_e ResID);
  *                          than the statically assigned priority of the calling task or interrupt routine
  *
  */
-extern StatusType OS_ReleaseResource(enum resources_e ResID);
+extern StatusType Resource_ReleaseResource(enum resources_e ResID);
 
 /**
  * @brief   Get internal resource of the current task if one is assigned
  *
  * @warning This function should only be called with interrupts disabled!
  */
-extern void OS_GetInternalResource();
+extern void Resource_GetInternalResource();
 
 /**
  * @brief   Release internal resource of the current task if one is assigned
  *
  * @warning This function should only be called with interrupts disabled!
  */
-extern void OS_ReleaseInternalResource();
+extern void Resource_ReleaseInternalResource();
 
 
 #endif /* RESOURCE_H_ */
