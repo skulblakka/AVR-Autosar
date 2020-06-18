@@ -113,4 +113,15 @@ extern void PreTaskHook();
 extern void PostTaskHook();
 #endif
 
+#if (defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true) || defined(__DOXYGEN__)
+/**
+ * @brief   PostTask hook function
+ *
+ * This hook function is called when a system service return StatusType not equal E_OK.
+ *
+ * @warning This function is executed with interrupts disabled and must not activate them!
+ */
+extern void ErrorHook();
+#endif
+
 #endif /* OS_H_ */

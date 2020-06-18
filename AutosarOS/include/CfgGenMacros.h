@@ -104,6 +104,18 @@
 #define OS_CONFIG_HOOK_POST_TASK
 
 /**
+ * @brief   Enable ErrorHook
+ *
+ * If defined and set to true the ErrorHook() will be called when a system service 
+ * returns StatusType not equal E_OK. 
+ * It will also be called when an alarm expires  and an error is detected during task
+ * activation or event setting. 
+ * It will not be called if a system service called from the ErrorHook does not 
+ * return E_OK.
+ */
+#define OS_CONFIG_HOOK_ERROR
+
+/**
  * @brief   Beginning of task definitions
  */
 #define OS_CONFIG_TASK_BEGIN
