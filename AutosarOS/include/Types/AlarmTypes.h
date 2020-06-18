@@ -17,7 +17,7 @@
 
 #include "AlarmTypes.h"
 #include "EventTypes.h"
-#include "OS.h"
+#include "OCB.h"
 
 /**
  * @brief   Define implementation of alarm callback

@@ -43,6 +43,11 @@ extern volatile bool isISR;
 extern volatile uint8_t isCat2ISR;
 
 /**
+ * @brief   Task currently being executed
+ */
+extern volatile enum tasks_e currentTask;
+
+/**
  * @brief   Current task control blocks
  */
 extern volatile struct task_s* TCB_Cfg[];
@@ -61,7 +66,7 @@ extern volatile uint8_t needScheduling;
 
 /**
  * @brief   Block scheduling
- * 
+ *
  * While set to a value different from zero all scheduling will be blocked.
  */
 extern volatile uint8_t blockScheduling;

@@ -16,7 +16,7 @@
 
 int main(void)
 {
-    OS_StartOS();
+    OS_StartOS(OSDEFAULTAPPMODE);
 
     while (1);
 }

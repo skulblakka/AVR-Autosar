@@ -1,6 +1,6 @@
 /**
  * @file
- * 
+ *
  * @brief       Implementation of Operating System Control Block
  *
  * @date        2019-09-02
@@ -18,6 +18,8 @@
 
 volatile bool isISR = false;
 volatile uint8_t isCat2ISR;
+
+volatile enum tasks_e currentTask = INVALID_TASK;
 
 volatile uint32_t sysTick;
 volatile uint8_t needScheduling;

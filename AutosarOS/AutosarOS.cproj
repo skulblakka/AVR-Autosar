@@ -71,7 +71,6 @@
   <avrgcc.compiler.symbols.DefSymbols>
     <ListValues>
       <Value>F_CPU=14745600UL</Value>
-      <Value>STARTUPHOOK=StartupHook</Value>
       <Value>NDEBUG</Value>
     </ListValues>
   </avrgcc.compiler.symbols.DefSymbols>
@@ -113,7 +112,6 @@
   <avrgcc.compiler.symbols.DefSymbols>
     <ListValues>
       <Value>F_CPU=14745600UL</Value>
-      <Value>STARTUPHOOK=StartupHook</Value>
       <Value>DEBUG</Value>
       <Value>ASSERT_BUFFER_SIZE=512</Value>
       <Value>STATIC_ASSERT_BUFFER</Value>

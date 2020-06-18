@@ -72,6 +72,49 @@
 
 /* Generate documentation */
 #ifdef __DOXYGEN__
+
+/**
+ * @brief   Enable StartupHook
+ *
+ * If defined and set to true the StartupHook() will be called on system startup.
+ */
+#define OS_CONFIG_HOOK_STARTUP
+
+/**
+ * @brief   Enable ShutdownHook
+ *
+ * If defined and set to true the ShutdownHook() will be called on system shutdown.
+ */
+#define OS_CONFIG_HOOK_SHUTDOWN
+
+/**
+ * @brief   Enable PreTaskHook
+ *
+ * If defined and set to true the PreTaskHook() will be called after a new task enters
+ * the running state.
+ */
+#define OS_CONFIG_HOOK_PRE_TASK
+
+/**
+ * @brief   Enable PostTaskHook
+ *
+ * If defined and set to true the PostTaskHook() will be called before a task leaves
+ * the running state.
+ */
+#define OS_CONFIG_HOOK_POST_TASK
+
+/**
+ * @brief   Enable ErrorHook
+ *
+ * If defined and set to true the ErrorHook() will be called when a system service 
+ * returns StatusType not equal E_OK. 
+ * It will also be called when an alarm expires  and an error is detected during task
+ * activation or event setting. 
+ * It will not be called if a system service called from the ErrorHook does not 
+ * return E_OK.
+ */
+#define OS_CONFIG_HOOK_ERROR
+
 /**
  * @brief   Beginning of task definitions
  */

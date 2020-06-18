@@ -21,6 +21,7 @@
 #include "Events.h"
 #include "Counter.h"
 #include "Alarm.h"
+#include "OS.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -293,7 +294,7 @@ TASK(T7)
     OS_TerminateTask();
 }
 
-extern void StartupHook()
+extern void StartupHook(void)
 {
     DDRB  = 0xFF;   // PB as output
     PORTB = 0xFF;   // keep all LEDs off
@@ -328,6 +329,29 @@ extern void StartupHook()
         _delay_ms(50);
         t++;
     }
+}
+
+extern void ShutdownHook(StatusType error)
+{
+    DDRB  = 0xFF;   // PB as output
+    PORTB = 0xFF;   // keep all LEDs off
+
+    for (uint8_t i = 0; i < 11; i++) {
+        PORTB ^= 0xFF;
+        _delay_ms(1000);
+    }
+}
+
+extern void PreTaskHook(void)
+{
+    enum tasks_e task;
+    OS_GetTaskID(&task);
+}
+
+extern void PostTaskHook(void)
+{
+    enum tasks_e task;
+    OS_GetTaskID(&task);
 }
 
 ISR(INT0_vect)
