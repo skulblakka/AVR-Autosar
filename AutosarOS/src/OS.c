@@ -28,6 +28,22 @@
  */
 static enum tasks_e highestPrioTask;
 
+/**
+ * @brief   Saved interrupt states
+ *
+ * This variable is used to save the interrupts states in OS_ResumeAllInterrupts() and
+ * OS_SuspendAllInterrupts() allowing nesting of said functions.
+ */
+static uint8_t intStates;
+
+/**
+ * @brief   Saved OS interrupt states
+ *
+ * This variable is used to save the interrupts states in OS_ResumeOSInterrupts() and
+ * OS_SuspendOSInterrupts() allowing nesting of said functions.
+ */
+static uint8_t osIntStates;
+
 /************************************************************************/
 /* EXTERNAL VARIABLES                                                   */
 /************************************************************************/
@@ -201,4 +217,35 @@ extern inline void OS_EnableAllInterrupts(void)
 extern inline void OS_DisableAllInterrupts(void)
 {
     cli(); // Global interrupt disable
+}
+
+extern void OS_ResumeAllInterrupts(void)
+{
+    bool enable = (intStates & 0b1);
+    intStates = (intStates >> 1);
+
+    if (enable) {
+        OS_EnableAllInterrupts();
+    }
+}
+extern void OS_SuspendAllInterrupts(void)
+{
+    intStates = (intStates << 1) | ((SREG >> SREG_I) & 0b1);
+
+    OS_DisableAllInterrupts();
+}
+extern void OS_ResumeOSInterrupts(void)
+{
+    bool enable = (osIntStates & 0b1);
+    osIntStates = (osIntStates >> 1);
+
+    if (enable) {
+        OS_EnableAllInterrupts();
+    }
+}
+extern void OS_SuspendOSInterrupts(void)
+{
+    osIntStates = (osIntStates << 1) | ((SREG >> SREG_I) & 0b1);
+
+    OS_DisableAllInterrupts();
 }
