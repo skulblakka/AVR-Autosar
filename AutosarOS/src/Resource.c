@@ -18,20 +18,46 @@
 
 #include <util/atomic.h>
 
-extern StatusType Resource_GetResource(enum resources_e ResID)
+extern StatusType Resource_GetResource(ResourceType ResID)
 {
-    if (ResID >= RESOURCE_COUNT) {
+    OS_SET_ERROR_INFO1(OSServiceId_GetResource, &ResID, sizeof(ResID));
+
+    if (OS_EXTENDED && ResID >= RESOURCE_COUNT) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (Res_Cfg[ResID]->assigned) {
+        if (OS_EXTENDED && Res_Cfg[ResID]->assigned) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_ACCESS;
         }
 
-        if ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio)
-                || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio)) { // TODO Extended error check
+        if (OS_EXTENDED && ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio)
+                        || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio))) {
             // Prio of requested resource is lower than static prio of calling task or ISR
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_ACCESS;
         }
 
@@ -66,20 +92,46 @@ extern StatusType Resource_GetResource(enum resources_e ResID)
     return E_OK;
 }
 
-extern StatusType Resource_ReleaseResource(enum resources_e ResID)
+extern StatusType Resource_ReleaseResource(ResourceType ResID)
 {
-    if (ResID >= RESOURCE_COUNT) {
+    OS_SET_ERROR_INFO1(OSServiceId_ReleaseResource, &ResID, sizeof(ResID));
+
+    if (OS_EXTENDED && ResID >= RESOURCE_COUNT) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (!Res_Cfg[ResID]->assigned) {
+        if (OS_EXTENDED && !Res_Cfg[ResID]->assigned) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_NOFUNC;
         }
 
-        if ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio)
-                || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio)) { // TODO Extended error check
+        if (OS_EXTENDED &&  ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio)
+                        || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio))) {
             // Prio of requested resource is lower than static prio of calling task or ISR
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_ACCESS;
         }
 
@@ -112,7 +164,15 @@ extern StatusType Resource_ReleaseResource(enum resources_e ResID)
             resPtr = &(*resPtr)->next;
         }
 
-        if (*resPtr != Res_Cfg[ResID]) { // TODO Extended error check
+        if (OS_EXTENDED && *resPtr != Res_Cfg[ResID]) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_NOFUNC;
         }
 

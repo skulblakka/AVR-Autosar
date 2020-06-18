@@ -24,6 +24,7 @@
 #include "Types/EventTypes.h"
 #include "Types/CounterTypes.h"
 #include "Types/AlarmTypes.h"
+#include "Types/ErrorTypes.h"
 
 #undef ISR
 /**
@@ -52,6 +53,5 @@ typedef enum StatusType_e {
 typedef enum applicationMode_e {
     OSDEFAULTAPPMODE
 } AppModeType;
-
 
 #endif /* TYPES_H_ */

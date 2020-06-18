@@ -13,17 +13,33 @@
 
 #include "Counter.h"
 #include "OCB.h"
-#include "Alarm.h"
+#include "OS_API.h"
 
 #include <util/atomic.h>
 
 extern StatusType Counter_IncrementCounter(CounterType counterID)
 {
-    if (counterID >= INVALID_COUNTER) {
+    if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
-    if (Counter_Cfg[counterID]->type == HARDWARE) {
+    if (OS_EXTENDED && Counter_Cfg[counterID]->type == HARDWARE) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
@@ -42,7 +58,15 @@ extern StatusType Counter_IncrementCounter(CounterType counterID)
 
 extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType value)
 {
-    if (counterID >= INVALID_COUNTER) {
+    if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
@@ -59,8 +83,28 @@ extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType val
 
 extern StatusType Counter_GetElapsedValue(CounterType counterID, TickRefType value, TickRefType elapsedValue)
 {
-    if (counterID >= INVALID_COUNTER) {
+    if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
+    }
+
+    if (OS_EXTENDED && *value > Counter_Cfg[counterID]->maxallowedvalue) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
+        return E_OS_VALUE;
     }
 
     TickType currentValue = 0;

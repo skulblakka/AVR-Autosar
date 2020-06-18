@@ -19,7 +19,7 @@
 volatile bool isISR = false;
 volatile uint8_t isCat2ISR;
 
-volatile enum tasks_e currentTask = INVALID_TASK;
+volatile TaskType currentTask = INVALID_TASK;
 
 volatile uint32_t sysTick;
 volatile uint8_t needScheduling;
@@ -27,6 +27,14 @@ volatile uint8_t blockScheduling;
 bool forceScheduling;
 
 struct resource_s* volatile isrResourceQueue = NULL;
+
+#if (defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true)
+volatile bool blockErrorHook;
+#endif /* (defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true) */
+
+#if defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0
+volatile struct errorInfo_s errorInfo;
+#endif /* defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0 */
 
 #define OS_CONFIG_GEN_DATA_STRUCT
 #include "AppCfg.h"

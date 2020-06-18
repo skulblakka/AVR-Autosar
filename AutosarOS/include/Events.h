@@ -36,7 +36,7 @@
  *          E_OS_ACCESS     Referenced task is no extended task \n
  *          E_OS_STATE      Referenced task is in suspended state
  */
-extern StatusType Events_SetEvent(enum tasks_e TaskID, EventMaskType events);
+extern StatusType Events_SetEvent(TaskType TaskID, EventMaskType events);
 
 /**
  * @brief   Clear events
@@ -67,7 +67,7 @@ extern StatusType Events_ClearEvent(EventMaskType events);
  *          E_OS_ACCESS     Referenced task is not an extended task \n
  *          E_OS_STATE      Referenced task is in the suspended state
  */
-extern StatusType Events_GetEvent(enum tasks_e TaskID, EventMaskRefType events);
+extern StatusType Events_GetEvent(TaskType TaskID, EventMaskRefType events);
 
 /**
  * @brief   Wait for events

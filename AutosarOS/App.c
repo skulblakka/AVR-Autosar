@@ -40,7 +40,9 @@ TASK(T2)
     static uint8_t t = 0;
 
     ActivateTask(T6);
-    
+
+    SetRelAlarm((AlarmType) 128, 123, 321);
+
     AppModeType mode = GetActiveApplicationMode();
     assert(mode == OSDEFAULTAPPMODE);
 
@@ -178,11 +180,11 @@ TASK(T3)
         Schedule();
     }
 
-    enum tasks_e taskID = INVALID_TASK;
+    TaskType taskID = INVALID_TASK;
     GetTaskID(&taskID);
     assert(taskID == T3);
 
-    OsTaskState state = SUSPENDED;
+    TaskStateType state = SUSPENDED;
     GetTaskState(T3, &state);
     assert(state == RUNNING);
 
@@ -347,14 +349,27 @@ extern void ShutdownHook(StatusType error)
 
 extern void PreTaskHook(void)
 {
-    enum tasks_e task;
+    TaskType task;
     GetTaskID(&task);
 }
 
 extern void PostTaskHook(void)
 {
-    enum tasks_e task;
+    TaskType task;
     GetTaskID(&task);
+}
+
+extern void ErrorHook(void)
+{
+    //OSServiceIdType id = OSErrorGetServiceId();
+    //AlarmType alarm = OSError_SetRelAlarm_AlarmID();
+    //TickType inc = OSError_SetRelAlarm_increment();
+    //TickType cyc = OSError_SetRelAlarm_cycle();
+
+    //assert(id == OSServiceId_SetRelAlarm);
+    //assert(alarm == 128);
+    //assert(inc == 123);
+    //assert(cyc == 321);
 }
 
 ISR(INT0_vect)

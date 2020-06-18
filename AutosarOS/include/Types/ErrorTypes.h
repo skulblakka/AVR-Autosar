@@ -59,13 +59,13 @@ struct errorInfo_s {
     OSServiceIdType id;     /**< ID of service */
 #if OS_CONFIG_MAX_ERROR_PARAM >= 1
     uint64_t param1;        /**< First service parameter */
-#endif
+#endif /* OS_CONFIG_MAX_ERROR_PARAM >= 1 */
 #if OS_CONFIG_MAX_ERROR_PARAM >= 2
     uint64_t param2;        /**< Second service parameter */
-#endif
+#endif /* OS_CONFIG_MAX_ERROR_PARAM >= 2 */
 #if OS_CONFIG_MAX_ERROR_PARAM == 3
     uint64_t param3;        /**< Third service parameter */
-#endif
+#endif /* OS_CONFIG_MAX_ERROR_PARAM >= 3 */
 };
 
 #if defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0 && !defined(__DOXYGEN__)

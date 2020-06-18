@@ -12,10 +12,7 @@
  */
 
 #include "Alarm.h"
-#include "OCB.h"
-#include "Task.h"
-#include "Events.h"
-#include "Counter.h"
+#include "OS_API.h"
 #include "assert.h"
 
 #include <util/atomic.h>
@@ -39,7 +36,17 @@ static void Alarm_handleAlarmExpiration(AlarmType alarmID);
 /************************************************************************/
 extern StatusType Alarm_GetAlarmBase(AlarmType alarmID, AlarmBaseRefType info)
 {
-    if (alarmID >= INVALID_ALARM) { // TODO Extended error check
+    OS_SET_ERROR_INFO2(OSServiceId_GetAlarmBase, &alarmID, sizeof(alarmID), &info, sizeof(info));
+
+    if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
@@ -52,7 +59,17 @@ extern StatusType Alarm_GetAlarmBase(AlarmType alarmID, AlarmBaseRefType info)
 
 extern StatusType Alarm_GetAlarm(AlarmType alarmID, TickRefType tick)
 {
-    if (alarmID >= INVALID_ALARM) { // TODO Extended error check
+    OS_SET_ERROR_INFO2(OSServiceId_GetAlarm, &alarmID, sizeof(alarmID), &tick, sizeof(tick));
+
+    if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
@@ -60,6 +77,14 @@ extern StatusType Alarm_GetAlarm(AlarmType alarmID, TickRefType tick)
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (!Alarm_Cfg[alarmID]->running) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_NOFUNC;
         }
 
@@ -83,11 +108,30 @@ extern StatusType Alarm_GetAlarm(AlarmType alarmID, TickRefType tick)
 
 extern StatusType Alarm_SetRelAlarm(AlarmType alarmID, TickType increment, TickType cycle)
 {
-    if (alarmID >= INVALID_ALARM) { // TODO Extended error check
+    OS_SET_ERROR_INFO3(OSServiceId_SetRelAlarm, &alarmID, sizeof(alarmID), &increment, sizeof(increment), &cycle,
+            sizeof(cycle));
+
+    if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
     if (increment == 0) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_VALUE;
     }
 
@@ -112,23 +156,57 @@ extern StatusType Alarm_SetRelAlarm(AlarmType alarmID, TickType increment, TickT
 
 extern StatusType Alarm_SetAbsAlarm(AlarmType alarmID, TickType start, TickType cycle)
 {
-    if (alarmID >= INVALID_ALARM) { // TODO Extended error check
+    OS_SET_ERROR_INFO3(OSServiceId_SetRelAlarm, &alarmID, sizeof(alarmID), &start, sizeof(start), &cycle, sizeof(cycle));
+
+    if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
-    if (start > Alarm_Cfg[alarmID]->alarmBase->maxallowedvalue) { // TODO Extended error check
+    if (OS_EXTENDED && start > Alarm_Cfg[alarmID]->alarmBase->maxallowedvalue) {
         // Requested increment outside of allowed range
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_VALUE;
     }
 
-    if (cycle != 0 && (cycle < Alarm_Cfg[alarmID]->alarmBase->mincycle
-                    || cycle > Alarm_Cfg[alarmID]->alarmBase->maxallowedvalue)) { // TODO Extended error check
+    if (OS_EXTENDED && (cycle != 0 && (cycle < Alarm_Cfg[alarmID]->alarmBase->mincycle
+                            || cycle > Alarm_Cfg[alarmID]->alarmBase->maxallowedvalue))) {
         // Requested cycle outside of allowed range
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_VALUE;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (Alarm_Cfg[alarmID]->running) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_STATE;
         }
 
@@ -142,12 +220,30 @@ extern StatusType Alarm_SetAbsAlarm(AlarmType alarmID, TickType start, TickType 
 
 extern StatusType Alarm_CancelAlarm(AlarmType alarmID)
 {
-    if (alarmID >= INVALID_ALARM) { // TODO Extended error check
+    OS_SET_ERROR_INFO1(OSServiceId_GetAlarm, &alarmID, sizeof(alarmID));
+
+    if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (!Alarm_Cfg[alarmID]->running) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_NOFUNC;
         }
 
