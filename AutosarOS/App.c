@@ -15,13 +15,7 @@
 
 #include "assert.h"
 
-#include "OCB.h"
-#include "Task.h"
-#include "Resource.h"
-#include "Events.h"
-#include "Counter.h"
-#include "Alarm.h"
-#include "OS.h"
+#include "OS_API.h"
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -45,71 +39,74 @@ TASK(T2)
 {
     static uint8_t t = 0;
 
-    Task_ActivateTask(T6);
+    ActivateTask(T6);
+    
+    AppModeType mode = GetActiveApplicationMode();
+    assert(mode == OSDEFAULTAPPMODE);
 
-    OS_SuspendAllInterrupts();
-    OS_ResumeAllInterrupts();
+    SuspendAllInterrupts();
+    ResumeAllInterrupts();
 
-    OS_SuspendOSInterrupts();
-    OS_ResumeOSInterrupts();
+    SuspendOSInterrupts();
+    ResumeOSInterrupts();
 
     if (t == 0) {
         StatusType stat;
         for (uint64_t i = 0; i < 10; i++) {
-            stat = Counter_IncrementCounter(C1);
+            stat = IncrementCounter(C1);
             assert(stat == E_OK);
         }
 
         TickType tick = 0;
         TickType eTick = 0;
-        stat = Counter_GetCounterValue(C1, &tick);
+        stat = GetCounterValue(C1, &tick);
         assert(stat == E_OK && tick == 10);
-        stat = Counter_IncrementCounter(C1);
+        stat = IncrementCounter(C1);
         assert(stat == E_OK);
-        stat = Counter_GetCounterValue(C1, &tick);
+        stat = GetCounterValue(C1, &tick);
         assert(stat == E_OK && tick == 0);
 
-        stat = Alarm_SetAbsAlarm(Alarm9, 3, 5);
+        stat = SetAbsAlarm(Alarm9, 3, 5);
         assert(stat == E_OK);
-        stat = Alarm_GetAlarm(Alarm9, &tick);
+        stat = GetAlarm(Alarm9, &tick);
         assert(stat == E_OK && tick == 3);
 
         for (uint64_t i = 0; i < 5; i++) {
-            stat = Counter_IncrementCounter(C1);
+            stat = IncrementCounter(C1);
             assert(stat == E_OK);
         }
 
         tick = 0;
-        stat = Counter_GetElapsedValue(C1, &tick, &eTick);
+        stat = GetElapsedValue(C1, &tick, &eTick);
         assert(stat == E_OK && tick == 5 && eTick == 5);
 
-        stat = Alarm_GetAlarm(Alarm9, &tick);
+        stat = GetAlarm(Alarm9, &tick);
         assert(stat == E_OK && tick == 3);
 
-        stat = Alarm_CancelAlarm(Alarm9);
+        stat = CancelAlarm(Alarm9);
         assert(stat == E_OK);
-        stat = Alarm_SetAbsAlarm(Alarm9, 1, 3);
+        stat = SetAbsAlarm(Alarm9, 1, 3);
         assert(stat == E_OK);
-        stat = Alarm_GetAlarm(Alarm9, &tick);
+        stat = GetAlarm(Alarm9, &tick);
         assert(stat == E_OK && tick == 7);
 
         for (uint64_t i = 0; i < 7; i++) {
-            stat = Counter_IncrementCounter(C1);
+            stat = IncrementCounter(C1);
             assert(stat == E_OK);
         }
 
         tick = 5;
-        stat = Counter_GetElapsedValue(C1, &tick, &eTick);
+        stat = GetElapsedValue(C1, &tick, &eTick);
         assert(stat == E_OK && tick == 1 && eTick == 7);
 
-        stat = Alarm_GetAlarm(Alarm9, &tick);
+        stat = GetAlarm(Alarm9, &tick);
         assert(stat == E_OK && tick == 3);
 
-        stat = Alarm_CancelAlarm(Alarm9);
+        stat = CancelAlarm(Alarm9);
         assert(stat == E_OK);
 
         AlarmBaseType info;
-        Alarm_GetAlarmBase(Alarm5, &info);
+        GetAlarmBase(Alarm5, &info);
         assert(info.type == HARDWARE);
         assert(info.maxallowedvalue == UINT32_MAX);
         assert(info.mincycle == 1);
@@ -121,31 +118,31 @@ TASK(T2)
         StatusType stat;
 
         /* These tests should succeed */
-        stat = Resource_GetResource(Res1);
+        stat = GetResource(Res1);
         assert(stat == E_OK);
-        stat = Resource_GetResource(Res2);
+        stat = GetResource(Res2);
         assert(stat == E_OK);
-        stat = Resource_GetResource(Res3);
+        stat = GetResource(Res3);
         assert(stat == E_OK);
         /* Request resource again => should fail */
-        stat = Resource_GetResource(Res3);
+        stat = GetResource(Res3);
         assert(stat == E_OS_ACCESS);
         /* Request resource with ceiling priority below static task priority => should fail */
-        stat = Resource_GetResource(Res4);
+        stat = GetResource(Res4);
         assert(stat == E_OS_ACCESS);
         /* Request resource with invalid ID => should fail */
-        stat = Resource_GetResource(64);
+        stat = GetResource(64);
         assert(stat == E_OS_ID);
 
         /* These tests should succeed */
-        stat = Resource_ReleaseResource(Res3);
+        stat = ReleaseResource(Res3);
         assert(stat == E_OK);
-        stat = Resource_ReleaseResource(Res2);
+        stat = ReleaseResource(Res2);
         assert(stat == E_OK);
-        stat = Resource_ReleaseResource(Res1);
+        stat = ReleaseResource(Res1);
         assert(stat == E_OK);
         /* Release same resource again => should fail */
-        stat = Resource_ReleaseResource(Res1);
+        stat = ReleaseResource(Res1);
         assert(stat == E_OS_NOFUNC);
 
 
@@ -154,11 +151,11 @@ TASK(T2)
         PORTB |= (1 << 2);  // turn LED off
         _delay_ms(1000);
         if (t++ % 3 == 0) {
-            Task_ActivateTask(T3);
+            ActivateTask(T3);
         } else if (t == 20) {
-            Task_ChainTask(T2);
+            ChainTask(T2);
         } else if (t == 30) {
-            Task_TerminateTask();
+            TerminateTask();
         }
     }
 }
@@ -169,27 +166,27 @@ TASK(T3)
         PORTB &= ~(1 << 3);   // turn LED on
         _delay_ms(1000);
 
-        Events_WaitEvent(0x01);
+        WaitEvent(0x01);
         EventMaskType ev = 0;
-        Events_GetEvent(T3, &ev);
+        GetEvent(T3, &ev);
         assert(ev == 0x01);
-        Events_ClearEvent(0x01);
+        ClearEvent(0x01);
 
         PORTB |= (1 << 3);  // turn LED off
         _delay_ms(1000);
 
-        Task_Schedule();
+        Schedule();
     }
 
     enum tasks_e taskID = INVALID_TASK;
-    Task_GetTaskID(&taskID);
+    GetTaskID(&taskID);
     assert(taskID == T3);
 
     OsTaskState state = SUSPENDED;
-    Task_GetTaskState(T3, &state);
+    GetTaskState(T3, &state);
     assert(state == RUNNING);
 
-    Task_TerminateTask();
+    TerminateTask();
 }
 
 TASK(T4)
@@ -201,8 +198,8 @@ TASK(T4)
         _delay_ms(1000);
     }
 
-    if (Task_ChainTask(T5) != E_OK) {
-        Task_TerminateTask();
+    if (ChainTask(T5) != E_OK) {
+        TerminateTask();
     }
 }
 
@@ -215,7 +212,7 @@ TASK(T5)
         _delay_ms(1000);
     }
 
-    Task_TerminateTask();
+    TerminateTask();
 }
 
 TASK(T6)
@@ -227,77 +224,77 @@ TASK(T6)
         _delay_ms(1000);
     }
 
-    Task_TerminateTask();
+    TerminateTask();
 }
 
 TASK(T7)
 {
-    Alarm_CancelAlarm(Alarm3);
+    CancelAlarm(Alarm3);
 
-    StatusType stat = Alarm_SetAbsAlarm(Alarm3, 10, 0);
+    StatusType stat = SetAbsAlarm(Alarm3, 10, 0);
     assert(stat == E_OK);
 
-    Events_WaitEvent(0x01);
+    WaitEvent(0x01);
     EventMaskType ev = 0;
-    Events_GetEvent(T7, &ev);
+    GetEvent(T7, &ev);
     assert(ev == 0x01);
-    Events_ClearEvent(0x01);
+    ClearEvent(0x01);
 
-    stat = Alarm_SetAbsAlarm(Alarm3, 15, 5);
+    stat = SetAbsAlarm(Alarm3, 15, 5);
     assert(stat == E_OK);
 
-    Events_WaitEvent(0x01);
+    WaitEvent(0x01);
     ev = 0;
-    Events_GetEvent(T7, &ev);
+    GetEvent(T7, &ev);
     assert(ev == 0x01);
-    Events_ClearEvent(0x01);
+    ClearEvent(0x01);
 
-    Events_WaitEvent(0x01);
+    WaitEvent(0x01);
     ev = 0;
-    Events_GetEvent(T7, &ev);
+    GetEvent(T7, &ev);
     assert(ev == 0x01);
-    Events_ClearEvent(0x01);
+    ClearEvent(0x01);
 
-    stat = Alarm_CancelAlarm(Alarm3);
+    stat = CancelAlarm(Alarm3);
     assert(stat == E_OK);
 
-    stat = Alarm_SetRelAlarm(Alarm8, 6840, 0);
+    stat = SetRelAlarm(Alarm8, 6840, 0);
     assert(stat == E_OK);
 
-    Events_WaitEvent(0x02);
+    WaitEvent(0x02);
     ev = 0;
-    Events_GetEvent(T7, &ev);
+    GetEvent(T7, &ev);
     assert(ev == 0x02);
-    Events_ClearEvent(0x02);
+    ClearEvent(0x02);
 
-    stat = Alarm_SetRelAlarm(Alarm3, 3, 0);
+    stat = SetRelAlarm(Alarm3, 3, 0);
     assert(stat == E_OK);
 
     for (uint8_t i = 0; i < 5; i++) {
         PORTB &= ~(1 << 7);   // turn LED on
         _delay_ms(1000);
 
-        Events_WaitEvent(0x01);
+        WaitEvent(0x01);
         ev = 0;
-        Events_GetEvent(T7, &ev);
+        GetEvent(T7, &ev);
         assert(ev == 0x01);
-        Events_ClearEvent(0x01);
+        ClearEvent(0x01);
 
-        stat = Alarm_CancelAlarm(Alarm3);
-        stat = Alarm_SetRelAlarm(Alarm3, 10, 15);
+        stat = CancelAlarm(Alarm3);
+        stat = SetRelAlarm(Alarm3, 10, 15);
         assert(stat == E_OK);
 
         PORTB |= (1 << 7);  // turn LED off
         _delay_ms(1000);
 
-        Events_WaitEvent(0x01);
+        WaitEvent(0x01);
         ev = 0;
-        Events_GetEvent(T7, &ev);
+        GetEvent(T7, &ev);
         assert(ev == 0x01);
-        Events_ClearEvent(0x01);
+        ClearEvent(0x01);
     }
 
-    Task_TerminateTask();
+    TerminateTask();
 }
 
 extern void StartupHook(void)
@@ -351,42 +348,42 @@ extern void ShutdownHook(StatusType error)
 extern void PreTaskHook(void)
 {
     enum tasks_e task;
-    Task_GetTaskID(&task);
+    GetTaskID(&task);
 }
 
 extern void PostTaskHook(void)
 {
     enum tasks_e task;
-    Task_GetTaskID(&task);
+    GetTaskID(&task);
 }
 
 ISR(INT0_vect)
 {
     assert(isISR && isCat2ISR);
-    Task_ActivateTask(T4);
+    ActivateTask(T4);
 
-    Resource_GetResource(Res1);
-    Resource_GetResource(Res2);
-    Resource_GetResource(Res3);
+    GetResource(Res1);
+    GetResource(Res2);
+    GetResource(Res3);
 
-    Resource_ReleaseResource(Res3);
-    Resource_ReleaseResource(Res2);
-    Resource_ReleaseResource(Res1);
+    ReleaseResource(Res3);
+    ReleaseResource(Res2);
+    ReleaseResource(Res1);
 }
 
 ISR(INT1_vect)
 {
     assert(isISR && isCat2ISR);
 
-    Events_SetEvent(T3, 0b11);
+    SetEvent(T3, 0b11);
 }
 
 ISR(TIMER1_COMPA_vect)
 {
-    Counter_IncrementCounter(C2);
+    IncrementCounter(C2);
 }
 
 ALARMCALLBACK(AlarmCb)
 {
-    Task_ActivateTask(T7);
+    ActivateTask(T7);
 }
