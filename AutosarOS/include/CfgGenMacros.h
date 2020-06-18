@@ -76,21 +76,21 @@
 /**
  * @brief   Enable StartupHook
  *
- * If defined and set to true the StartupHook will be called on system startup.
+ * If defined and set to true the StartupHook() will be called on system startup.
  */
 #define OS_CONFIG_HOOK_STARTUP
 
 /**
  * @brief   Enable ShutdownHook
  *
- * If defined and set to true the ShutdownHook will be called on system shutdown.
+ * If defined and set to true the ShutdownHook() will be called on system shutdown.
  */
 #define OS_CONFIG_HOOK_SHUTDOWN
 
 /**
  * @brief   Enable PreTaskHook
  *
- * If defined and set to true the PreTaskHook will be called after a new task enters
+ * If defined and set to true the PreTaskHook() will be called after a new task enters
  * the running state.
  */
 #define OS_CONFIG_HOOK_PRE_TASK
@@ -98,7 +98,7 @@
 /**
  * @brief   Enable PostTaskHook
  *
- * If defined and set to true the PostTaskHook will be called before a task leaves
+ * If defined and set to true the PostTaskHook() will be called before a task leaves
  * the running state.
  */
 #define OS_CONFIG_HOOK_POST_TASK

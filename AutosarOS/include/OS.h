@@ -70,6 +70,8 @@ extern bool forceSchedule;
  * @brief   Hook function for startup
  *
  * This hook function is called after system startup and before the scheduler is running.
+ *
+ * @warning This function is executed with interrupts disabled and must not activate them!
  */
 extern void StartupHook(void);
 #endif
@@ -79,6 +81,8 @@ extern void StartupHook(void);
  * @brief   Hook function for shutdown
  *
  * This hook function is called before the system is shutdown.
+ *
+ * @warning This function is executed with interrupts disabled and must not activate them!
  *
  * @param   error       Error passed to OS_ShutdownOS()
  */
@@ -90,7 +94,9 @@ extern void ShutdownHook(StatusType error);
  * @brief   PreTask hook function
  *
  * This hook function is called after a new task has entered the running state but before
- * it is executed. The ID of the task can be evaluated using OS_GetTaskID()
+ * it is executed. The ID of the task can be evaluated using OS_GetTaskID().
+ *
+ * @warning This function is executed with interrupts disabled and must not activate them!
  */
 extern void PreTaskHook();
 #endif
@@ -100,7 +106,9 @@ extern void PreTaskHook();
  * @brief   PostTask hook function
  *
  * This hook function is called before a task leaves the running state but before
- * a new task is selected. The ID of the task can be evaluated using OS_GetTaskID()
+ * a new task is selected. The ID of the task can be evaluated using OS_GetTaskID().
+ *
+ * @warning This function is executed with interrupts disabled and must not activate them!
  */
 extern void PostTaskHook();
 #endif
