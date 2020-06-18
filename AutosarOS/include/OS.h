@@ -134,6 +134,13 @@ extern void OS_ResumeOSInterrupts(void);
  */
 extern void OS_SuspendOSInterrupts(void);
 
+/**
+ * @brief   Get currently active application mode
+ * 
+ * @return  Current application mode
+ */
+extern AppModeType OS_GetActiveApplicationMode(void);
+
 #if defined(OS_CONFIG_HOOK_STARTUP) && OS_CONFIG_HOOK_STARTUP == true
 /**
  * @brief   Hook function for startup

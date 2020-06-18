@@ -44,6 +44,11 @@ static uint8_t intStates;
  */
 static uint8_t osIntStates;
 
+/**
+ * @brief   Currently active application mode
+ */
+static AppModeType activeApplicationMode;
+
 /************************************************************************/
 /* EXTERNAL VARIABLES                                                   */
 /************************************************************************/
@@ -75,6 +80,8 @@ static void OS_StartSysTimer()
 extern void OS_StartOS(AppModeType mode)
 {
     OS_DisableAllInterrupts();
+    
+    activeApplicationMode = mode;
 
     if (TASK_COUNT > 0) {
         assert(TASK_COUNT <= UINT8_MAX);
@@ -246,4 +253,9 @@ extern void OS_SuspendOSInterrupts(void)
     osIntStates = (osIntStates << 1) | ((SREG >> SREG_I) & 0b1);
 
     OS_DisableAllInterrupts();
+}
+
+extern AppModeType OS_GetActiveApplicationMode(void)
+{
+    return activeApplicationMode;
 }
