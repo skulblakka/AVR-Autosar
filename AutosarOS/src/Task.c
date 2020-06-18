@@ -16,6 +16,8 @@
 #include "assert.h"
 #include "Resource.h"
 
+#include <util/atomic.h>
+
 extern StatusType Task_ActivateTask(TaskType TaskID)
 {
     OS_SET_ERROR_INFO1(OSServiceId_ActivateTask, &TaskID, sizeof(TaskID));
@@ -32,22 +34,24 @@ extern StatusType Task_ActivateTask(TaskType TaskID)
         return E_OS_ID;
     }
 
-    if (TCB_Cfg[TaskID]->curNumberOfActivations + 1 > TCB_Cfg[TaskID]->numberOfActivations) {
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if (TCB_Cfg[TaskID]->curNumberOfActivations + 1 > TCB_Cfg[TaskID]->numberOfActivations) {
 #if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
 #endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
 
-        return E_OS_LIMIT;
-    }
+            return E_OS_LIMIT;
+        }
 
-    TCB_Cfg[TaskID]->curNumberOfActivations += 1;
+        TCB_Cfg[TaskID]->curNumberOfActivations += 1;
 
-    if (TCB_Cfg[TaskID]->curState == SUSPENDED) {
-        TCB_Cfg[TaskID]->curState = PRE_READY;
+        if (TCB_Cfg[TaskID]->curState == SUSPENDED) {
+            TCB_Cfg[TaskID]->curState = PRE_READY;
+        }
     }
 
     OS_Schedule();
@@ -83,49 +87,51 @@ extern StatusType Task_ChainTask(TaskType TaskID)
         return E_OS_ID;
     }
 
-    if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
 #if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
 #endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
 
-        return E_OS_RESOURCE;
-    }
-
-    /* Handle multiple activations of chained task */
-    if (TCB_Cfg[TaskID]->curNumberOfActivations + 1 > TCB_Cfg[TaskID]->numberOfActivations && TaskID != currentTask) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
+            return E_OS_RESOURCE;
         }
+
+        /* Handle multiple activations of chained task */
+        if (TCB_Cfg[TaskID]->curNumberOfActivations + 1 > TCB_Cfg[TaskID]->numberOfActivations && TaskID != currentTask) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
 #endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
 
-        return E_OS_LIMIT;
-    }
+            return E_OS_LIMIT;
+        }
 
-    TCB_Cfg[TaskID]->curNumberOfActivations += 1;
+        TCB_Cfg[TaskID]->curNumberOfActivations += 1;
 
-    /* Handle multiple activations of current task */
-    TCB_Cfg[currentTask]->curNumberOfActivations -= 1;
-    assert(TCB_Cfg[currentTask]->curNumberOfActivations >= 0);
-    assert(TCB_Cfg[currentTask]->curNumberOfActivations <= TCB_Cfg[currentTask]->numberOfActivations);
-    if (TCB_Cfg[currentTask]->curNumberOfActivations > 0) {
-        TCB_Cfg[currentTask]->curState = PRE_READY;
-    } else {
-        TCB_Cfg[currentTask]->curState = SUSPENDED;
-    }
+        /* Handle multiple activations of current task */
+        TCB_Cfg[currentTask]->curNumberOfActivations -= 1;
+        assert(TCB_Cfg[currentTask]->curNumberOfActivations >= 0);
+        assert(TCB_Cfg[currentTask]->curNumberOfActivations <= TCB_Cfg[currentTask]->numberOfActivations);
+        if (TCB_Cfg[currentTask]->curNumberOfActivations > 0) {
+            TCB_Cfg[currentTask]->curState = PRE_READY;
+        } else {
+            TCB_Cfg[currentTask]->curState = SUSPENDED;
+        }
 
-    Resource_ReleaseInternalResource();
+        Resource_ReleaseInternalResource();
 
-    currentTask = INVALID_TASK;
+        currentTask = INVALID_TASK;
 
-    if (TCB_Cfg[TaskID]->curState == SUSPENDED) {
-        TCB_Cfg[TaskID]->curState = PRE_READY;
+        if (TCB_Cfg[TaskID]->curState == SUSPENDED) {
+            TCB_Cfg[TaskID]->curState = PRE_READY;
+        }
     }
 
     OS_Schedule();
@@ -149,30 +155,32 @@ extern StatusType Task_TerminateTask()
         return E_OS_CALLLEVEL;
     }
 
-    if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
 #if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
 #endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
 
-        return E_OS_RESOURCE;
+            return E_OS_RESOURCE;
+        }
+
+        TCB_Cfg[currentTask]->curNumberOfActivations -= 1;
+        assert(TCB_Cfg[currentTask]->curNumberOfActivations >= 0);
+        assert(TCB_Cfg[currentTask]->curNumberOfActivations <= TCB_Cfg[currentTask]->numberOfActivations);
+        if (TCB_Cfg[currentTask]->curNumberOfActivations > 0) {
+            TCB_Cfg[currentTask]->curState = PRE_READY;
+        } else {
+            TCB_Cfg[currentTask]->curState = SUSPENDED;
+        }
+
+        Resource_ReleaseInternalResource();
+
+        currentTask = INVALID_TASK;
     }
-
-    TCB_Cfg[currentTask]->curNumberOfActivations -= 1;
-    assert(TCB_Cfg[currentTask]->curNumberOfActivations >= 0);
-    assert(TCB_Cfg[currentTask]->curNumberOfActivations <= TCB_Cfg[currentTask]->numberOfActivations);
-    if (TCB_Cfg[currentTask]->curNumberOfActivations > 0) {
-        TCB_Cfg[currentTask]->curState = PRE_READY;
-    } else {
-        TCB_Cfg[currentTask]->curState = SUSPENDED;
-    }
-
-    Resource_ReleaseInternalResource();
-
-    currentTask = INVALID_TASK;
 
     OS_Schedule();
 
@@ -183,45 +191,48 @@ extern StatusType Task_Schedule()
 {
     OS_SET_ERROR_INFO0(OSServiceId_Schedule);
 
-    if (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        if (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
 #if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
 #endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
 
-        return E_OK;
-    }
-
-    if (OS_EXTENDED && isISR) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
+            return E_OK;
         }
+
+        if (OS_EXTENDED && isISR) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
 #endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
 
-        return E_OS_CALLLEVEL;
-    }
-
-    if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
+            return E_OS_CALLLEVEL;
         }
+
+        if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
 #endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
 
-        return E_OS_RESOURCE;
+            return E_OS_RESOURCE;
+        }
+
+        Resource_ReleaseInternalResource();
+
+        forceScheduling = true;
     }
 
-    Resource_ReleaseInternalResource();
-
-    forceScheduling = true;
     OS_Schedule();
 
     return E_OK;
@@ -231,7 +242,9 @@ extern StatusType Task_GetTaskID(TaskRefType TaskID)
 {
     OS_SET_ERROR_INFO1(OSServiceId_GetTaskID, &TaskID, sizeof(TaskID));
 
-    *TaskID = currentTask;
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        *TaskID = currentTask;
+    }
 
     return E_OK;
 }
@@ -254,7 +267,9 @@ extern StatusType Task_GetTaskState(TaskType TaskID, TaskStateRefType State)
         return E_OS_ID;
     }
 
-    *State = TCB_Cfg[TaskID]->curState;
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        *State = TCB_Cfg[TaskID]->curState;
+    }
 
     /* Report PRE_READY as READY to conform to OSEK standard */
     if (*State == PRE_READY) {
