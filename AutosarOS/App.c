@@ -46,6 +46,11 @@ TASK(T2)
     static uint8_t t = 0;
 
     OS_ActivateTask(T6);
+    OS_SuspendAllInterrupts();
+    OS_ResumeAllInterrupts();
+
+    OS_SuspendOSInterrupts();
+    OS_ResumeOSInterrupts();
 
     if (t == 0) {
         StatusType stat;
