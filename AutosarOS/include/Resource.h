@@ -35,7 +35,7 @@
  *                          or the statically assigned priority of the calling task or interrupt
  *                          routine is higher than the calculated ceiling priority
  */
-extern StatusType Resource_GetResource(enum resources_e ResID);
+extern StatusType Resource_GetResource(ResourceType ResID);
 
 /**
  * @brief   Release a resource
@@ -53,7 +53,7 @@ extern StatusType Resource_GetResource(enum resources_e ResID);
  *                          than the statically assigned priority of the calling task or interrupt routine
  *
  */
-extern StatusType Resource_ReleaseResource(enum resources_e ResID);
+extern StatusType Resource_ReleaseResource(ResourceType ResID);
 
 /**
  * @brief   Get internal resource of the current task if one is assigned

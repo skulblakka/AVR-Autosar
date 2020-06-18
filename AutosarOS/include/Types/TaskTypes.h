@@ -23,24 +23,55 @@
 
 typedef void (*pTaskFxn)();
 
+/**
+ * @brief   Type for task reference
+ */
+typedef enum tasks_e TaskType;
+
+/**
+ * @brief   Reference to a task reference
+ *
+ * Reference an #TaskType
+ */
+typedef TaskType* TaskRefType;
+
+/**
+ * @brief   OSEK task type
+ */
 typedef enum OsTaskType_e {
     BASIC = 0,      /**< The task is a basic task, thus unable to wait on an event */
     EXTENDED        /**< The task is a extended task */
 } OsTaskType;
 
+/**
+ * @brief   Task scheduling scheme
+ */
 typedef enum OsTaskSchedule_e {
     PREEMPTIVE = 0, /**< The task may be preempted by another task */
     NON_PREEMPTIVE  /**< The task may not be preempted */
 } OsTaskSchedule;
 
+/**
+ * @brief   Task state
+ */
 typedef enum OsTaskState_e {
     SUSPENDED = 0,  /**< The task is suspended and will not be scheduled */
     PRE_READY,      /**< The task is ready but its stack is uninitialized */
     READY,          /**< The task is ready to be scheduled */
     RUNNING,        /**< The task is currently running */
     WAITING         /**< The task is waiting for an event */
-} OsTaskState;
+} TaskStateType;
 
+/**
+ * @brief   Type for task state reference
+ *
+ * Reference a #TaskStateType.
+ */
+typedef TaskStateType* TaskStateRefType;
+
+/**
+ * @brief   Task autostart mode
+ */
 typedef enum OsTaskAutostart_e {
     NO_AUTOSTART = 0, /**< Do not autostart task */
     AUTOSTART         /**< Autostart task */
@@ -63,7 +94,7 @@ struct task_s {
     uint8_t* context;                                           /**< Current context/stack pointer */
     uint8_t curPrio;                                            /**< Current priority */
     uint8_t curNumberOfActivations;                             /**< Current number of activations */
-    OsTaskState curState;                                       /**< Current state of the task */
+    TaskStateType curState;                                       /**< Current state of the task */
     uint16_t curStackUse;                                       /**< Current stack usage */
     uint16_t maxStackUse;                                       /**< Maximum recorded stack usage */
     struct resource_s* resourceQueue;                           /**< Current queue of allocated resources */

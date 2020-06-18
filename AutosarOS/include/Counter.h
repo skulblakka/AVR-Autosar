@@ -53,7 +53,7 @@ extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType val
  * @param   elapsedValue    Difference between previous and current value
  *
  * @return  E_OK            No errors \n
- *          E_OS_ID         The counterID was not valid
+ *          E_OS_ID         The counterID was not valid \n
  *          E_OS_VALUE      The given value was not valid
  */
 extern StatusType Counter_GetElapsedValue(CounterType counterID, TickRefType value, TickRefType elapsedValue);

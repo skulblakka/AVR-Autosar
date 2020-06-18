@@ -116,6 +116,29 @@
 #define OS_CONFIG_HOOK_ERROR
 
 /**
+ * @brief   Enable extended mode
+ *
+ * If set to true the system will be compiled in extended mode with extended error checks
+ * enabled.
+ */
+#define OS_CONFIG_EXTENDED
+
+/**
+ * @brief   Configure number of parameters saved for error information
+ *
+ * Configure the number of parameters saved for error information. Additional parameters
+ * will not be saved.
+ *
+ * If set to zero only the service ID will be saved.
+ *
+ * If undefined or set to values below zero no information will be saved.
+ *
+ * @note    While possible to only save the service ID or even nothing at all it not
+ *          conforming to the OSEK standard in that configuration.
+ */
+#define OS_CONFIG_MAX_ERROR_PARAM
+
+/**
  * @brief   Beginning of task definitions
  */
 #define OS_CONFIG_TASK_BEGIN

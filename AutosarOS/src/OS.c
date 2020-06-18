@@ -26,7 +26,7 @@
 /**
  * @brief   Highest priority task in READY state
  */
-static enum tasks_e highestPrioTask;
+static TaskType highestPrioTask;
 
 /**
  * @brief   Saved interrupt states
@@ -79,8 +79,10 @@ static void OS_StartSysTimer()
 /************************************************************************/
 extern void OS_StartOS(AppModeType mode)
 {
+    OS_SET_ERROR_INFO1(OSServiceId_StartOS, &mode, sizeof(mode));
+
     OS_DisableAllInterrupts();
-    
+
     activeApplicationMode = mode;
 
     if (TASK_COUNT > 0) {
@@ -113,6 +115,8 @@ extern void OS_StartOS(AppModeType mode)
 
 extern void OS_ShutdownOS(StatusType error)
 {
+    OS_SET_ERROR_INFO1(OSServiceId_ShutdownOS, &error, sizeof(error));
+
     OS_DisableAllInterrupts();
 
 #if defined(OS_CONFIG_HOOK_SHUTDOWN) && OS_CONFIG_HOOK_SHUTDOWN == true
@@ -162,7 +166,7 @@ extern void __attribute__((naked)) OS_ScheduleC()
         Resource_GetInternalResource();
 
         /* Change task state already to prevent changes to SREG */
-        OsTaskState prevState = TCB_Cfg[currentTask]->curState;
+        TaskStateType prevState = TCB_Cfg[currentTask]->curState;
         TCB_Cfg[currentTask]->curState = RUNNING;
 
 #if defined(OS_CONFIG_HOOK_POST_TASK) && OS_CONFIG_HOOK_POST_TASK == true
@@ -205,7 +209,7 @@ extern void OS_Switch()
         if ((TCB_Cfg[i]->curState == PRE_READY || TCB_Cfg[i]->curState == READY || TCB_Cfg[i]->curState == RUNNING)
                 && TCB_Cfg[i]->curPrio >= highestPrio) {
             highestPrio = TCB_Cfg[i]->curPrio;
-            highestPrioTask = (enum tasks_e) i;
+            highestPrioTask = (TaskType) i;
         }
     }
 
@@ -226,6 +230,8 @@ extern inline void OS_DisableAllInterrupts(void)
 
 extern void OS_ResumeAllInterrupts(void)
 {
+    OS_SET_ERROR_INFO0(OSServiceId_ResumeAllInterrupts);
+
     bool enable = (intStates & 0b1);
     intStates = (intStates >> 1);
 
@@ -235,12 +241,16 @@ extern void OS_ResumeAllInterrupts(void)
 }
 extern void OS_SuspendAllInterrupts(void)
 {
+    OS_SET_ERROR_INFO0(OSServiceId_SuspendAllInterrupts);
+
     intStates = (intStates << 1) | ((SREG >> SREG_I) & 0b1);
 
     OS_DisableAllInterrupts();
 }
 extern void OS_ResumeOSInterrupts(void)
 {
+    OS_SET_ERROR_INFO0(OSServiceId_ResumeOSInterrupts);
+
     bool enable = (osIntStates & 0b1);
     osIntStates = (osIntStates >> 1);
 
@@ -250,6 +260,8 @@ extern void OS_ResumeOSInterrupts(void)
 }
 extern void OS_SuspendOSInterrupts(void)
 {
+    OS_SET_ERROR_INFO0(OSServiceId_SuspendOSInterrupts);
+
     osIntStates = (osIntStates << 1) | ((SREG >> SREG_I) & 0b1);
 
     OS_DisableAllInterrupts();
@@ -257,5 +269,7 @@ extern void OS_SuspendOSInterrupts(void)
 
 extern AppModeType OS_GetActiveApplicationMode(void)
 {
+    OS_SET_ERROR_INFO0(OSServiceId_GetActiveApplicationMode);
+
     return activeApplicationMode;
 }

@@ -19,20 +19,46 @@
 
 #include <util/atomic.h>
 
-extern StatusType Events_SetEvent(enum tasks_e TaskID, EventMaskType events)
+extern StatusType Events_SetEvent(TaskType TaskID, EventMaskType events)
 {
+    OS_SET_ERROR_INFO2(OSServiceId_SetEvent, &TaskID, sizeof(TaskID), &events, sizeof(events));
+
     bool taskChanged = false;
 
-    if (TaskID >= INVALID_TASK) { // TODO Extended error check
+    if (OS_EXTENDED && TaskID >= INVALID_TASK) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
-    if (TCB_Cfg[TaskID]->taskType != EXTENDED) { // TODO Extended error check
+    if (OS_EXTENDED && TCB_Cfg[TaskID]->taskType != EXTENDED) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ACCESS;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (TCB_Cfg[TaskID]->curState == SUSPENDED) { // TODO Extended error check
+        if (OS_EXTENDED && TCB_Cfg[TaskID]->curState == SUSPENDED) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_STATE;
         }
 
@@ -58,12 +84,30 @@ extern StatusType Events_SetEvent(enum tasks_e TaskID, EventMaskType events)
 
 extern StatusType Events_ClearEvent(EventMaskType events)
 {
-    if (isISR) { // TODO Extended error check
+    OS_SET_ERROR_INFO1(OSServiceId_ClearEvent, &events, sizeof(events));
+
+    if (OS_EXTENDED && isISR) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_CALLLEVEL;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (TCB_Cfg[currentTask]->taskType != EXTENDED) { // TODO Extended error check
+        if (OS_EXTENDED && TCB_Cfg[currentTask]->taskType != EXTENDED) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_ACCESS;
         }
 
@@ -74,18 +118,44 @@ extern StatusType Events_ClearEvent(EventMaskType events)
     return E_OK;
 }
 
-extern StatusType Events_GetEvent(enum tasks_e TaskID, EventMaskRefType events)
+extern StatusType Events_GetEvent(TaskType TaskID, EventMaskRefType events)
 {
-    if (TaskID >= INVALID_TASK) { // TODO Extended error check
+    OS_SET_ERROR_INFO2(OSServiceId_GetEvent, &TaskID, sizeof(TaskID), &events, sizeof(events));
+
+    if (TaskID >= INVALID_TASK) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ID;
     }
 
-    if (TCB_Cfg[TaskID]->taskType != EXTENDED) { // TODO Extended error check
+    if (OS_EXTENDED && TCB_Cfg[TaskID]->taskType != EXTENDED) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_ACCESS;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (TCB_Cfg[TaskID]->curState == SUSPENDED) { // TODO Extended error check
+        if (OS_EXTENDED && TCB_Cfg[TaskID]->curState == SUSPENDED) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_STATE;
         }
 
@@ -98,16 +168,42 @@ extern StatusType Events_GetEvent(enum tasks_e TaskID, EventMaskRefType events)
 
 extern StatusType Events_WaitEvent(EventMaskType events)
 {
-    if (isISR) { // TODO Extended error check
+    OS_SET_ERROR_INFO1(OSServiceId_WaitEvent, &events, sizeof(events));
+
+    if (OS_EXTENDED && isISR) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+        if (!blockErrorHook) {
+            blockErrorHook = true;
+            ErrorHook();
+            blockErrorHook = false;
+        }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
         return E_OS_CALLLEVEL;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (TCB_Cfg[currentTask]->taskType != EXTENDED) { // TODO Extended error check
+        if (OS_EXTENDED && TCB_Cfg[currentTask]->taskType != EXTENDED) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_ACCESS;
         }
 
-        if (TCB_Cfg[currentTask]->resourceQueue != NULL) { // TODO Extended error check
+        if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
             return E_OS_RESOURCE;
         }
 

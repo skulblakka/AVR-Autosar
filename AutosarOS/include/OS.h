@@ -136,7 +136,7 @@ extern void OS_SuspendOSInterrupts(void);
 
 /**
  * @brief   Get currently active application mode
- * 
+ *
  * @return  Current application mode
  */
 extern AppModeType OS_GetActiveApplicationMode(void);

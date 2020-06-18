@@ -45,7 +45,7 @@ extern volatile uint8_t isCat2ISR;
 /**
  * @brief   Task currently being executed
  */
-extern volatile enum tasks_e currentTask;
+extern volatile TaskType currentTask;
 
 /**
  * @brief   Current task control blocks
@@ -105,5 +105,31 @@ extern volatile struct counter_s* Counter_Cfg[];
  * @brief   Current alarm control blocks
  */
 extern volatile struct alarm_s* Alarm_Cfg[];
+
+#if (defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true)
+/**
+ * @brief   Block error hook from being executed
+ *
+ * If set to true the error block will not be executed. This is used to prevent recursive
+ * calls of the hook.
+ */
+extern volatile bool blockErrorHook;
+#endif /* (defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true) */
+
+#if defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0
+/**
+ * @brief   Error information
+ *
+ * This structure is used to save information used during error handling. Usage and structure
+ * depend on #OS_CONFIG_MAX_ERROR_PARAM.
+ */
+extern volatile struct errorInfo_s errorInfo;
+#endif /* defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0 */
+
+#if defined(OS_CONFIG_EXTENDED) && OS_CONFIG_EXTENDED == true
+#define OS_EXTENDED true
+#else /* defined(OS_CONFIG_EXTENDED) && OS_CONFIG_EXTENDED == true */
+#define OS_EXTENDED false
+#endif /* defined(OS_CONFIG_EXTENDED) && OS_CONFIG_EXTENDED == true */
 
 #endif /* OCB_H_ */

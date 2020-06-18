@@ -68,7 +68,7 @@ struct alarm_s {
     const enum alarmActionType_e actionType;    /**< Type of the alarm */
     union {
         const void* action;                     /**< Untyped value to be used during configuration */
-        const enum tasks_e task;                /**< Task to activate if type is #ALARM_ACTION_TASK or to set
+        const TaskType task;                    /**< Task to activate if type is #ALARM_ACTION_TASK or to set
                                                      event for if type is #ALARM_ACTION_EVENT */
         const pAlarmCallback callback;          /**< Callback to execute if type is #ALARM_ACTION_CALLBACK */
         const CounterType counter;              /**< Counter to increment if type is #ALARM_ACTION_COUNTER */

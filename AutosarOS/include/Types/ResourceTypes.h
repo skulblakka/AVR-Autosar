@@ -19,6 +19,11 @@
 #include <stdbool.h>
 
 /**
+ * @brief   Type for resource reference
+ */
+typedef enum resources_e ResourceType;
+
+/**
  * @brief   Data structure for OS resource
  */
 struct resource_s {
