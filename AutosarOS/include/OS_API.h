@@ -1,7 +1,7 @@
 /**
  * @file
  *
- * @brief       API
+ * @brief       Operating System API
  *
  * @date        2020-06-018
  * @author      Pascal Romahn
