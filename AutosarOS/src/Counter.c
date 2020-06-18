@@ -13,6 +13,7 @@
 
 #include "Counter.h"
 #include "OCB.h"
+#include "Alarm.h"
 
 #include <util/atomic.h>
 
@@ -34,6 +35,8 @@ extern StatusType Counter_IncrementCounter(CounterType counterID)
         }
     }
 
+    Alarm_evaluateAlarm();
+
     return E_OK;
 }
 
@@ -44,7 +47,7 @@ extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType val
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (counterID == SysTick) {
+        if (counterID == SYSTEM_COUNTER) {
             *value = sysTick;
         } else {
             *value = Counter_Cfg[counterID]->value;
@@ -63,7 +66,7 @@ extern StatusType Counter_GetElapsedValue(CounterType counterID, TickRefType val
     TickType currentValue = 0;
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (counterID == SysTick) {
+        if (counterID == SYSTEM_COUNTER) {
             currentValue = sysTick;
         } else {
             currentValue = Counter_Cfg[counterID]->value;

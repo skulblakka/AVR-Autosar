@@ -60,6 +60,13 @@ extern volatile uint32_t sysTick;
 extern volatile uint8_t needScheduling;
 
 /**
+ * @brief   Block scheduling
+ * 
+ * While set to a value different from zero all scheduling will be blocked.
+ */
+extern volatile uint8_t blockScheduling;
+
+/**
  * @brief   Current resource control blocks
  */
 extern volatile struct resource_s* Res_Cfg[];
@@ -79,5 +86,9 @@ extern volatile struct internalResource_s IntResourceNULL_s;
  */
 extern volatile struct counter_s* Counter_Cfg[];
 
+/**
+ * @brief   Current alarm control blocks
+ */
+extern volatile struct alarm_s* Alarm_Cfg[];
 
 #endif /* OCB_H_ */

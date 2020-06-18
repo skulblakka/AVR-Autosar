@@ -216,6 +216,32 @@ TIMER0_OVF_vect:
     pop     r25
     pop     r24
 
+    /* Restore r0 and SREG */
+    pop     r0
+    out     _SFR_IO_ADDR(SREG), r0
+    pop     r0
+
+    /* Save current context */
+    call    save_context
+
+    /* Block scheduling */
+    ldi     r24, 1
+    sts     blockScheduling, r24
+
+    call    Alarm_evaluateSysTickAlarm
+
+    /* Release scheduling */
+    ldi     r24, 0
+    sts     blockScheduling, r24
+
+    /* Restore context */
+    call    restore_context
+
+    /* Push r0 and SREG */
+    push    r0
+    in      r0, _SFR_IO_ADDR(SREG)
+    push    r0
+
     /* Test if rescheduling is needed */
     lds     r0, needScheduling
     tst     r0
