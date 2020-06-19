@@ -15,7 +15,6 @@
 #ifndef ALARMTYPES_H_
 #define ALARMTYPES_H_
 
-#include "AlarmTypes.h"
 #include "EventTypes.h"
 #include "OCB.h"
 
