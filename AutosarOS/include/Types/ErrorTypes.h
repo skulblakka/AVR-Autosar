@@ -17,8 +17,6 @@
 
 #include <string.h>
 
-#include <util/atomic.h>
-
 /**
  * @brief   Type for Service IDs
  */
