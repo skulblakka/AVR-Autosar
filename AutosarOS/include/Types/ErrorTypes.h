@@ -17,6 +17,8 @@
 
 #include <string.h>
 
+#include <util/atomic.h>
+
 /**
  * @brief   Type for Service IDs
  */
@@ -70,67 +72,101 @@ struct errorInfo_s {
 
 #if defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0 && !defined(__DOXYGEN__)
 #if OS_CONFIG_MAX_ERROR_PARAM == 0
-#define OS_SET_ERROR_INFO0(serviceId)                       errorInfo.id = serviceId;
+#define OS_SET_ERROR_INFO0(serviceId)                       ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                            }
 
-#define OS_SET_ERROR_INFO1(serviceId, paramPtr1, size1)     errorInfo.id = serviceId;
+#define OS_SET_ERROR_INFO1(serviceId, paramPtr1, size1)     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                            }
 
 #define OS_SET_ERROR_INFO2(serviceId, paramPtr1, size1, \
-                            paramPtr2, size2)               errorInfo.id = serviceId;
+                            paramPtr2, size2)               ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                            }
 
 #define OS_SET_ERROR_INFO3(serviceId, paramPtr1, size1, \
                             paramPtr2, size2, \
-                            paramPtr3, size3)               errorInfo.id = serviceId;
+                            paramPtr3, size3)               ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                            }
 #endif /* OS_CONFIG_MAX_ERROR_PARAM == 0 */
 
 #if OS_CONFIG_MAX_ERROR_PARAM == 1
-#define OS_SET_ERROR_INFO0(serviceId)                       errorInfo.id = serviceId;
+#define OS_SET_ERROR_INFO0(serviceId)                       ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                            }
 
-#define OS_SET_ERROR_INFO1(serviceId, paramPtr1, size1)     errorInfo.id = serviceId; \
-                                                            memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1);
+#define OS_SET_ERROR_INFO1(serviceId, paramPtr1, size1)     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                                memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
+                                                            }
+
 #define OS_SET_ERROR_INFO2(serviceId, paramPtr1, size1, \
-                            paramPtr2, size2)               errorInfo.id = serviceId; \
-                                                            memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1);
+                            paramPtr2, size2)               ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                                memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
+                                                            }
+
 #define OS_SET_ERROR_INFO3(serviceId, paramPtr1, size1, \
                             paramPtr2, size2, \
-                            paramPtr3, size3)               errorInfo.id = serviceId; \
-                                                            memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1);
+                            paramPtr3, size3)               ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                                memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
+                                                            }
 #endif /* OS_CONFIG_MAX_ERROR_PARAM == 1 */
 
 #if OS_CONFIG_MAX_ERROR_PARAM == 2
-#define OS_SET_ERROR_INFO0(serviceId)                       errorInfo.id = serviceId;
+#define OS_SET_ERROR_INFO0(serviceId)                       ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                            }
 
-#define OS_SET_ERROR_INFO1(serviceId, paramPtr1, size1)     errorInfo.id = serviceId; \
-                                                            memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1);
+#define OS_SET_ERROR_INFO1(serviceId, paramPtr1, size1)     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                                memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
+                                                            }
 
 #define OS_SET_ERROR_INFO2(serviceId, paramPtr1, size1, \
-                            paramPtr2, size2)               errorInfo.id = serviceId; \
-                                                            memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
-                                                            memcpy((uint8_t*) &errorInfo.param2, paramPtr2, size2);
+                            paramPtr2, size2)               ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                                memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
+                                                                memcpy((uint8_t*) &errorInfo.param2, paramPtr2, size2); \
+                                                            }
 
 #define OS_SET_ERROR_INFO3(serviceId, paramPtr1, size1, \
                             paramPtr2, size2, \
-                            paramPtr3, size3)               errorInfo.id = serviceId; \
-                                                            memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
-                                                            memcpy((uint8_t*) &errorInfo.param2, paramPtr2, size2);
+                            paramPtr3, size3)               ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                                memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
+                                                                memcpy((uint8_t*) &errorInfo.param2, paramPtr2, size2); \
+                                                            }
 #endif /* OS_CONFIG_MAX_ERROR_PARAM == 2 */
 
 #if OS_CONFIG_MAX_ERROR_PARAM == 3
-#define OS_SET_ERROR_INFO0(serviceId)                       errorInfo.id = serviceId;
+#define OS_SET_ERROR_INFO0(serviceId)                       ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                            }
 
-#define OS_SET_ERROR_INFO1(serviceId, paramPtr1, size1)     errorInfo.id = serviceId; \
-                                                            memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1);
+#define OS_SET_ERROR_INFO1(serviceId, paramPtr1, size1)     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                                memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
+                                                            }
 
 #define OS_SET_ERROR_INFO2(serviceId, paramPtr1, size1, \
-                            paramPtr2, size2)               errorInfo.id = serviceId; \
-                                                            memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
-                                                            memcpy((uint8_t*) &errorInfo.param2, paramPtr2, size2);
+                            paramPtr2, size2)               ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                                memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
+                                                                memcpy((uint8_t*) &errorInfo.param2, paramPtr2, size2); \
+                                                            }
 
 #define OS_SET_ERROR_INFO3(serviceId, paramPtr1, size1, \
                             paramPtr2, size2, \
-                            paramPtr3, size3)               errorInfo.id = serviceId; \
-                                                            memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
-                                                            memcpy((uint8_t*) &errorInfo.param2, paramPtr2, size2); \
-                                                            memcpy((uint8_t*) &errorInfo.param3, paramPtr3, size3);
+                            paramPtr3, size3)               ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                errorInfo.id = serviceId; \
+                                                                memcpy((uint8_t*) &errorInfo.param1, paramPtr1, size1); \
+                                                                memcpy((uint8_t*) &errorInfo.param2, paramPtr2, size2); \
+                                                                memcpy((uint8_t*) &errorInfo.param3, paramPtr3, size3); \
+                                                            }
 #endif /* OS_CONFIG_MAX_ERROR_PARAM == 3 */
 
 #if OS_CONFIG_MAX_ERROR_PARAM > 3
