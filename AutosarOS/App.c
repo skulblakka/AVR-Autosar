@@ -320,7 +320,7 @@ extern void StartupHook(void)
     EICRA = 1 << ISC11 | 1 << ISC10 | 1 << ISC01 | 1 << ISC00;  // Trigger INT0 and INT1 on falling edge
     EIMSK |= 1 << INT1 | 1 << INT0;                             // Enable INT0 and INT1
 
-    /* Reset counter 1 */
+    /* Timer 1 */
     TCCR1A = 0;
     TCCR1B = 0;
     TCNT1 = 0;
