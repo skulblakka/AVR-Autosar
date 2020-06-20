@@ -319,9 +319,10 @@
 /* Generate enumerations based on config */
 #ifdef OS_CONFIG_GEN_ENUM
 
-#define OS_CONFIG_TASK_BEGIN                                                                                    enum tasks_e {
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)  Name,
-#define OS_CONFIG_TASK_END                                                                                      INVALID_TASK};
+#define OS_CONFIG_TASK_BEGIN                                                    enum tasks_e {
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
+                            Autostart, TaskType, TaskSchedule, Res, Events)     Name,
+#define OS_CONFIG_TASK_END                                                      INVALID_TASK};
 
 #define TASK_COUNT     INVALID_TASK
 
@@ -329,9 +330,9 @@
 #define OS_CONFIG_INT_DEF(Name, Prio)
 #define OS_CONFIG_INT_END
 
-#define OS_CONFIG_RESOURCE_BEGIN                                                                                enum resources_e {
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                                      Name,
-#define OS_CONFIG_RESOURCE_END                                                                                  INVALID_RESOURCE};
+#define OS_CONFIG_RESOURCE_BEGIN                                                enum resources_e {
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                      Name,
+#define OS_CONFIG_RESOURCE_END                                                  INVALID_RESOURCE};
 
 #define RESOURCE_COUNT  INVALID_RESOURCE
 
@@ -339,16 +340,18 @@
 #define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
-#define OS_CONFIG_COUNTER_BEGIN                                                                                 enum counters_e { \
-                                                                                                                SYSTEM_COUNTER,
-#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)              Name,
-#define OS_CONFIG_COUNTER_END                                                                                   INVALID_COUNTER};
+#define OS_CONFIG_COUNTER_BEGIN                                                 enum counters_e { \
+                                                                                SYSTEM_COUNTER,
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, \
+                                TicksPerBase, Type, SecondsPerTick)             Name,
+#define OS_CONFIG_COUNTER_END                                                   INVALID_COUNTER};
 
 #define COUNTER_COUNT   INVALID_COUNTER
 
-#define OS_CONFIG_ALARM_BEGIN                                                                                   enum alarm_e {
-#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)                      Name,
-#define OS_CONFIG_ALARM_END                                                                                     INVALID_ALARM};
+#define OS_CONFIG_ALARM_BEGIN                                                   enum alarm_e {
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, \
+                                Action, Expiration, Cycle)                      Name,
+#define OS_CONFIG_ALARM_END                                                     INVALID_ALARM};
 
 #define ALARM_COUNT     INVALID_ALARM
 
@@ -360,11 +363,12 @@
 #ifdef OS_CONFIG_GEN_FUNC_DECL
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)  TASK(Name);
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
+                            Autostart, TaskType, TaskSchedule, Res, Events)     TASK(Name);
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name, Prio)                                                                           extern void Func ## Name(void);
+#define OS_CONFIG_INT_DEF(Name, Prio)                                           extern void Func ## Name(void);
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
@@ -376,14 +380,16 @@
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
 #define OS_CONFIG_COUNTER_BEGIN
-#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, \
+                                TicksPerBase, Type, SecondsPerTick)
 #define OS_CONFIG_COUNTER_END
 
 #define OS_CONFIG_ALARM_BEGIN
-#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, \
+                                Action, Expiration, Cycle)
 #define OS_CONFIG_ALARM_END
 
-#define OS_CONFIG_ALARM_CALLBACK(Name)                                                                          extern void Name(void);
+#define OS_CONFIG_ALARM_CALLBACK(Name)                                          extern void Name(void);
 
 #endif /* OS_CONFIG_GEN_FUNC_DECL */
 
@@ -391,18 +397,20 @@
 #ifdef OS_CONFIG_GEN_FUNC
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
+                            Autostart, TaskType, TaskSchedule, Res, Events)
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name, Prio)                                                                           ISR(Name) { \
-                                                                                                                    isISR = true; \
-                                                                                                                    isCat2ISR = Prio; \
-                                                                                                                    if (currentTask == INVALID_TASK || Prio == 0 || Prio > TCB_Cfg[currentTask]->curPrio) \
-                                                                                                                        Func ## Name(); \
-                                                                                                                    isISR = false; \
-                                                                                                                    isCat2ISR = 0; \
-                                                                                                                }
+#define OS_CONFIG_INT_DEF(Name, Prio)                                           ISR(Name) { \
+                                                                                    isISR = true; \
+                                                                                    isCat2ISR = Prio; \
+                                                                                    if (currentTask == INVALID_TASK || Prio == 0 \
+                                                                                            || Prio > TCB_Cfg[currentTask]->curPrio) \
+                                                                                        Func ## Name(); \
+                                                                                        isISR = false; \
+                                                                                        isCat2ISR = 0; \
+                                                                                }
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
@@ -414,11 +422,13 @@
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
 #define OS_CONFIG_COUNTER_BEGIN
-#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, \
+                                TicksPerBase, Type, SecondsPerTick)
 #define OS_CONFIG_COUNTER_END
 
 #define OS_CONFIG_ALARM_BEGIN
-#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, \
+                                Action, Expiration, Cycle)
 #define OS_CONFIG_ALARM_END
 
 #define OS_CONFIG_ALARM_CALLBACK(Name)
@@ -429,25 +439,26 @@
 #ifdef OS_CONFIG_GEN_DATA_STRUCT
 
 #define OS_CONFIG_TASK_BEGIN
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)  uint8_t Task##Name##_stack[StackSize]; \
-                                                                                                                volatile struct task_s Task##Name##_s = { \
-                                                                                                                    .stack = (uint8_t* const) &Task##Name##_stack, \
-                                                                                                                    .stackSize = StackSize, \
-                                                                                                                    .prio = Prio, \
-                                                                                                                    .numberOfActivations = NumberOfActivations, \
-                                                                                                                    .autostart = Autostart, \
-                                                                                                                    .taskType = TaskType, \
-                                                                                                                    .taskSchedule = TaskSchedule, \
-                                                                                                                    .taskFxn = PTASK(Name), \
-                                                                                                                    .context = Task##Name##_stack + StackSize - 1, \
-                                                                                                                    .curPrio = Prio, \
-                                                                                                                    .curState = SUSPENDED, \
-                                                                                                                    .curStackUse = 0, \
-                                                                                                                    .maxStackUse = 0, \
-                                                                                                                    .resourceQueue = NULL, \
-                                                                                                                    .internalResource = &IntResource##Res##_s, \
-                                                                                                                    .events = Events, \
-                                                                                                                };
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
+                            Autostart, TaskType, TaskSchedule, Res, Events)     uint8_t Task##Name##_stack[StackSize]; \
+                                                                                volatile struct task_s Task##Name##_s = { \
+                                                                                    .stack = (uint8_t* const) &Task##Name##_stack, \
+                                                                                    .stackSize = StackSize, \
+                                                                                    .prio = Prio, \
+                                                                                    .numberOfActivations = NumberOfActivations, \
+                                                                                    .autostart = Autostart, \
+                                                                                    .taskType = TaskType, \
+                                                                                    .taskSchedule = TaskSchedule, \
+                                                                                    .taskFxn = PTASK(Name), \
+                                                                                    .context = Task##Name##_stack + StackSize - 1, \
+                                                                                    .curPrio = Prio, \
+                                                                                    .curState = SUSPENDED, \
+                                                                                    .curStackUse = 0, \
+                                                                                    .maxStackUse = 0, \
+                                                                                    .resourceQueue = NULL, \
+                                                                                    .internalResource = &IntResource##Res##_s, \
+                                                                                    .events = Events, \
+                                                                                };
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
@@ -455,48 +466,50 @@
 #define OS_CONFIG_INT_END
 
 #define OS_CONFIG_RESOURCE_BEGIN
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                                      volatile struct resource_s Resource##Name##_s = { \
-                                                                                                                    .prio = Prio, \
-                                                                                                                    .assigned = false, \
-                                                                                                                    .next = NULL \
-                                                                                                                };
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                      volatile struct resource_s Resource##Name##_s = { \
+                                                                                    .prio = Prio, \
+                                                                                    .assigned = false, \
+                                                                                    .next = NULL \
+                                                                                };
 #define OS_CONFIG_RESOURCE_END
 
-#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                                                       volatile struct internalResource_s IntResourceNULL_s;
-#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                                                             volatile struct internalResource_s IntResource##Name##_s = { \
-                                                                                                                    .prio = Prio, \
-                                                                                                                    .assigned = false \
-                                                                                                                };
+#define OS_CONFIG_INTERNAL_RESOURCE_BEGIN                                       volatile struct internalResource_s IntResourceNULL_s;
+#define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)                             volatile struct internalResource_s IntResource##Name##_s = { \
+                                                                                    .prio = Prio, \
+                                                                                    .assigned = false \
+                                                                                };
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
-#define OS_CONFIG_COUNTER_BEGIN                                                                                 volatile struct counter_s CounterSYSTEM_COUNTER_s = { \
-                                                                                                                    .maxallowedvalue = UINT32_MAX, \
-                                                                                                                    .mincycle = 1, \
-                                                                                                                    .ticksperbase = 57, \
-                                                                                                                    .type = HARDWARE, \
-                                                                                                                    .secondspertick = 0.017778, \
-                                                                                                                    .value = 0 \
-                                                                                                                };
-#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)              volatile struct counter_s Counter##Name##_s = { \
-                                                                                                                    .maxallowedvalue = MaxAllowedValue, \
-                                                                                                                    .mincycle = MinCycle, \
-                                                                                                                    .ticksperbase = TicksPerBase, \
-                                                                                                                    .type = Type, \
-                                                                                                                    .secondspertick = SecondsPerTick, \
-                                                                                                                    .value = 0 \
-                                                                                                                };
+#define OS_CONFIG_COUNTER_BEGIN                                                 volatile struct counter_s CounterSYSTEM_COUNTER_s = { \
+                                                                                    .maxallowedvalue = UINT32_MAX, \
+                                                                                    .mincycle = 1, \
+                                                                                    .ticksperbase = 57, \
+                                                                                    .type = HARDWARE, \
+                                                                                    .secondspertick = 0.017778, \
+                                                                                    .value = 0 \
+                                                                                };
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, \
+                                TicksPerBase, Type, SecondsPerTick)             volatile struct counter_s Counter##Name##_s = { \
+                                                                                    .maxallowedvalue = MaxAllowedValue, \
+                                                                                    .mincycle = MinCycle, \
+                                                                                    .ticksperbase = TicksPerBase, \
+                                                                                    .type = Type, \
+                                                                                    .secondspertick = SecondsPerTick, \
+                                                                                    .value = 0 \
+                                                                                };
 #define OS_CONFIG_COUNTER_END
 
 #define OS_CONFIG_ALARM_BEGIN
-#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)                      volatile struct alarm_s Alarm##Name##_s = { \
-                                                                                                                    .alarmBase = &Counter##Base##_s, \
-                                                                                                                    .event = Event, \
-                                                                                                                    .actionType = Type, \
-                                                                                                                    .action.action = (void*) Action, \
-                                                                                                                    .running = AutoStart, \
-                                                                                                                    .expiration = Expiration, \
-                                                                                                                    .cycle = Cycle \
-                                                                                                                };
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, \
+                             Action, Expiration, Cycle)                         volatile struct alarm_s Alarm##Name##_s = { \
+                                                                                    .alarmBase = &Counter##Base##_s, \
+                                                                                    .event = Event, \
+                                                                                    .actionType = Type, \
+                                                                                    .action.action = (void*) Action, \
+                                                                                    .running = AutoStart, \
+                                                                                    .expiration = Expiration, \
+                                                                                    .cycle = Cycle \
+                                                                                };
 #define OS_CONFIG_ALARM_END
 
 #define OS_CONFIG_ALARM_CALLBACK(Name)
@@ -506,30 +519,33 @@
 /* Generate OS Task Control Block */
 #ifdef OS_CONFIG_GEN_TCB
 
-#define OS_CONFIG_TASK_BEGIN                                                                                    volatile struct task_s* TCB_Cfg[TASK_COUNT] = {
-#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)  &Task##Name##_s,
-#define OS_CONFIG_TASK_END                                                                                      };
+#define OS_CONFIG_TASK_BEGIN                                                    volatile struct task_s* TCB_Cfg[TASK_COUNT] = {
+#define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
+                            Autostart, TaskType, TaskSchedule, Res, Events)     &Task##Name##_s,
+#define OS_CONFIG_TASK_END                                                      };
 
 #define OS_CONFIG_INT_BEGIN
 #define OS_CONFIG_INT_DEF(Name, Prio)
 #define OS_CONFIG_INT_END
 
-#define OS_CONFIG_RESOURCE_BEGIN                                                                                volatile struct resource_s* Res_Cfg[RESOURCE_COUNT] = {
-#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                                                      &Resource##Name##_s,
-#define OS_CONFIG_RESOURCE_END                                                                                  };
+#define OS_CONFIG_RESOURCE_BEGIN                                                volatile struct resource_s* Res_Cfg[RESOURCE_COUNT] = {
+#define OS_CONFIG_RESOURCE_DEF(Name, Prio)                                      &Resource##Name##_s,
+#define OS_CONFIG_RESOURCE_END                                                  };
 
 #define OS_CONFIG_INTERNAL_RESOURCE_BEGIN
 #define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
 #define OS_CONFIG_INTERNAL_RESOURCE_END
 
-#define OS_CONFIG_COUNTER_BEGIN                                                                                 volatile struct counter_s* Counter_Cfg[COUNTER_COUNT] = { \
-                                                                                                                &CounterSYSTEM_COUNTER_s,
-#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)              &Counter##Name##_s,
-#define OS_CONFIG_COUNTER_END                                                                                   };
+#define OS_CONFIG_COUNTER_BEGIN                                                 volatile struct counter_s* Counter_Cfg[COUNTER_COUNT] = { \
+                                                                                &CounterSYSTEM_COUNTER_s,
+#define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, \
+                                TicksPerBase, Type, SecondsPerTick)             &Counter##Name##_s,
+#define OS_CONFIG_COUNTER_END                                                   };
 
-#define OS_CONFIG_ALARM_BEGIN                                                                                   volatile struct alarm_s* Alarm_Cfg[ALARM_COUNT] = {
-#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)                      &Alarm##Name##_s,
-#define OS_CONFIG_ALARM_END                                                                                     };
+#define OS_CONFIG_ALARM_BEGIN                                                   volatile struct alarm_s* Alarm_Cfg[ALARM_COUNT] = {
+#define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, \
+                                Action, Expiration, Cycle)                      &Alarm##Name##_s,
+#define OS_CONFIG_ALARM_END                                                     };
 
 #define OS_CONFIG_ALARM_CALLBACK(Name)
 
