@@ -19,6 +19,8 @@
 
 extern StatusType Counter_IncrementCounter(CounterType counterID)
 {
+    OS_SET_ERROR_INFO1(OSServiceId_IncrementCounter, &counterID, sizeof(counterID));
+
     if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
 #if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
         if (!blockErrorHook) {
@@ -58,6 +60,8 @@ extern StatusType Counter_IncrementCounter(CounterType counterID)
 
 extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType value)
 {
+    OS_SET_ERROR_INFO1(OSServiceId_GetCounterValue, &counterID, sizeof(counterID), &value, sizeof(value));
+
     if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
 #if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
         if (!blockErrorHook) {
@@ -83,6 +87,9 @@ extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType val
 
 extern StatusType Counter_GetElapsedValue(CounterType counterID, TickRefType value, TickRefType elapsedValue)
 {
+    OS_SET_ERROR_INFO1(OSServiceId_GetElapsedValue, &counterID, sizeof(counterID), &value, sizeof(value), &elapsedValue,
+            sizeof(elapsedValue));
+
     if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
 #if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
         if (!blockErrorHook) {
