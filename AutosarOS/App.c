@@ -20,6 +20,12 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
+#define DELAY_MS(ms)
+#else
+#define DELAY_MS(ms)    _delay_ms(ms)
+#endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
+
 TASK(Idle)
 {
     while (1);
@@ -29,9 +35,9 @@ TASK(T1)
 {
     while (1) {
         PORTB &= ~(1 << 1);   // turn LED on
-        _delay_ms(1000);
+        DELAY_MS(1000);
         PORTB |= (1 << 1);  // turn LED off
-        _delay_ms(1000);
+        DELAY_MS(1000);
     }
 }
 
@@ -149,9 +155,9 @@ TASK(T2)
 
 
         PORTB &= ~(1 << 2);   // turn LED on
-        _delay_ms(1000);
+        DELAY_MS(1000);
         PORTB |= (1 << 2);  // turn LED off
-        _delay_ms(1000);
+        DELAY_MS(1000);
         if (t++ % 3 == 0) {
             ActivateTask(T3);
         } else if (t == 20) {
@@ -166,7 +172,7 @@ TASK(T3)
 {
     for (uint8_t i = 0; i < 3; i++) {
         PORTB &= ~(1 << 3);   // turn LED on
-        _delay_ms(1000);
+        DELAY_MS(1000);
 
         WaitEvent(0x01);
         EventMaskType ev = 0;
@@ -175,7 +181,7 @@ TASK(T3)
         ClearEvent(0x01);
 
         PORTB |= (1 << 3);  // turn LED off
-        _delay_ms(1000);
+        DELAY_MS(1000);
 
         Schedule();
     }
@@ -195,9 +201,9 @@ TASK(T4)
 {
     for (uint8_t i = 0; i < 3; i++) {
         PORTB &= ~(1 << 4);   // turn LED on
-        _delay_ms(1000);
+        DELAY_MS(1000);
         PORTB |= (1 << 4);  // turn LED off
-        _delay_ms(1000);
+        DELAY_MS(1000);
     }
 
     if (ChainTask(T5) != E_OK) {
@@ -209,9 +215,9 @@ TASK(T5)
 {
     for (uint8_t i = 0; i < 3; i++) {
         PORTB &= ~(1 << 5);   // turn LED on
-        _delay_ms(1000);
+        DELAY_MS(1000);
         PORTB |= (1 << 5);  // turn LED off
-        _delay_ms(1000);
+        DELAY_MS(1000);
     }
 
     TerminateTask();
@@ -221,9 +227,9 @@ TASK(T6)
 {
     for (uint8_t i = 0; i < 3; i++) {
         PORTB &= ~(1 << 6);   // turn LED on
-        _delay_ms(1000);
+        DELAY_MS(1000);
         PORTB |= (1 << 6);  // turn LED off
-        _delay_ms(1000);
+        DELAY_MS(1000);
     }
 
     TerminateTask();
@@ -274,7 +280,7 @@ TASK(T7)
 
     for (uint8_t i = 0; i < 5; i++) {
         PORTB &= ~(1 << 7);   // turn LED on
-        _delay_ms(1000);
+        DELAY_MS(1000);
 
         WaitEvent(0x01);
         ev = 0;
@@ -287,7 +293,7 @@ TASK(T7)
         assert(stat == E_OK);
 
         PORTB |= (1 << 7);  // turn LED off
-        _delay_ms(1000);
+        DELAY_MS(1000);
 
         WaitEvent(0x01);
         ev = 0;
@@ -323,6 +329,12 @@ extern void StartupHook(void)
     TCCR1B |= (1 << WGM12);                                     // Enable CTC mode
     TCCR1B |= (1 << CS12) | (1 << CS10);                        // Set prescaler to 1024
     TIMSK |= (1 << OCIE1A);                                     // Enable interrupt on compare match
+
+    /* Timer 2 */
+#if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
+    TCCR2 = (1 << CS20);                                        // Enable Timer2 with Prescaler 1
+    TIMSK |= 1 << TOIE2;                                        // Enable Overflow Interrupt (Timer2)
+#endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
 #endif
 
     uint8_t t = 0;
@@ -331,7 +343,7 @@ extern void StartupHook(void)
         uint8_t r = PORTB;
         r ^= (1 << 7);
         PORTB = r;
-        _delay_ms(50);
+        DELAY_MS(50);
         t++;
     }
 }
@@ -343,7 +355,7 @@ extern void ShutdownHook(StatusType error)
 
     for (uint8_t i = 0; i < 11; i++) {
         PORTB ^= 0xFF;
-        _delay_ms(1000);
+        DELAY_MS(1000);
     }
 }
 
@@ -401,4 +413,9 @@ ISR(TIMER1_COMPA_vect)
 ALARMCALLBACK(AlarmCb)
 {
     ActivateTask(T7);
+}
+
+ISR(TIMER2_OVF_vect)
+{
+
 }

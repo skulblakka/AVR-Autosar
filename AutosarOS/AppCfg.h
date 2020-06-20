@@ -25,6 +25,9 @@
 
 #define OS_CONFIG_MAX_ERROR_PARAM   3
 
+// Custom macro for enabling simulator specific code
+#define OS_CONFIG_SIM               false
+
 OS_CONFIG_INTERNAL_RESOURCE_BEGIN
     OS_CONFIG_INTERNAL_RESOURCE_DEF(IntRes1, 9)
     OS_CONFIG_INTERNAL_RESOURCE_DEF(IntRes2, 9)
@@ -45,6 +48,11 @@ OS_CONFIG_INT_BEGIN
     OS_CONFIG_INT_DEF(INT0_vect, 11)
     OS_CONFIG_INT_DEF(INT1_vect, 11)
     OS_CONFIG_INT_DEF(TIMER1_COMPA_vect, 15)
+
+#if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
+    OS_CONFIG_INT_DEF(TIMER2_OVF_vect, 20)
+#endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
+
 OS_CONFIG_INT_END
 
 OS_CONFIG_RESOURCE_BEGIN
