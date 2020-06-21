@@ -26,38 +26,20 @@ extern StatusType Events_SetEvent(TaskType TaskID, EventMaskType events)
     bool taskChanged = false;
 
     if (OS_EXTENDED && TaskID >= INVALID_TASK) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && TCB_Cfg[TaskID]->taskType != EXTENDED) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_ACCESS;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && TCB_Cfg[TaskID]->curState == SUSPENDED) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_STATE;
         }
@@ -87,26 +69,14 @@ extern StatusType Events_ClearEvent(EventMaskType events)
     OS_SET_ERROR_INFO1(OSServiceId_ClearEvent, &events, sizeof(events));
 
     if (OS_EXTENDED && isISR) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_CALLLEVEL;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && TCB_Cfg[currentTask]->taskType != EXTENDED) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_ACCESS;
         }
@@ -123,38 +93,20 @@ extern StatusType Events_GetEvent(TaskType TaskID, EventMaskRefType events)
     OS_SET_ERROR_INFO2(OSServiceId_GetEvent, &TaskID, sizeof(TaskID), &events, sizeof(events));
 
     if (TaskID >= INVALID_TASK) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && TCB_Cfg[TaskID]->taskType != EXTENDED) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_ACCESS;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && TCB_Cfg[TaskID]->curState == SUSPENDED) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_STATE;
         }
@@ -171,38 +123,20 @@ extern StatusType Events_WaitEvent(EventMaskType events)
     OS_SET_ERROR_INFO1(OSServiceId_WaitEvent, &events, sizeof(events));
 
     if (OS_EXTENDED && isISR) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_CALLLEVEL;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && TCB_Cfg[currentTask]->taskType != EXTENDED) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_ACCESS;
         }
 
         if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_RESOURCE;
         }

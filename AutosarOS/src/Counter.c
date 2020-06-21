@@ -22,25 +22,13 @@ extern StatusType Counter_IncrementCounter(CounterType counterID)
     OS_SET_ERROR_INFO1(OSServiceId_IncrementCounter, &counterID, sizeof(counterID));
 
     if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && Counter_Cfg[counterID]->type == HARDWARE) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_ID;
     }
@@ -63,13 +51,7 @@ extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType val
     OS_SET_ERROR_INFO2(OSServiceId_GetCounterValue, &counterID, sizeof(counterID), &value, sizeof(value));
 
     if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_ID;
     }
@@ -91,25 +73,13 @@ extern StatusType Counter_GetElapsedValue(CounterType counterID, TickRefType val
             sizeof(elapsedValue));
 
     if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && *value > Counter_Cfg[counterID]->maxallowedvalue) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_VALUE;
     }

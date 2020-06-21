@@ -23,26 +23,14 @@ extern StatusType Resource_GetResource(ResourceType ResID)
     OS_SET_ERROR_INFO1(OSServiceId_GetResource, &ResID, sizeof(ResID));
 
     if (OS_EXTENDED && ResID >= RESOURCE_COUNT) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && Res_Cfg[ResID]->assigned) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_ACCESS;
         }
@@ -50,13 +38,7 @@ extern StatusType Resource_GetResource(ResourceType ResID)
         if (OS_EXTENDED && ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio)
                         || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio))) {
             // Prio of requested resource is lower than static prio of calling task or ISR
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_ACCESS;
         }
@@ -97,26 +79,14 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID)
     OS_SET_ERROR_INFO1(OSServiceId_ReleaseResource, &ResID, sizeof(ResID));
 
     if (OS_EXTENDED && ResID >= RESOURCE_COUNT) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-        if (!blockErrorHook) {
-            blockErrorHook = true;
-            ErrorHook();
-            blockErrorHook = false;
-        }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+        OS_CALL_ERROR_HOOK();
 
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && !Res_Cfg[ResID]->assigned) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_NOFUNC;
         }
@@ -124,13 +94,7 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID)
         if (OS_EXTENDED &&  ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio)
                         || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio))) {
             // Prio of requested resource is lower than static prio of calling task or ISR
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_ACCESS;
         }
@@ -157,13 +121,7 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID)
 
         /* Check if queue has any elements */
         if (OS_EXTENDED && *resPtr == NULL) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_NOFUNC;
         }
@@ -178,13 +136,7 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID)
         }
 
         if (OS_EXTENDED && *resPtr != Res_Cfg[ResID]) {
-#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
-            if (!blockErrorHook) {
-                blockErrorHook = true;
-                ErrorHook();
-                blockErrorHook = false;
-            }
-#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+            OS_CALL_ERROR_HOOK();
 
             return E_OS_NOFUNC;
         }
