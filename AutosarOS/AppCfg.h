@@ -19,7 +19,7 @@
 #define OS_CONFIG_HOOK_SHUTDOWN     true
 #define OS_CONFIG_HOOK_PRE_TASK     false
 #define OS_CONFIG_HOOK_POST_TASK    false
-#define OS_CONFIG_HOOK_ERROR        false
+#define OS_CONFIG_HOOK_ERROR        true
 
 #define OS_CONFIG_EXTENDED          true
 
