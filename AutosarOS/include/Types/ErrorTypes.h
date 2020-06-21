@@ -68,6 +68,24 @@ struct errorInfo_s {
 #endif /* OS_CONFIG_MAX_ERROR_PARAM >= 3 */
 };
 
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true && !defined(__DOXYGEN__)
+#define OS_CALL_ERROR_HOOK()                                ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                if (!blockErrorHook) { \
+                                                                    blockErrorHook = true; \
+                                                                    ErrorHook(); \
+                                                                    blockErrorHook = false; \
+                                                                } \
+                                                            }
+#else
+/**
+ * @brief   Call error hook if configured
+ *
+ * Call the ErrorHook() if it is configured. Also block recursive calls of the hook
+ * and disable interrupts if necessary.
+ */
+#define OS_CALL_ERROR_HOOK()
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true && !defined(__DOXYGEN__) */
+
 #if defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0 && !defined(__DOXYGEN__)
 #if OS_CONFIG_MAX_ERROR_PARAM == 0
 #define OS_SET_ERROR_INFO0(serviceId)                       ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
@@ -171,7 +189,7 @@ struct errorInfo_s {
 #error Values of OS_CONFIG_MAX_ERROR_PARAM larger 3 are not supported!
 #endif /* OS_CONFIG_MAX_ERROR_PARAM > 3 */
 
-#else /* defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM != 0 */
+#else /* defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0 && !defined(__DOXYGEN__) */
 
 /**
  * @brief   Set error info with zero parameters
@@ -223,7 +241,7 @@ struct errorInfo_s {
  * @param   size3           Size of first parameter in bytes (used if #OS_CONFIG_MAX_ERROR_PARAM >= 3)
  */
 #define OS_SET_ERROR_INFO3(serviceId, paramPtr1, size1, paramPtr2, size2, paramPtr3, size3)
-#endif /* defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM != 0 */
+#endif /* defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0 && !defined(__DOXYGEN__) */
 
 /************************************************************************/
 /* ERROR INFORMATION ACCESS MACROS                                      */
