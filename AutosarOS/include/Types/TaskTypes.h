@@ -94,9 +94,13 @@ struct task_s {
     uint8_t* context;                                           /**< Current context/stack pointer */
     uint8_t curPrio;                                            /**< Current priority */
     uint8_t curNumberOfActivations;                             /**< Current number of activations */
-    TaskStateType curState;                                       /**< Current state of the task */
+    TaskStateType curState;                                     /**< Current state of the task */
+
+#if defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1
     uint16_t curStackUse;                                       /**< Current stack usage */
     uint16_t maxStackUse;                                       /**< Maximum recorded stack usage */
+#endif /* defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1 */
+
     struct resource_s* resourceQueue;                           /**< Current queue of allocated resources */
     EventMaskType waitEvents;                                   /**< Mask of events the task is currently waiting on */
     EventMaskType pendingEvents;                                /**< Mask of currently pending events */

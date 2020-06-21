@@ -44,7 +44,8 @@ typedef enum StatusType_e {
     E_OS_NOFUNC,
     E_OS_RESOURCE,
     E_OS_STATE,
-    E_OS_VALUE
+    E_OS_VALUE,
+    E_OS_STACKFAULT
 } StatusType;
 
 /**
