@@ -155,6 +155,19 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID)
             }
         }
 
+        /* Check if queue has any elements */
+        if (OS_EXTENDED && *resPtr == NULL) {
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true
+            if (!blockErrorHook) {
+                blockErrorHook = true;
+                ErrorHook();
+                blockErrorHook = false;
+            }
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true */
+
+            return E_OS_NOFUNC;
+        }
+
         /* Find last element in queue and new ceiling priority */
         while ((*resPtr)->next != NULL) {
             if (ceilingPrio < (*resPtr)->prio) {
@@ -220,12 +233,14 @@ extern void Resource_ReleaseInternalResource()
         struct resource_s* volatile* resPtr = &(TCB_Cfg[currentTask]->resourceQueue);
 
         /* Find ceiling priority */
-        while ((*resPtr)->next != NULL) {
-            if (ceilingPrio < (*resPtr)->prio) {
-                ceilingPrio = (*resPtr)->prio;
-            }
+        if (*resPtr != NULL) {
+            while ((*resPtr)->next != NULL) {
+                if (ceilingPrio < (*resPtr)->prio) {
+                    ceilingPrio = (*resPtr)->prio;
+                }
 
-            resPtr = &(*resPtr)->next;
+                resPtr = &(*resPtr)->next;
+            }
         }
 
         // Set new task priority
