@@ -93,6 +93,15 @@ extern void OS_StartOS(AppModeType mode)
             if (TCB_Cfg[i]->autostart == AUTOSTART && TCB_Cfg[i]->curState == SUSPENDED) {
                 TCB_Cfg[i]->curState = PRE_READY;
             }
+
+#if defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 2
+            // Set stack top marker
+            *(TCB_Cfg[i]->stack - 1) = 0xBE;
+#if OS_CONFIG_STACK_MONITORING >= 3
+            // Set stack memory for stack monitoring
+            memset(TCB_Cfg[i]->stack, 0xBE, TCB_Cfg[i]->stackSize);
+#endif /* OS_CONFIG_STACK_MONITORING >= 3 */
+#endif /* defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 2 */
         }
     }
 
@@ -124,6 +133,8 @@ extern void OS_ShutdownOS(StatusType error)
     ShutdownHook(error);
 #endif
 
+    assert(false); // We never want to reach this
+
     while (1);
 }
 
@@ -131,6 +142,8 @@ extern void __attribute__((naked)) OS_ScheduleC()
 {
     save_context();
 
+
+#if defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1
     /* Calculate stack usage */
     if (currentTask != INVALID_TASK) {
         TCB_Cfg[currentTask]->curStackUse = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize
@@ -139,8 +152,19 @@ extern void __attribute__((naked)) OS_ScheduleC()
             TCB_Cfg[currentTask]->maxStackUse = TCB_Cfg[currentTask]->curStackUse;
         }
 
-        assert(TCB_Cfg[currentTask]->maxStackUse <= TCB_Cfg[currentTask]->stackSize);
+#if OS_CONFIG_STACK_MONITORING >= 2
+        if (*(TCB_Cfg[currentTask]->stack - 1) != 0xBE) {
+            if (TCB_Cfg[currentTask]->maxStackUse <= TCB_Cfg[currentTask]->stackSize) {
+                TCB_Cfg[currentTask]->maxStackUse = TCB_Cfg[currentTask]->stackSize + 1;
+            }
+        }
+#endif /* OS_CONFIG_STACK_MONITORING >= 2 */
+
+        if (TCB_Cfg[currentTask]->maxStackUse >= TCB_Cfg[currentTask]->stackSize) {
+            OS_ShutdownOS(E_OS_STACKFAULT);
+        }
     }
+#endif /* defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1 */
 
     if (!isISR && (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceScheduling))) {
         // Enter critical section

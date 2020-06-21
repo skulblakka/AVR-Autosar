@@ -25,6 +25,8 @@
 
 #define OS_CONFIG_MAX_ERROR_PARAM   3
 
+#define OS_CONFIG_STACK_MONITORING  3
+
 // Custom macro for enabling simulator specific code
 #define OS_CONFIG_SIM               false
 

@@ -12,6 +12,9 @@
  */
 
 /* Undefine already existing defines for generation */
+#ifdef OS_STACK_MONITORING
+#undef OS_STACK_MONITORING
+#endif
 #ifdef OS_CONFIG_TASK_BEGIN
 #undef OS_CONFIG_TASK_BEGIN
 #endif
@@ -137,6 +140,30 @@
  *          conforming to the OSEK standard in that configuration.
  */
 #define OS_CONFIG_MAX_ERROR_PARAM
+
+/**
+ * @brief   Configure stack monitoring
+ *
+ * Stack monitoring will check for task stack overrun on context switch. If a overrun is
+ * detected ShutdownOS() will be called with #E_OS_STACKFAULT.
+ *
+ * The following values are possible:
+ * * If not configured or set to 0 stack monitoring is disabled and related variables
+ *   and code are removed to conserve memory.
+ * * If set to >= 1 stack monitoring is performed by calculating the difference between
+ *   the current stack pointer and the stack base. Note that this will only detect
+ *   overruns if the stack pointer is still outside the stack region during the context
+ *   switch.
+ * * If set to >= 2 an additional marker will be placed above the stack top. This allows
+ *   to detect overruns even if the stack pointer was moved back into the stack
+ *   region before the context switch but requires additional memory.
+ * * If set to >= 3 the stack will be initialized with 0xBE. This allows to analyze the
+ *   memory sections during debugging.
+ *
+ * For values above zero the current and maximum stack use will be saved in the task
+ * structure #task_s.
+ */
+#define OS_CONFIG_STACK_MONITORING
 
 /**
  * @brief   Beginning of task definitions
@@ -438,11 +465,17 @@
 /* Generate data structures based on config */
 #ifdef OS_CONFIG_GEN_DATA_STRUCT
 
+#if defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 2
+#define OS_STACK_MONITORING_MARKER_SIZE                                         1
+#else
+#define OS_STACK_MONITORING_MARKER_SIZE                                         0
+#endif
+
 #define OS_CONFIG_TASK_BEGIN
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
-                            Autostart, TaskType, TaskSchedule, Res, Events)     uint8_t Task##Name##_stack[StackSize]; \
+                            Autostart, TaskType, TaskSchedule, Res, Events)     uint8_t Task##Name##_stack[StackSize + OS_STACK_MONITORING_MARKER_SIZE]; \
                                                                                 volatile struct task_s Task##Name##_s = { \
-                                                                                    .stack = (uint8_t* const) &Task##Name##_stack, \
+                                                                                    .stack = ((uint8_t* const) &Task##Name##_stack) + OS_STACK_MONITORING_MARKER_SIZE, \
                                                                                     .stackSize = StackSize, \
                                                                                     .prio = Prio, \
                                                                                     .numberOfActivations = NumberOfActivations, \
@@ -450,11 +483,9 @@
                                                                                     .taskType = TaskType, \
                                                                                     .taskSchedule = TaskSchedule, \
                                                                                     .taskFxn = PTASK(Name), \
-                                                                                    .context = Task##Name##_stack + StackSize - 1, \
+                                                                                    .context = Task##Name##_stack + StackSize - 1 + OS_STACK_MONITORING_MARKER_SIZE, \
                                                                                     .curPrio = Prio, \
                                                                                     .curState = SUSPENDED, \
-                                                                                    .curStackUse = 0, \
-                                                                                    .maxStackUse = 0, \
                                                                                     .resourceQueue = NULL, \
                                                                                     .internalResource = &IntResource##Res##_s, \
                                                                                     .events = Events, \
