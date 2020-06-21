@@ -68,6 +68,24 @@ struct errorInfo_s {
 #endif /* OS_CONFIG_MAX_ERROR_PARAM >= 3 */
 };
 
+#if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true && !defined(__DOXYGEN__)
+#define OS_CALL_ERROR_HOOK()                                ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+                                                                if (!blockErrorHook) { \
+                                                                    blockErrorHook = true; \
+                                                                    ErrorHook(); \
+                                                                    blockErrorHook = false; \
+                                                                } \
+                                                            }
+#else
+/**
+ * @brief   Call error hook if configured
+ *
+ * Call the ErrorHook() if it is configured. Also block recursive calls of the hook
+ * and disable interrupts if necessary.
+ */
+#define OS_CALL_ERROR_HOOK()
+#endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true && !defined(__DOXYGEN__) */
+
 #if defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0 && !defined(__DOXYGEN__)
 #if OS_CONFIG_MAX_ERROR_PARAM == 0
 #define OS_SET_ERROR_INFO0(serviceId)                       ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
