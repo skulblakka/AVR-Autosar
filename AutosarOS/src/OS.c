@@ -160,7 +160,7 @@ extern void __attribute__((naked)) OS_ScheduleC()
         }
 #endif /* OS_CONFIG_STACK_MONITORING >= 2 */
 
-        if (TCB_Cfg[currentTask]->maxStackUse >= TCB_Cfg[currentTask]->stackSize) {
+        if (TCB_Cfg[currentTask]->maxStackUse > TCB_Cfg[currentTask]->stackSize) {
             OS_ShutdownOS(E_OS_STACKFAULT);
         }
     }
