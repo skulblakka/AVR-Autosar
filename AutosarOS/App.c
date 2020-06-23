@@ -316,8 +316,8 @@ extern void StartupHook(void)
 #if defined (__AVR_ATmega32__)
     GICR  = 1 << INT0 | 1 << INT1;                              // Enable INT0 and INT1
     MCUCR = 1 << ISC01 | 0 << ISC00 | 1 << ISC11 | 0 << ISC10;  // Trigger INT0 and INT1 on falling edge
-#elif defined (__AVR_ATmega128__)
-    EICRA = 1 << ISC11 | 1 << ISC10 | 1 << ISC01 | 1 << ISC00;  // Trigger INT0 and INT1 on falling edge
+#elif defined (__AVR_ATmega128__) || defined (__AVR_ATmega1284__)
+    EICRA = 1 << ISC11 | 0 << ISC10 | 1 << ISC01 | 0 << ISC00;  // Trigger INT0 and INT1 on falling edge
     EIMSK |= 1 << INT1 | 1 << INT0;                             // Enable INT0 and INT1
 
     /* Timer 1 */
@@ -328,14 +328,26 @@ extern void StartupHook(void)
     OCR1A = 14400;                                              // Set compare-match value for 1Hz
     TCCR1B |= (1 << WGM12);                                     // Enable CTC mode
     TCCR1B |= (1 << CS12) | (1 << CS10);                        // Set prescaler to 1024
+
+#if defined (__AVR_ATmega128__)
     TIMSK |= (1 << OCIE1A);                                     // Enable interrupt on compare match
+#else /* #if defined (__AVR_ATmega128__) */
+    TIMSK1 |= (1 << OCIE1A);                                    // Enable interrupt on compare match
+#endif /* #if defined (__AVR_ATmega128__) */
 
     /* Timer 2 */
 #if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
+#if defined (__AVR_ATmega128__)
     TCCR2 = (1 << CS20);                                        // Enable Timer2 with Prescaler 1
-    TIMSK |= 1 << TOIE2;                                        // Enable Overflow Interrupt (Timer2)
+    TIMSK |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
+#else /* #if defined (__AVR_ATmega128__) */
+    TCCR2B = (1 << CS20);                                       // Enable Timer2 with Prescaler 1
+    TIMSK2 |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
+#endif /* #if defined (__AVR_ATmega128__) */
 #endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
-#endif
+#else 
+#error Unknown CPU defined!
+#endif /* defined (__AVR_ATmega32__) */
 
     uint8_t t = 0;
 

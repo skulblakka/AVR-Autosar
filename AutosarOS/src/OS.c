@@ -71,8 +71,16 @@ pTaskFxn ptrCurrentFxnAddr;
  */
 static void OS_StartSysTimer()
 {
+#if defined (__AVR_ATmega32__) || defined (__AVR_ATmega128__)
     TCCR0 = 1 << CS02 | 1 << CS00;      // Enable Timer0 with Prescaler 1024
     TIMSK |= 1 << TOIE0;                // Enable Overflow Interrupt (Timer0)
+#elif defined (__AVR_ATmega1284__)
+    TCCR0A = 0;                         // Reset Timer0 control A register
+    TCCR0B = 1 << CS02 | 1 << CS00;     // Enable Timer0 with Prescaler 1024
+    TIMSK0 |= 1 << TOIE0;               // Enable Overflow Interrupt (Timer0)
+#else
+#warning Unknown CPU defined. Setup of Timer0 overflow interrupt is required for sysTick and preemptive scheduling.
+#endif
 }
 
 /************************************************************************/
