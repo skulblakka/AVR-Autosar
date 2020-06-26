@@ -49,7 +49,12 @@ typedef enum osServiceIdType {
     OSServiceId_TerminateTask,
     OSServiceId_Schedule,
     OSServiceId_GetTaskID,
-    OSServiceId_GetTaskState
+    OSServiceId_GetTaskState,
+    OSServiceId_StartScheduleTableRel,
+    OSServiceId_StartScheduleTableAbs,
+    OSServiceId_StopScheduleTable,
+    OSServiceId_NextScheduleTable,
+    OSServiceId_GetScheduleTableStatus
 } OSServiceIdType;
 
 /**
@@ -319,5 +324,24 @@ struct errorInfo_s {
 /* OSServiceId_GetTaskState */
 #define OSError_GetTaskState_TaskID()           ((TaskType) errorInfo.param1)
 #define OSError_GetTaskState_State()            ((TaskStateRefType) errorInfo.param2)
+
+/* OSServiceId_StartScheduleTableRel */
+#define OSError_StartScheduleTableRel_ScheduleTableID   ((ScheduleTableType) errorInfo.param1)
+#define OSError_StartScheduleTableRel_Offset            ((TickType) errorInfo.param2)
+
+/* OSServiceId_StartScheduleTableAbs */
+#define OSError_StartScheduleTableAbs_ScheduleTableID   ((ScheduleTableType) errorInfo.param1)
+#define OSError_StartScheduleTableAbs_Start             ((TickType) errorInfo.param2)
+
+/* OSServiceId_StopScheduleTable */
+#define OSError_StopScheduleTable_ScheduleTableID       ((ScheduleTableType) errorInfo.param1)
+
+/* OSServiceId_NextScheduleTable */
+#define OSError_NextScheduleTable_ScheduleTableID_From  ((ScheduleTableType) errorInfo.param1)
+#define OSError_NextScheduleTable_ScheduleTableID_To    ((ScheduleTableType) errorInfo.param2)
+
+/* OSServiceId_GetScheduleTableStatus */
+#define OSError_GetScheduleTableStatus_ScheduleTableID  ((ScheduleTableType) errorInfo.param1)
+#define OSError_GetScheduleTableStatus_ScheduleStatus   ((ScheduleTableStatusRefType) errorInfo.param2)
 
 #endif /* ERRORTYPES_H_ */
