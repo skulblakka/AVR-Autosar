@@ -16,6 +16,7 @@
 #include "context.h"
 #include "Task.h"
 #include "Resource.h"
+#include "ScheduleTables.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -96,6 +97,8 @@ extern void OS_StartOS(AppModeType mode)
 
     // Startup task management
     Task_startup();
+
+    ScheduleTable_startup();
 
 #if defined(OS_CONFIG_HOOK_STARTUP) && OS_CONFIG_HOOK_STARTUP == true
     StartupHook();
