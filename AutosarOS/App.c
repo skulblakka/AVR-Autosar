@@ -345,7 +345,7 @@ extern void StartupHook(void)
     TIMSK2 |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
 #endif /* #if defined (__AVR_ATmega128__) */
 #endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
-#else 
+#else
 #error Unknown CPU defined!
 #endif /* defined (__AVR_ATmega32__) */
 

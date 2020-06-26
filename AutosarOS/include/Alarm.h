@@ -106,5 +106,4 @@ extern void Alarm_evaluateAlarm(void);
  */
 extern void Alarm_evaluateSysTickAlarm(void);
 
-
 #endif /* ALARM_H_ */

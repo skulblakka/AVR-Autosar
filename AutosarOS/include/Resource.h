@@ -48,7 +48,7 @@ extern StatusType Resource_GetResource(ResourceType ResID);
  * @return  E_OK            No error \n
  *          E_OS_ID         Invalid resource ID \n
  *          E_OS_NOFUNC     Attempt to release a resource which is not occupied or another resource shall
- *                          be released before
+ *                          be released before \n
  *          E_OS_ACCESS     Attempt to release a resource which has a lower ceiling priority
  *                          than the statically assigned priority of the calling task or interrupt routine
  *
