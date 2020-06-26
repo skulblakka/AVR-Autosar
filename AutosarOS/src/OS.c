@@ -94,25 +94,8 @@ extern void OS_StartOS(AppModeType mode)
 
     activeApplicationMode = mode;
 
-    if (TASK_COUNT > 0) {
-        assert(TASK_COUNT <= UINT8_MAX);
-        /* Start all tasks configured as autostart */
-        for (uint8_t i = 0; i < TASK_COUNT; i++) {
-            if (TCB_Cfg[i]->autostart == AUTOSTART && TCB_Cfg[i]->curState == SUSPENDED) {
-                TCB_Cfg[i]->curState = PRE_READY;
-                TCB_Cfg[i]->curNumberOfActivations += 1;
-            }
-
-#if defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 2
-            // Set stack top marker
-            *(TCB_Cfg[i]->stack - 1) = 0xBE;
-#if OS_CONFIG_STACK_MONITORING >= 3
-            // Set stack memory for stack monitoring
-            memset(TCB_Cfg[i]->stack, 0xBE, TCB_Cfg[i]->stackSize);
-#endif /* OS_CONFIG_STACK_MONITORING >= 3 */
-#endif /* defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 2 */
-        }
-    }
+    // Startup task management
+    Task_startup();
 
 #if defined(OS_CONFIG_HOOK_STARTUP) && OS_CONFIG_HOOK_STARTUP == true
     StartupHook();
@@ -125,10 +108,7 @@ extern void OS_StartOS(AppModeType mode)
     init_context();
     TCB_Cfg[currentTask]->curState = RUNNING;
 
-    if (TCB_Cfg[currentTask]->curNumberOfActivations == 0) {
-        // Set one activation
-        TCB_Cfg[currentTask]->curNumberOfActivations += 1;
-    }
+    assert(TCB_Cfg[currentTask]->curNumberOfActivations > 0);
 
     Resource_GetInternalResource();
 
