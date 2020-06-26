@@ -226,13 +226,13 @@ TIMER0_OVF_vect:
 
     /* Block scheduling */
     ldi     r24, 1
+    lds     r25, blockScheduling
     sts     blockScheduling, r24
 
     call    Alarm_evaluateSysTickAlarm
 
     /* Release scheduling */
-    ldi     r24, 0
-    sts     blockScheduling, r24
+    sts     blockScheduling, r25
 
     /* Restore context */
     call    restore_context
