@@ -100,6 +100,7 @@ extern void OS_StartOS(AppModeType mode)
         for (uint8_t i = 0; i < TASK_COUNT; i++) {
             if (TCB_Cfg[i]->autostart == AUTOSTART && TCB_Cfg[i]->curState == SUSPENDED) {
                 TCB_Cfg[i]->curState = PRE_READY;
+                TCB_Cfg[i]->curNumberOfActivations += 1;
             }
 
 #if defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 2
@@ -117,14 +118,19 @@ extern void OS_StartOS(AppModeType mode)
     StartupHook();
 #endif
 
+    OS_StartSysTimer();
+
     /* Switch to first task */
     OS_Switch();
     init_context();
     TCB_Cfg[currentTask]->curState = RUNNING;
-    TCB_Cfg[currentTask]->curNumberOfActivations += 1;
-    Resource_GetInternalResource();
 
-    OS_StartSysTimer();
+    if (TCB_Cfg[currentTask]->curNumberOfActivations == 0) {
+        // Set one activation
+        TCB_Cfg[currentTask]->curNumberOfActivations += 1;
+    }
+
+    Resource_GetInternalResource();
 
     OS_EnableAllInterrupts();
 
