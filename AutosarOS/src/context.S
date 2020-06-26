@@ -230,6 +230,7 @@ TIMER0_OVF_vect:
     sts     blockScheduling, r24
 
     call    Alarm_evaluateSysTickAlarm
+    call    ScheduleTable_handleSysTick
 
     /* Release scheduling */
     sts     blockScheduling, r2
