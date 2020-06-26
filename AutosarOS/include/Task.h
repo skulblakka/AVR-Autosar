@@ -97,4 +97,9 @@ extern StatusType Task_GetTaskID(TaskRefType TaskID);
  */
 extern StatusType Task_GetTaskState(TaskType TaskID, TaskStateRefType State);
 
+/**
+ * @brief   Startup function for task management
+ */
+extern void Task_startup(void);
+
 #endif /* TASK_H_ */
