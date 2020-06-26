@@ -25,6 +25,7 @@
 #include "Types/CounterTypes.h"
 #include "Types/AlarmTypes.h"
 #include "Types/ErrorTypes.h"
+#include "Types/ScheduleTableTypes.h"
 
 #undef ISR
 /**
