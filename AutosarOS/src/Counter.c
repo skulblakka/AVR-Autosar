@@ -12,6 +12,7 @@
  */
 
 #include "Counter.h"
+#include "ScheduleTables.h"
 #include "OCB.h"
 #include "OS_API.h"
 
@@ -42,6 +43,7 @@ extern StatusType Counter_IncrementCounter(CounterType counterID)
     }
 
     Alarm_evaluateAlarm(counterID);
+    ScheduleTable_handleTick(counterID);
 
     return E_OK;
 }
