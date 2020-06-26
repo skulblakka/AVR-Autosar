@@ -187,13 +187,17 @@ extern StatusType Alarm_CancelAlarm(AlarmType alarmID)
     return E_OK;
 }
 
-extern void Alarm_evaluateAlarm(void)
+extern void Alarm_evaluateAlarm(CounterType counter)
 {
+    if (counter == SYSTEM_COUNTER) {
+        return;
+    }
+    
     for (uint8_t i = 0; i < ALARM_COUNT; i++) {
         bool expired = false;
 
-        if (Alarm_Cfg[i]->alarmBase == Counter_Cfg[SYSTEM_COUNTER]) {
-            // Handle non-SysTick based alarm only
+        if (Alarm_Cfg[i]->alarmBase != Counter_Cfg[counter]) {
+            // Handle alarms for the changed counter only
             continue;
         }
 

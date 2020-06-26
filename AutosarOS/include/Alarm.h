@@ -95,8 +95,12 @@ extern StatusType Alarm_CancelAlarm(AlarmType alarmID);
  * @brief   Evaluate alarms with user generated counter
  *
  * This will evaluate all alarms with a user generated counter and handle expiration if necessary.
+ * 
+ * counter may not equal SYSTEM_COUNTER. Alarm_evaluateSysTickAlarm() must be used instead.
+ * 
+ * @param   counter         ID of the counter that triggered the alarm evaluation
  */
-extern void Alarm_evaluateAlarm(void);
+extern void Alarm_evaluateAlarm(CounterType counter);
 
 /**
  * @brief   Evaluate alarm with SYSTEM_COUNTER
