@@ -82,4 +82,15 @@
 #define GetTaskID                   Task_GetTaskID
 #define GetTaskState                Task_GetTaskState
 
+/************************************************************************/
+/* SCHEDULE TABLES                                                      */
+/************************************************************************/
+#include "ScheduleTables.h"
+
+#define StartScheduleTableRel       ScheduleTable_StartScheduleTableRel
+#define StartScheduleTableAbs       ScheduleTable_StartScheduleTableAbs
+#define StopScheduleTable           ScheduleTable_StopScheduleTable
+#define NextScheduleTable           ScheduleTable_NextScheduleTable
+#define GetScheduleTableStatus      ScheduleTable_GetScheduleTableStatus
+
 #endif /* OS_API_H_ */
