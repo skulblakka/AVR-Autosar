@@ -41,7 +41,7 @@ extern StatusType Counter_IncrementCounter(CounterType counterID)
         }
     }
 
-    Alarm_evaluateAlarm();
+    Alarm_evaluateAlarm(counterID);
 
     return E_OK;
 }
