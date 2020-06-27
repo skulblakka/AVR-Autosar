@@ -42,7 +42,6 @@ typedef ScheduleTableStatusType* ScheduleTableStatusRefType;
  * @brief   Structure for task activation action
  */
 struct scheduleTableExpiryActionTask_s {
-    const struct scheduleTableExpiryActionTask_s* next;     /**< Pointer to next element (NULL if this is the last) */
     const TaskType task;                                    /**< ID of task to activate */
 };
 
@@ -50,7 +49,6 @@ struct scheduleTableExpiryActionTask_s {
  * @brief   Structure for event activation action
  */
 struct scheduleTableExpiryActionEvent_s {
-    const struct scheduleTableExpiryActionEvent_s* next;    /**< Pointer to next element (NULL if this is the last */
     const TaskType task;                                    /**< ID of task to set events for */
     const EventMaskType event;                              /**< Mask of events to set */
 };
@@ -60,10 +58,12 @@ struct scheduleTableExpiryActionEvent_s {
  */
 struct scheduleTableExpiryPoint_s {
     const TickType offset;                                          /**< Offset from schedule table start */
-    const struct scheduleTableExpiryActionTask_s* taskActionList;   /**< List of task activation actions (may be NULL) */
-    const struct scheduleTableExpiryActionEvent_s* eventActionList; /**< List of event activation actions (may be NULL) */
-    const struct scheduleTableExpiryPoint_s* next;                  /**< Pointer to next element (NULL if this is the
-                                                                         final expiry point) */
+    const uint8_t numTaskActions;                                   /**< Length of taskActionList */
+    const struct scheduleTableExpiryActionTask_s* taskActionList;   /**< List of task activation actions (may be NULL
+                                                                         if numTaskActions equals zero) */
+    const uint8_t numEventActions;                                  /**< Length of eventActionList */
+    const struct scheduleTableExpiryActionEvent_s* eventActionList; /**< List of event activation actions (may be NULL
+                                                                         if numEventActions equals zero) */
 };
 
 /**
@@ -72,14 +72,15 @@ struct scheduleTableExpiryPoint_s {
 struct scheduleTable_s {
     const TickType finalDelay;                                  /**< Final delay of schedule table (applied after last
                                                                      expiry point */
-    const struct scheduleTableExpiryPoint_s expiryPointList;    /**< List of expiry points */
+    const uint8_t numExpiryPoints;                              /**< Length of expiryPointList */
+    const struct scheduleTableExpiryPoint_s* expiryPointList;   /**< List of expiry points */
     const CounterType counter;                                  /**< Counter driving the schedule table */
     const bool autoStart;                                       /**< If true the schedule table will be started at
                                                                      startup */
     const bool cyclic;                                          /**< If true the schedule table is cyclic */
-    TickType currentTick;                                       /**< Current tick of the schedule table */
-    ScheduleTableStatusType currentState;                       /**< Current state of the schedule table */
-    ScheduleTableType next;                                     /**< Schedule table queued after the current one */
+    volatile TickType currentTick;                              /**< Current tick of the schedule table */
+    volatile ScheduleTableStatusType currentState;              /**< Current state of the schedule table */
+    volatile ScheduleTableType next;                            /**< Schedule table queued after the current one */
 };
 
 #endif /* SCHEDULETABLETYPES_H_ */

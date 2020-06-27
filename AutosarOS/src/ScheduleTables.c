@@ -35,22 +35,14 @@
  */
 static void ScheduleTable_handleExpiryPoint(const volatile struct scheduleTableExpiryPoint_s* expiryPoint)
 {
-    /* Set initial pointers */
-    const volatile struct scheduleTableExpiryActionTask_s* actionTask = expiryPoint->taskActionList;
-    const volatile struct scheduleTableExpiryActionEvent_s* actionEvent = expiryPoint->eventActionList;
-
     /* Handle task activations */
-    while (actionTask != NULL) {
-        Task_ActivateTask(actionTask->task);
-
-        actionTask = actionTask->next;
+    for (uint8_t i = 0; i < expiryPoint->numTaskActions; i++) {
+        Task_ActivateTask(expiryPoint->taskActionList[i].task);
     }
 
     /* Handle events */
-    while (actionEvent != NULL) {
-        Events_SetEvent(actionEvent->task, actionEvent->event);
-
-        actionEvent = actionEvent->next;
+    for (uint8_t i = 0; i < expiryPoint->numEventActions; i++) {
+        Events_SetEvent(expiryPoint->eventActionList[i].task, expiryPoint->eventActionList[i].event);
     }
 }
 
@@ -73,10 +65,10 @@ static void ScheduleTable_handleScheduleTableStart(ScheduleTableType scheduleTab
     ScheduleTable_Cfg[scheduleTableID]->currentTick = 0;
 
     /* Handle first expiry point if it has zero offset */
-    if (ScheduleTable_Cfg[scheduleTableID]->expiryPointList.offset == 0) {
+    if (ScheduleTable_Cfg[scheduleTableID]->expiryPointList[0].offset == 0) {
         bool savedBlock = blockScheduling;
         blockScheduling = true;
-        ScheduleTable_handleExpiryPoint(&ScheduleTable_Cfg[scheduleTableID]->expiryPointList);
+        ScheduleTable_handleExpiryPoint(&ScheduleTable_Cfg[scheduleTableID]->expiryPointList[0]);
         blockScheduling = savedBlock;
     }
 }
@@ -97,7 +89,7 @@ extern StatusType ScheduleTable_StartScheduleTableRel(ScheduleTableType schedule
 
     if (OS_EXTENDED && (offset == 0
                     || offset > Counter_Cfg[ScheduleTable_Cfg[scheduleTableID]->counter]->maxallowedvalue -
-                    ScheduleTable_Cfg[scheduleTableID]->expiryPointList.offset)) {
+                    ScheduleTable_Cfg[scheduleTableID]->expiryPointList[0].offset)) {
         OS_CALL_ERROR_HOOK();
 
         return E_OS_VALUE;
@@ -242,33 +234,28 @@ extern void ScheduleTable_handleTick(CounterType counter)
 
             ScheduleTable_Cfg[i]->currentTick += 1;
 
-            // Get first expiry point
-            const volatile struct scheduleTableExpiryPoint_s* expiryPoint = &ScheduleTable_Cfg[i]->expiryPointList;
+            uint8_t expiryPoint;
+            for (expiryPoint = 0; expiryPoint < ScheduleTable_Cfg[i]->numExpiryPoints; expiryPoint++) {
+                if (ScheduleTable_Cfg[i]->expiryPointList[expiryPoint].offset == ScheduleTable_Cfg[i]->currentTick) {
+                    ScheduleTable_handleExpiryPoint(&ScheduleTable_Cfg[i]->expiryPointList[expiryPoint]);
 
-            while (expiryPoint != NULL) {
-                if (expiryPoint->offset == ScheduleTable_Cfg[i]->currentTick) {
-                    ScheduleTable_handleExpiryPoint(expiryPoint);
+                    // Increment counter for end of table handling below
+                    expiryPoint += 1;
 
                     // Only one expiry point per offset per schedule table allowed
                     break;
-                } else if (expiryPoint->offset > ScheduleTable_Cfg[i]->currentTick) {
+                } else if (ScheduleTable_Cfg[i]->expiryPointList[expiryPoint].offset
+                        > ScheduleTable_Cfg[i]->currentTick) {
                     // Reached upcoming expiry points
                     break;
                 }
-
-                // Check if we reached to end of the schedule table
-                if (expiryPoint->next == NULL) {
-                    break;
-                }
-
-                // Get next expiry point
-                expiryPoint = expiryPoint->next;
             }
 
             /* Handle end of schedule table */
-            if (expiryPoint->next == NULL) {
+            if (expiryPoint == ScheduleTable_Cfg[i]->numExpiryPoints) {
                 if (ScheduleTable_Cfg[i]->finalDelay == 0
-                        || ScheduleTable_Cfg[i]->finalDelay == ScheduleTable_Cfg[i]->currentTick - expiryPoint->offset) {
+                        || ScheduleTable_Cfg[i]->finalDelay == ScheduleTable_Cfg[i]->currentTick -
+                        ScheduleTable_Cfg[i]->expiryPointList[expiryPoint - 1].offset) {
                     if (ScheduleTable_Cfg[i]->cyclic) {
                         // Schedule table is cyclic => restart it
                         ScheduleTable_handleScheduleTableStart(i);
