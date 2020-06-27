@@ -38,6 +38,9 @@ TASK(T1)
         DELAY_MS(1000);
         PORTB |= (1 << 1);  // turn LED off
         DELAY_MS(1000);
+
+        StatusType stat = IncrementCounter(C7);
+        assert(stat == E_OK);
     }
 }
 
@@ -305,6 +308,315 @@ TASK(T7)
     TerminateTask();
 }
 
+TASK(T8)
+{
+    static TickType tick = 0;
+    static TickType currentTick = 0;
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    WaitEvent(0b01);
+    EventMaskType ev = 0;
+    GetEvent(T8, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    WaitEvent(0b10);
+    ev = 0;
+    GetEvent(T8, &ev);
+    assert(ev == 0b10);
+    ClearEvent(0b10);
+
+    tick += 5;
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    tick += 5;
+    tick += 3;
+
+    TerminateTask();
+}
+
+TASK(T9)
+{
+    static TickType tick = 0;
+    static TickType currentTick = 0;
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    WaitEvent(0b01);
+    EventMaskType ev = 0;
+    GetEvent(T9, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    WaitEvent(0b10);
+    ev = 0;
+    GetEvent(T9, &ev);
+    assert(ev == 0b10);
+    ClearEvent(0b10);
+
+    tick += 10;
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    tick += 3;
+
+    TerminateTask();
+}
+
+TASK(T10)
+{
+    static TickType tick = 0;
+    static TickType currentTick = 0;
+    StatusType stat;
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    /* Enable ST2 */
+    stat = StartScheduleTableRel(ST2, 3);
+    assert(stat == E_OK);
+
+    /* Running ST2 */
+
+    tick += 3;
+
+    WaitEvent(0b01);
+    EventMaskType ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    tick += 5;
+
+    /* Queue ST3 */
+    stat = NextScheduleTable(ST2, ST3);
+    assert(stat == E_OK);
+
+    WaitEvent(0b10);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b10);
+    ClearEvent(0b10);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    tick += 3;
+
+    /* Switch to ST3 */
+
+    tick += 1;
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    tick += 2;
+
+    /* Queue ST2 */
+    stat = NextScheduleTable(ST3, ST2);
+    assert(stat == E_OK);
+
+    WaitEvent(0b10);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b10);
+    ClearEvent(0b10);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    tick += 5;
+
+    /* Back to ST2 */
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    tick += 5;
+
+    WaitEvent(0b10);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b10);
+    ClearEvent(0b10);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    tick += 3;
+
+    /* Enable ST3 */
+    currentTick += 5;
+    currentTick = currentTick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    stat = StartScheduleTableAbs(ST3, currentTick);
+    assert(stat == E_OK);
+
+    tick += 2;
+
+    /* Back to ST3 */
+
+    tick += 1;
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    tick += 2;
+
+    WaitEvent(0b10);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b10);
+    ClearEvent(0b10);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    //tick += 5;
+
+    /* Enable ST2 */
+    tick += Counter_Cfg[C5]->maxallowedvalue;
+    stat = StartScheduleTableAbs(ST2, currentTick);
+    assert(stat == E_OK);
+
+    /* Back to ST2 */
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    tick += 5;
+
+    WaitEvent(0b10);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b10);
+    ClearEvent(0b10);
+
+    tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
+    GetCounterValue(C5, &currentTick);
+    assert(tick == currentTick);
+
+    //tick += 3;
+
+    //GetCounterValue(C5, &currentTick);
+    //stat = StartScheduleTableAbs(ST3, currentTick);
+    //assert(stat == E_OK);
+    //
+
+    /* Start ST4 */
+    stat = StartScheduleTableRel(ST4, 50);
+    assert(stat == E_OK);
+
+    /* Running ST4 */
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    WaitEvent(0b10);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b10);
+    ClearEvent(0b10);
+
+    /* Start ST5 */
+    stat = StartScheduleTableRel(ST5, 5);
+    assert(stat == E_OK);
+
+    /* Running ST5 */
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    WaitEvent(0b10);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b10);
+    ClearEvent(0b10);
+
+    /* Start ST6 */
+    stat = StartScheduleTableRel(ST6, 1);
+    assert(stat == E_OK);
+
+    /* Running ST6 */
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    WaitEvent(0b10);
+    ev = 0;
+    GetEvent(T10, &ev);
+    assert(ev == 0b10);
+    ClearEvent(0b10);
+
+    stat = StopScheduleTable(ST6);
+    assert(stat == E_OK);
+
+    ScheduleTableStatusType status;
+    stat = GetScheduleTableStatus(ST6, &status);
+    assert(stat == E_OK && status == SCHEDULETABLE_STOPPED);
+
+    TerminateTask();
+}
+
 extern void StartupHook(void)
 {
     DDRB  = 0xFF;   // PB as output
@@ -420,6 +732,7 @@ ISR(INT1_vect)
 ISR(TIMER1_COMPA_vect)
 {
     IncrementCounter(C2);
+    IncrementCounter(C6);
 }
 
 ALARMCALLBACK(AlarmCb)
