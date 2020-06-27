@@ -136,8 +136,8 @@
  *
  * If undefined or set to values below zero no information will be saved.
  *
- * @note    While possible to only save the service ID or even nothing at all it not
- *          conforming to the OSEK standard in that configuration.
+ * @note    While possible to only save the service ID or even nothing at all the system
+ *          is not conforming to the OSEK standard in that configuration.
  */
 #define OS_CONFIG_MAX_ERROR_PARAM
 
@@ -213,8 +213,8 @@
  * If the interrupt is triggered and the currently executed task has a higher priority the ISR will not be executed.
  * Note that in this case interrupts will be skipped not deferred!
  *
- * @param   Name    Name of the interrupt
- * @param   Prio    Priority of the interrupt (0 for Cat. 1 ISR; >0 for Cat. 2 ISR)
+ * @param   Name                    Name of the interrupt
+ * @param   Prio                    Priority of the interrupt (0 for Cat. 1 ISR; >0 for Cat. 2 ISR)
  *
  * This will create a new interrupt and declare its ISR. Each interrupt will need a function ISR(Name).
  */
@@ -233,8 +233,8 @@
 /**
  * @brief   Resource definition
  *
- * @param   Name            Name of resource
- * @param   Prio            Ceiling priority of resource
+ * @param   Name                    Name of resource
+ * @param   Prio                    Ceiling priority of resource
  */
 #define OS_CONFIG_RESOURCE_DEF(Name, Prio)
 
@@ -256,8 +256,8 @@
 /**
  * @brief   Internal resource definition
  *
- * @param   Name            Name of the resource
- * @param   Prio            Ceiling priority of the resource
+ * @param   Name                    Name of the resource
+ * @param   Prio                    Ceiling priority of the resource
  */
 #define OS_CONFIG_INTERNAL_RESOURCE_DEF(Name, Prio)
 
@@ -274,12 +274,12 @@
 /**
  * @brief   Counter definition
  *
- * @param   Name            Name of the counter
- * @param   MaxAllowedValue Maximum allowed counter value
- * @param   MinCycle        Smallest allowed value for the cycle-parameter of cyclic alarms
- * @param   TicksPerBase    Number of ticks required to reach a counter-specific unit
- * @param   Type            Type of the counter in #counterType_e
- * @param   SecondsPerTick  Time of one counter tick in seconds
+ * @param   Name                    Name of the counter
+ * @param   MaxAllowedValue         Maximum allowed counter value
+ * @param   MinCycle                Smallest allowed value for the cycle-parameter of cyclic alarms
+ * @param   TicksPerBase            Number of ticks required to reach a counter-specific unit
+ * @param   Type                    Type of the counter in #counterType_e
+ * @param   SecondsPerTick          Time of one counter tick in seconds
  */
 #define OS_CONFIG_COUNTER_DEF(Name, MaxAllowedValue, MinCycle, TicksPerBase, Type, SecondsPerTick)
 
@@ -309,14 +309,16 @@
  * If Type is #ALARM_ACTION_CALLBACK, Action must be a pointer to the callback function. \n
  * If Type is #ALARM_ACTION_COUNTER, Action must be the counter to be incremented.
  *
- * @param   Name            Name of the alarm
- * @param   Base            Counter used as alarm base
- * @param   AutoStart       Set alarm to autostart
- * @param   Event           Event to set (only applicable when Type is #ALARM_ACTION_EVENT)
- * @param   Type            Type of alarm (see #alarmActionType_e)
- * @param   Action          Action to be performed
- * @param   Expiration      Expiration value of alarm (must be between zero and the maximum allowed value of the base)
- * @param   Cycle           Cycle of the alarm (must be zero or between minCycle and maximum allowed value of the base)
+ * @param   Name                    Name of the alarm
+ * @param   Base                    Counter used as alarm base
+ * @param   AutoStart               Set alarm to autostart
+ * @param   Event                   Event to set (only applicable when Type is #ALARM_ACTION_EVENT)
+ * @param   Type                    Type of alarm (see #alarmActionType_e)
+ * @param   Action                  Action to be performed
+ * @param   Expiration              Expiration value of alarm (must be between zero and the maximum allowed
+ *                                  value of the base)
+ * @param   Cycle                   Cycle of the alarm (must be zero or between minCycle and maximum allowed
+ *                                  value of the base)
  */
 #define OS_CONFIG_ALARM_DEF(Name, Base, AutoStart, Event, Type, Action, Expiration, Cycle)
 
@@ -336,7 +338,7 @@
  * Define a callback function to be used with an alarm of #ALARM_ACTION_CALLBACK type. The definition must
  * must be made before the alarm is defined.
  *
- * @param   Name            Name of the callback function
+ * @param   Name                    Name of the callback function
  */
 #define OS_CONFIG_ALARM_CALLBACK(Name)
 
