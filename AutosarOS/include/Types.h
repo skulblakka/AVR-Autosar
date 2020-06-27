@@ -19,6 +19,17 @@
 #include "AppCfg.h"
 #undef OS_CONFIG_GEN_ENUM
 
+// FIXME Implement generation of schedule tables via AppCfg
+enum scheduleTables_e {
+    ST1,
+    ST2,
+    ST3,
+    ST4,
+    ST5,
+    ST6,
+    INVALID_SCHEDULETABLE
+};
+
 #include "Types/TaskTypes.h"
 #include "Types/ResourceTypes.h"
 #include "Types/EventTypes.h"
