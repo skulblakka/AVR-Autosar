@@ -515,8 +515,6 @@ TASK(T10)
     GetCounterValue(C5, &currentTick);
     assert(tick == currentTick);
 
-    //tick += 5;
-
     /* Enable ST2 */
     tick += Counter_Cfg[C5]->maxallowedvalue;
     stat = StartScheduleTableAbs(ST2, currentTick);
@@ -545,13 +543,6 @@ TASK(T10)
     tick = tick % (Counter_Cfg[C5]->maxallowedvalue + 1);
     GetCounterValue(C5, &currentTick);
     assert(tick == currentTick);
-
-    //tick += 3;
-
-    //GetCounterValue(C5, &currentTick);
-    //stat = StartScheduleTableAbs(ST3, currentTick);
-    //assert(stat == E_OK);
-    //
 
     /* Start ST4 */
     stat = StartScheduleTableRel(ST4, 50);
