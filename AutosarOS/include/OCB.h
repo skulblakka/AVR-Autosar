@@ -137,6 +137,4 @@ extern volatile struct errorInfo_s errorInfo;
 #define OS_EXTENDED false
 #endif /* defined(OS_CONFIG_EXTENDED) && OS_CONFIG_EXTENDED == true */
 
-#define SCHEDULETABLE_COUNT INVALID_SCHEDULETABLE
-
 #endif /* OCB_H_ */
