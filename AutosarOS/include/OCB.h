@@ -109,7 +109,7 @@ extern volatile struct alarm_s* Alarm_Cfg[];
 /**
  * @brief   Current schedule table control blocks
  */
-extern volatile struct scheduleTable_s* ScheduleTable_Cfg[];
+extern struct scheduleTable_s* ScheduleTable_Cfg[];
 
 #if (defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true)
 /**
