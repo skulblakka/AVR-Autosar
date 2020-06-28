@@ -22,10 +22,10 @@
  *
  * This service increments a software counter.
  *
- * @param   counterID       Counter to be incremented
+ * @param   counterID               Counter to be incremented
  *
- * @return  E_OK            No errors \n
- *          E_OS_ID         The counterID was not valid or the counter is implemented in hardware
+ * @return  E_OK                    No errors \n
+ *          E_OS_ID                 The counterID was not valid or the counter is implemented in hardware
  */
 extern StatusType Counter_IncrementCounter(CounterType counterID);
 
@@ -34,11 +34,12 @@ extern StatusType Counter_IncrementCounter(CounterType counterID);
  *
  * This service reads the current count value of a counter.
  *
- * @param   counterID       Counter which tick value should be read
- * @param   value           Contains the current tick value of the counter
+ * @param   counterID               Counter which tick value should be read
+ * @param   value                   Contains the current tick value of the counter
  *
- * @return  E_OK            No errors \n
- *          E_OS_ID         The counterID was not valid
+ * @return  E_OK                    No errors \n
+ *          E_OS_ID                 The counterID was not valid \n
+ *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType value);
 
@@ -48,13 +49,14 @@ extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType val
  * This service gets the number of ticks between the current tick value and a previously
  * read tick value.
  *
- * @param   counterID       The counter to be read
- * @param   value           Previously read tick value (contains the current tick afterwards)
- * @param   elapsedValue    Difference between previous and current value
+ * @param   counterID               The counter to be read
+ * @param   value                   Previously read tick value (contains the current tick afterwards)
+ * @param   elapsedValue            Difference between previous and current value
  *
- * @return  E_OK            No errors \n
- *          E_OS_ID         The counterID was not valid \n
- *          E_OS_VALUE      The given value was not valid
+ * @return  E_OK                    No errors \n
+ *          E_OS_ID                 The counterID was not valid \n
+ *          E_OS_VALUE              The given value was not valid \n
+ *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType Counter_GetElapsedValue(CounterType counterID, TickRefType value, TickRefType elapsedValue);
 

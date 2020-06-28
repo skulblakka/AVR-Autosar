@@ -44,6 +44,12 @@ extern StatusType Alarm_GetAlarmBase(AlarmType alarmID, AlarmBaseRefType info)
         return E_OS_ID;
     }
 
+    if (OS_EXTENDED && info == NULL) {
+        OS_CALL_ERROR_HOOK();
+
+        return E_OS_PARAM_POINTER;
+    }
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         memcpy((void*) info, (void*) Alarm_Cfg[alarmID]->alarmBase, sizeof(AlarmBaseType));
     }
@@ -192,7 +198,7 @@ extern void Alarm_evaluateAlarm(CounterType counter)
     if (counter == SYSTEM_COUNTER) {
         return;
     }
-    
+
     for (uint8_t i = 0; i < ALARM_COUNT; i++) {
         bool expired = false;
 
