@@ -49,7 +49,12 @@ typedef enum osServiceIdType {
     OSServiceId_TerminateTask,
     OSServiceId_Schedule,
     OSServiceId_GetTaskID,
-    OSServiceId_GetTaskState
+    OSServiceId_GetTaskState,
+    OSServiceId_StartScheduleTableRel,
+    OSServiceId_StartScheduleTableAbs,
+    OSServiceId_StopScheduleTable,
+    OSServiceId_NextScheduleTable,
+    OSServiceId_GetScheduleTableStatus
 } OSServiceIdType;
 
 /**
@@ -246,78 +251,97 @@ struct errorInfo_s {
 /************************************************************************/
 /* ERROR INFORMATION ACCESS MACROS                                      */
 /************************************************************************/
-#define OSErrorGetServiceId()                   (errorInfo.id);
+#define OSErrorGetServiceId()                           (errorInfo.id);
 
 /* OSServiceId_GetAlarmBase */
-#define OSError_GetAlarmBase_AlarmID()          ((AlarmType) errorInfo.param1)
-#define OSError_GetAlarmBase_Info()             ((AlarmBaseRefType) errorInfo.param2)
+#define OSError_GetAlarmBase_AlarmID()                  ((AlarmType) errorInfo.param1)
+#define OSError_GetAlarmBase_Info()                     ((AlarmBaseRefType) errorInfo.param2)
 
 /* OSServiceId_GetAlarm */
-#define OSError_GetAlarm_AlarmID()              ((AlarmType) errorInfo.param1)
-#define OSError_GetAlarm_Tick()                 ((TickRefType) errorInfo.param2)
+#define OSError_GetAlarm_AlarmID()                      ((AlarmType) errorInfo.param1)
+#define OSError_GetAlarm_Tick()                         ((TickRefType) errorInfo.param2)
 
 /* OSServiceId_SetRelAlarm */
-#define OSError_SetRelAlarm_AlarmID()           ((AlarmType) errorInfo.param1)
-#define OSError_SetRelAlarm_increment()         ((TickType) errorInfo.param2)
-#define OSError_SetRelAlarm_cycle()             ((TickType) errorInfo.param3)
+#define OSError_SetRelAlarm_AlarmID()                   ((AlarmType) errorInfo.param1)
+#define OSError_SetRelAlarm_increment()                 ((TickType) errorInfo.param2)
+#define OSError_SetRelAlarm_cycle()                     ((TickType) errorInfo.param3)
 
 /* OSServiceId_SetAbsAlarm */
-#define OSError_SetAbsAlarm_AlarmID()           ((AlarmType) errorInfo.param1)
-#define OSError_SetAbsAlarm_start()             ((TickType) errorInfo.param2)
-#define OSError_SetAbsAlarm_cycle()             ((TickType) errorInfo.param3)
+#define OSError_SetAbsAlarm_AlarmID()                   ((AlarmType) errorInfo.param1)
+#define OSError_SetAbsAlarm_start()                     ((TickType) errorInfo.param2)
+#define OSError_SetAbsAlarm_cycle()                     ((TickType) errorInfo.param3)
 
 /* OSServiceId_CancelAlarm */
-#define OSError_CancelAlarm_AlarmID()           ((AlarmType) errorInfo.param1)
+#define OSError_CancelAlarm_AlarmID()                   ((AlarmType) errorInfo.param1)
 
 /* OSServiceId_IncrementCounter */
-#define OSError_IncrementCounter_CounterID()    ((CounterType) errorInfo.param1)
+#define OSError_IncrementCounter_CounterID()            ((CounterType) errorInfo.param1)
 
 /* OSServiceId_GetCounterValue */
-#define OSError_GetCounterValue_CounterID()     ((CounterType) errorInfo.param1)
-#define OSError_GetCounterValue_Value()         ((TickRefType) errorInfo.param2)
+#define OSError_GetCounterValue_CounterID()             ((CounterType) errorInfo.param1)
+#define OSError_GetCounterValue_Value()                 ((TickRefType) errorInfo.param2)
 
 /* OSServiceId_GetElapsedValue */
-#define OSError_GetElapsedValue_CounterID()     ((CounterType) errorInfo.param1)
-#define OSError_GetElapsedValue_Value()         ((TickRefType) errorInfo.param2)
-#define OSError_GetElapsedValue_ElapsedValue()  ((TickRefType) errorInfo.param3)
+#define OSError_GetElapsedValue_CounterID()             ((CounterType) errorInfo.param1)
+#define OSError_GetElapsedValue_Value()                 ((TickRefType) errorInfo.param2)
+#define OSError_GetElapsedValue_ElapsedValue()          ((TickRefType) errorInfo.param3)
 
 /* OSServiceId_SetEvent */
-#define OSError_SetEvent_TaskID()               ((TaskType) errorInfo.param1)
-#define OSError_SetEvent_Mask()                 ((EventMaskType) errorInfo.param2)
+#define OSError_SetEvent_TaskID()                       ((TaskType) errorInfo.param1)
+#define OSError_SetEvent_Mask()                         ((EventMaskType) errorInfo.param2)
 
 /* OSServiceId_ClearEvent */
-#define OSError_ClearEvent_Mask()               ((EventMaskType) errorInfo.param1)
+#define OSError_ClearEvent_Mask()                       ((EventMaskType) errorInfo.param1)
 
 /* OSServiceId_GetEvent */
-#define OSError_GetEvent_TaskID()               ((TaskType) errorInfo.param1)
-#define OSError_GetEvent_Type()                 ((EventMaskRefType) errorInfo.param2)
+#define OSError_GetEvent_TaskID()                       ((TaskType) errorInfo.param1)
+#define OSError_GetEvent_Type()                         ((EventMaskRefType) errorInfo.param2)
 
 /* OSServiceId_WaitEvent */
-#define OSError_WaitEvent_Mask()                ((EventMaskType) errorInfo.param1)
+#define OSError_WaitEvent_Mask()                        ((EventMaskType) errorInfo.param1)
 
 /* OSServiceId_StartOS */
-#define OSError_StartOS_Mode()                  ((AppModeType) errorInfo.param1)
+#define OSError_StartOS_Mode()                          ((AppModeType) errorInfo.param1)
 
 /* OSServiceId_ShutdownOS */
-#define OSError_ShutdownOS_Error                ((StatusType) errorInfo.param1)
+#define OSError_ShutdownOS_Error                        ((StatusType) errorInfo.param1)
 
 /* OSServiceId_GetResource */
-#define OSError_GetResource_ResID()             ((ResourceType) errorInfo.param1)
+#define OSError_GetResource_ResID()                     ((ResourceType) errorInfo.param1)
 
 /* OSServiceId_ReleaseResource */
-#define OSError_ReleaseResource_ResID()         ((ResourceType) errorInfo.param1)
+#define OSError_ReleaseResource_ResID()                 ((ResourceType) errorInfo.param1)
 
 /* OSServiceId_ActivateTask */
-#define OSError_ActivateTask_TaskID()           ((TaskType) errorInfo.param1)
+#define OSError_ActivateTask_TaskID()                   ((TaskType) errorInfo.param1)
 
 /* OSServiceId_ChainTask */
-#define OSError_ChainTask_TaskID()              ((TaskType) errorInfo.param1)
+#define OSError_ChainTask_TaskID()                      ((TaskType) errorInfo.param1)
 
 /* OSServiceId_GetTaskID */
-#define OSError_GetTaskID_TaskID()              ((TaskRefType) errorInfo.param1)
+#define OSError_GetTaskID_TaskID()                      ((TaskRefType) errorInfo.param1)
 
 /* OSServiceId_GetTaskState */
-#define OSError_GetTaskState_TaskID()           ((TaskType) errorInfo.param1)
-#define OSError_GetTaskState_State()            ((TaskStateRefType) errorInfo.param2)
+#define OSError_GetTaskState_TaskID()                   ((TaskType) errorInfo.param1)
+#define OSError_GetTaskState_State()                    ((TaskStateRefType) errorInfo.param2)
+
+/* OSServiceId_StartScheduleTableRel */
+#define OSError_StartScheduleTableRel_ScheduleTableID   ((ScheduleTableType) errorInfo.param1)
+#define OSError_StartScheduleTableRel_Offset            ((TickType) errorInfo.param2)
+
+/* OSServiceId_StartScheduleTableAbs */
+#define OSError_StartScheduleTableAbs_ScheduleTableID   ((ScheduleTableType) errorInfo.param1)
+#define OSError_StartScheduleTableAbs_Start             ((TickType) errorInfo.param2)
+
+/* OSServiceId_StopScheduleTable */
+#define OSError_StopScheduleTable_ScheduleTableID       ((ScheduleTableType) errorInfo.param1)
+
+/* OSServiceId_NextScheduleTable */
+#define OSError_NextScheduleTable_ScheduleTableID_From  ((ScheduleTableType) errorInfo.param1)
+#define OSError_NextScheduleTable_ScheduleTableID_To    ((ScheduleTableType) errorInfo.param2)
+
+/* OSServiceId_GetScheduleTableStatus */
+#define OSError_GetScheduleTableStatus_ScheduleTableID  ((ScheduleTableType) errorInfo.param1)
+#define OSError_GetScheduleTableStatus_ScheduleStatus   ((ScheduleTableStatusRefType) errorInfo.param2)
 
 #endif /* ERRORTYPES_H_ */

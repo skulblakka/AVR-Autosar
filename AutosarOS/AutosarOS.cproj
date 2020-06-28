@@ -180,6 +180,9 @@
     <Compile Include="include\Resource.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\ScheduleTables.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\Task.h">
       <SubType>compile</SubType>
     </Compile>
@@ -202,6 +205,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\Types\ResourceTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types\ScheduleTableTypes.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\Types\TaskTypes.h">
@@ -235,6 +241,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Resource.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ScheduleTables.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Task.c">
