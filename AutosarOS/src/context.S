@@ -229,6 +229,7 @@ TIMER0_OVF_vect:
     lds     r2, blockScheduling
     sts     blockScheduling, r24
 
+    /* Call subsystem functions to handle sysTick */
     call    Alarm_evaluateSysTickAlarm
     call    ScheduleTable_handleSysTick
 
