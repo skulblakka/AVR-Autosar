@@ -198,7 +198,7 @@ extern void Alarm_evaluateAlarm(CounterType counter)
     if (counter == SYSTEM_COUNTER) {
         return;
     }
-    
+
     for (uint8_t i = 0; i < ALARM_COUNT; i++) {
         bool expired = false;
 
