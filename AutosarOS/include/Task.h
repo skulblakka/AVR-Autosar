@@ -28,11 +28,11 @@
  * @note    ActivateTask will not immediately change the state of the task in case of multiple activation requests.
  *          If the task is not suspended, the activation will only be recorded and performed later.
  *
- * @param   TaskID          ID of the task to be activated
+ * @param   TaskID                  ID of the task to be activated
  *
- * @return  E_OK            No error \n
- *          E_OS_LIMIT      Too many activations of the task \n
- *          E_OS_ID         TaskID is invalid
+ * @return  E_OK                    No error \n
+ *          E_OS_LIMIT              Too many activations of the task \n
+ *          E_OS_ID                 TaskID is invalid
  */
 extern StatusType Task_ActivateTask(TaskType TaskID);
 
@@ -42,13 +42,13 @@ extern StatusType Task_ActivateTask(TaskType TaskID);
  * The current is transferred from the running state into the suspended state. The specified task will be transferred
  * into the ready state. The specified task may be identical to the current task.
  *
- * @param   TaskID          ID of the task to be chained
+ * @param   TaskID                  ID of the task to be chained
  *
- * @return  E_OK            No error \n
- *          E_OS_LIMIT      Too many activations of the task \n
- *          E_OS_ID         TaskID is invalid \n
- *          E_OS_RESOURCE   Task still occupies resources \n
- *          E_OS_CALLLEVEL  Call at interrupt level
+ * @return  E_OK                    No error \n
+ *          E_OS_LIMIT              Too many activations of the task \n
+ *          E_OS_ID                 TaskID is invalid \n
+ *          E_OS_RESOURCE           Task still occupies resources \n
+ *          E_OS_CALLLEVEL          Call at interrupt level
  */
 extern StatusType Task_ChainTask(TaskType TaskID);
 
@@ -57,8 +57,8 @@ extern StatusType Task_ChainTask(TaskType TaskID);
  *
  * The calling task is transferred from the running state into the suspended state.
  *
- * @return  E_OS_RESOURCE   Task still occupies resources \n
- *          E_OS_CALLLEVEL  Call at interrupt level
+ * @return  E_OS_RESOURCE           Task still occupies resources \n
+ *          E_OS_CALLLEVEL          Call at interrupt level
  */
 extern StatusType Task_TerminateTask();
 
@@ -70,9 +70,9 @@ extern StatusType Task_TerminateTask();
  *
  * This service has no influence on preemptive tasks with no internal resource.
  *
- * @return  E_OK            No error \n
- *          E_OS_RESOURCE   Task still occupies resources \n
- *          E_OS_CALLLEVEL  Call at interrupt level
+ * @return  E_OK                    No error \n
+ *          E_OS_RESOURCE           Task still occupies resources \n
+ *          E_OS_CALLLEVEL          Call at interrupt level
  *
  */
 extern StatusType Task_Schedule();
@@ -80,9 +80,10 @@ extern StatusType Task_Schedule();
 /**
  * @brief   Return the ID of the task currently running
  *
- * @param   TaskID  Reference of the task currently running. INVALID_TASK if no task is in running state.
+ * @param   TaskID                  Reference of the task currently running. INVALID_TASK if no task is in
+ *                                  running state.
  *
- * @return  E_OK    No error \n
+ * @return  E_OK                    No error \n
  *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType Task_GetTaskID(TaskRefType TaskID);
@@ -90,11 +91,11 @@ extern StatusType Task_GetTaskID(TaskRefType TaskID);
 /**
  * @brief   Return the state of a task
  *
- * @param   TaskID          ID of the task to return the state for
- * @param   State           Reference of the specified tasks state
+ * @param   TaskID                  ID of the task to return the state for
+ * @param   State                   Reference of the specified tasks state
  *
- * @return  E_OK            No error \n
- *          E_OS_ID         TaskID is invalid
+ * @return  E_OK                    No error \n
+ *          E_OS_ID                 TaskID is invalid
  */
 extern StatusType Task_GetTaskState(TaskType TaskID, TaskStateRefType State);
 

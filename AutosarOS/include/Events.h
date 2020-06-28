@@ -28,13 +28,13 @@
  * If the specified was waiting for at least one of the events specified it will
  * be transferred to the ready state.
  *
- * @param   TaskID          ID of the task to set the events for
- * @param   events          Mask of the events to set
+ * @param   TaskID                  ID of the task to set the events for
+ * @param   events                  Mask of the events to set
  *
- * @return  E_OK            No error \n
- *          E_OS_ID         TaskID is invalid \n
- *          E_OS_ACCESS     Referenced task is no extended task \n
- *          E_OS_STATE      Referenced task is in suspended state
+ * @return  E_OK                    No error \n
+ *          E_OS_ID                 TaskID is invalid \n
+ *          E_OS_ACCESS             Referenced task is no extended task \n
+ *          E_OS_STATE              Referenced task is in suspended state
  */
 extern StatusType Events_SetEvent(TaskType TaskID, EventMaskType events);
 
@@ -46,11 +46,11 @@ extern StatusType Events_SetEvent(TaskType TaskID, EventMaskType events);
  * Events can only be cleared by extended tasks. Tasks can only clear their
  * own events.
  *
- * @param   events          Mask of events to clear
+ * @param   events                  Mask of events to clear
  *
- * @return  E_OK            No error \n
- *          E_OS_ACCESS     Call not from extended task \n
- *          E_OS_CALLLEVEL  Call at interrupt level
+ * @return  E_OK                    No error \n
+ *          E_OS_ACCESS             Call not from extended task \n
+ *          E_OS_CALLLEVEL          Call at interrupt level
  */
 extern StatusType Events_ClearEvent(EventMaskType events);
 
@@ -59,13 +59,13 @@ extern StatusType Events_ClearEvent(EventMaskType events);
  *
  * Get current event state of task.
  *
- * @param   TaskID          ID of the task to request event state from
- * @param   events          Pointer to write event state to
+ * @param   TaskID                  ID of the task to request event state from
+ * @param   events                  Pointer to write event state to
  *
- * @return  E_OK            No error \n
- *          E_OS_ID         TaskID is invalid \n
- *          E_OS_ACCESS     Referenced task is not an extended task \n
- *          E_OS_STATE      Referenced task is in the suspended state \n
+ * @return  E_OK                    No error \n
+ *          E_OS_ID                 TaskID is invalid \n
+ *          E_OS_ACCESS             Referenced task is not an extended task \n
+ *          E_OS_STATE              Referenced task is in the suspended state \n
  *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType Events_GetEvent(TaskType TaskID, EventMaskRefType events);
@@ -82,12 +82,12 @@ extern StatusType Events_GetEvent(TaskType TaskID, EventMaskRefType events);
  *
  * This service shall only be called from the extended task owning the events.
  *
- * @param   events          Mask of events to wait for
+ * @param   events                  Mask of events to wait for
  *
- * @return  E_OK            No error \n
- *          E_OS_ACCESS     Calling task is not an extended task \n
- *          E_OS_RESOURCE   Calling task occupies resources
- *          E_OS_CALLLEVEL  Call at interrupt level
+ * @return  E_OK                    No error \n
+ *          E_OS_ACCESS             Calling task is not an extended task \n
+ *          E_OS_RESOURCE           Calling task occupies resources
+ *          E_OS_CALLLEVEL          Call at interrupt level
  */
 extern StatusType Events_WaitEvent(EventMaskType events);
 
