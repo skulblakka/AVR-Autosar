@@ -65,7 +65,8 @@ extern StatusType Events_ClearEvent(EventMaskType events);
  * @return  E_OK            No error \n
  *          E_OS_ID         TaskID is invalid \n
  *          E_OS_ACCESS     Referenced task is not an extended task \n
- *          E_OS_STATE      Referenced task is in the suspended state
+ *          E_OS_STATE      Referenced task is in the suspended state \n
+ *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType Events_GetEvent(TaskType TaskID, EventMaskRefType events);
 

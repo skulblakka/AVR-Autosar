@@ -25,8 +25,9 @@
  * @param   alarmID         Alarm which base should be read
  * @param   info            Pointer to copy base info into
  *
- * @return  E_OK            No error \n
- *          E_OS_ID         alarmID is invalid
+ * @return  E_OK                    No error \n
+ *          E_OS_ID                 alarmID is invalid \n
+ *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType Alarm_GetAlarmBase(AlarmType alarmID, AlarmBaseRefType info);
 

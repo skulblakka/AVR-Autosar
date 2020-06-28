@@ -37,8 +37,9 @@ extern StatusType Counter_IncrementCounter(CounterType counterID);
  * @param   counterID       Counter which tick value should be read
  * @param   value           Contains the current tick value of the counter
  *
- * @return  E_OK            No errors \n
- *          E_OS_ID         The counterID was not valid
+ * @return  E_OK                    No errors \n
+ *          E_OS_ID                 The counterID was not valid \n
+ *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType value);
 
@@ -52,9 +53,10 @@ extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType val
  * @param   value           Previously read tick value (contains the current tick afterwards)
  * @param   elapsedValue    Difference between previous and current value
  *
- * @return  E_OK            No errors \n
- *          E_OS_ID         The counterID was not valid \n
- *          E_OS_VALUE      The given value was not valid
+ * @return  E_OK                    No errors \n
+ *          E_OS_ID                 The counterID was not valid \n
+ *          E_OS_VALUE              The given value was not valid \n
+ *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType Counter_GetElapsedValue(CounterType counterID, TickRefType value, TickRefType elapsedValue);
 

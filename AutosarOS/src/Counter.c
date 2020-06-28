@@ -58,6 +58,12 @@ extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType val
         return E_OS_ID;
     }
 
+    if (OS_EXTENDED && value == NULL) {
+        OS_CALL_ERROR_HOOK();
+
+        return E_OS_PARAM_POINTER;
+    }
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (counterID == SYSTEM_COUNTER) {
             *value = sysTick;
@@ -78,6 +84,12 @@ extern StatusType Counter_GetElapsedValue(CounterType counterID, TickRefType val
         OS_CALL_ERROR_HOOK();
 
         return E_OS_ID;
+    }
+
+    if (OS_EXTENDED && (value == NULL || elapsedValue == NULL)) {
+        OS_CALL_ERROR_HOOK();
+
+        return E_OS_PARAM_POINTER;
     }
 
     if (OS_EXTENDED && *value > Counter_Cfg[counterID]->maxallowedvalue) {

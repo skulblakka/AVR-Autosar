@@ -82,7 +82,8 @@ extern StatusType Task_Schedule();
  *
  * @param   TaskID  Reference of the task currently running. INVALID_TASK if no task is in running state.
  *
- * @return  E_OK    No error
+ * @return  E_OK    No error \n
+ *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType Task_GetTaskID(TaskRefType TaskID);
 

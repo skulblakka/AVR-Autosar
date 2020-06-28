@@ -98,6 +98,12 @@ extern StatusType Events_GetEvent(TaskType TaskID, EventMaskRefType events)
         return E_OS_ID;
     }
 
+    if (OS_EXTENDED && events == NULL) {
+        OS_CALL_ERROR_HOOK();
+
+        return E_OS_PARAM_POINTER;
+    }
+
     if (OS_EXTENDED && TCB_Cfg[TaskID]->taskType != EXTENDED) {
         OS_CALL_ERROR_HOOK();
 

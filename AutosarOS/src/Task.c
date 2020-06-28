@@ -194,6 +194,12 @@ extern StatusType Task_GetTaskState(TaskType TaskID, TaskStateRefType State)
         return E_OS_ID;
     }
 
+    if (OS_EXTENDED && (value == NULL || State == NULL)) {
+        OS_CALL_ERROR_HOOK();
+
+        return E_OS_PARAM_POINTER;
+    }
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         *State = TCB_Cfg[TaskID]->curState;
     }
