@@ -72,6 +72,48 @@
 #ifdef OS_CONFIG_ALARM_CALLBACK
 #undef OS_CONFIG_ALARM_CALLBACK
 #endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_BEGIN
+#undef OS_CONFIG_SCHEDULE_TABLE_BEGIN
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_DEF_BEGIN
+#undef OS_CONFIG_SCHEDULE_TABLE_DEF_BEGIN
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN
+#undef OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN
+#undef OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_BEGIN
+#undef OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_BEGIN
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_TASK_ACTION_DEF
+#undef OS_CONFIG_SCHEDULE_TABLE_TASK_ACTION_DEF
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_END
+#undef OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_END
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_BEGIN
+#undef OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_BEGIN
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTION_DEF
+#undef OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTION_DEF
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_END
+#undef OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_END
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_END
+#undef OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_END
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END
+#undef OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_DEF_END
+#undef OS_CONFIG_SCHEDULE_TABLE_DEF_END
+#endif
+#ifdef OS_CONFIG_SCHEDULE_TABLE_END
+#undef OS_CONFIG_SCHEDULE_TABLE_END
+#endif
 
 /* Generate documentation */
 #ifdef __DOXYGEN__
@@ -342,6 +384,135 @@
  */
 #define OS_CONFIG_ALARM_CALLBACK(Name)
 
+/**
+ * @brief   Beginning of schedule tables definitions
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_BEGIN
+
+/**
+ * @brief   Beginning schedule table definition
+ *
+ * @param   Name                    Name of the schedule table
+ * @param   Counter                 Counter driving the schedule table
+ * @param   AutoStart               Set schedule table to autostart
+ * @param   Cyclic                  Set schedule table to cyclic
+ * @param   FinalDelay              Delay applied after the final expiry point
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_BEGIN(Name, Counter, AutoStart, Cyclic, FinalDelay)
+
+/**
+ * @brief   Beginning of expiry points definition
+ *
+ * This starts the definition of expiry point of a schedule table and must therefore be placed between
+ * #OS_CONFIG_SCHEDULE_TABLE_DEF_BEGIN and #OS_CONFIG_SCHEDULE_TABLE_DEF_END.
+ *
+ * The individual schedule points must defined in ascending order. Only one expiry point per offset
+ * is allowed per schedule table.
+ *
+ * Each schedule table needs at least one expiry point.
+ *
+ * @param   NumExpiryPoints         Number of expiry points to create for schedule table
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN(NumExpiryPoints)
+
+/**
+ * @brief   Beginning of expiry point definition
+ *
+ * This starts the definition of a single expiry point and must therefore be placed between
+ * #OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN and #OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END.
+ *
+ * @note    While this implementation allows both the task actions and the event actions to be zero
+ *          at the same time the system does not conform to the AUTOSAR standard it that configuration.
+ *
+ * @param   Offset                  Offset of the expiry point
+ * @param   NumTaskActions          Number of task actions to create for expiry point
+ * @param   NumEventActions         Number of event actions to create for expiry point
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN(Offset, NumTaskActions, NumEventActions)
+
+/**
+ * @brief   Beginning of task actions definitions
+ *
+ * This starts the definition of an expiry points task actions and must therefore be place between
+ * #OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN and #OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_END.
+ *
+ * This and #OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_END should be omitted if no task actions are defined.
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_BEGIN
+
+/**
+ * @brief   Definition of task action
+ *
+ * Defines a task activation action for the expiry point causing the task to be activated once the offset of
+ * the expiry point is reached by the schedule table.
+ *
+ * @param   Task                    Task to activate
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTION_DEF(Task)
+
+/**
+ * @brief   Ending of task actions definitions
+ *
+ * This ends the definition of an expiry points task actions and is the counterpart to
+ * #OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_BEGIN.
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_END
+
+/**
+ * @brief   Beginning of event actions definitions
+ *
+ * This starts the definition of an expiry points event actions and must therefore be place between
+ * #OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN and #OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_END.
+ *
+ * This and #OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_END should be omitted if no event actions are defined.
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_BEGIN
+
+/**
+ * @brief   Definition of event action
+ *
+ * Defines an event action for the expiry point causing the specified event being set for the task once
+ * the offset of the expiry point is reached by the schedule table.
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTION_DEF(Task, Event)
+
+/**
+ * @brief   Ending of event actions definitions
+ *
+ * This ends the definition of an expiry points event actions and is the counterpart to
+ * #OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_BEGIN.
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_END
+
+/**
+ * @brief   Ending of expiry point definition
+ *
+ * This ends the definition of an expiry point. This is the counterpart to
+ * #OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_END
+
+/**
+ * @brief   Ending of expiry points definitions
+ *
+ * This ends the list of expiry points of the schedule table. This is the counterpart to
+ * #OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN.
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END
+
+/**
+ * @brief   Ending of schedule table definition
+ *
+ * This is the end of the schedule table definition. This is the counterpart to
+ * #OS_CONFIG_SCHEDULE_TABLE_DEF_BEGIN.
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_END
+
+/**
+ * @brief   End of schedule table definitions
+ */
+#define OS_CONFIG_SCHEDULE_TABLE_END
+
 #endif /* __DOXYGEN__ */
 
 
@@ -386,6 +557,25 @@
 
 #define OS_CONFIG_ALARM_CALLBACK(Name)
 
+#define OS_CONFIG_SCHEDULE_TABLE_BEGIN                                          enum scheduleTables_e {
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_BEGIN(Name, Counter, AutoStart, \
+                                            Cyclic, FinalDelay)                 Name,
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN(NumExpiryPoints)
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN(Offset, NumTaskActions, \
+                                                            NumEventActions)
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTION_DEF(Task)
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_END
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTION_DEF(Task, Event)
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_END
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_END
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_END
+#define OS_CONFIG_SCHEDULE_TABLE_END                                            INVALID_SCHEDULETABLE};
+
+#define SCHEDULETABLE_COUNT     INVALID_SCHEDULETABLE
+
 #endif /* OS_CONFIG_GEN_ENUM */
 
 /* Generate function declarations based on config */
@@ -419,6 +609,23 @@
 #define OS_CONFIG_ALARM_END
 
 #define OS_CONFIG_ALARM_CALLBACK(Name)                                          extern void Name(void);
+
+#define OS_CONFIG_SCHEDULE_TABLE_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_BEGIN(Name, Counter, AutoStart, \
+                                            Cyclic, FinalDelay)
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN(NumExpiryPoints)
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN(Offset, NumTaskActions, \
+                                                            NumEventActions)
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTION_DEF(Task)
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_END
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTION_DEF(Task, Event)
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_END
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_END
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_END
+#define OS_CONFIG_SCHEDULE_TABLE_END
 
 #endif /* OS_CONFIG_GEN_FUNC_DECL */
 
@@ -461,6 +668,23 @@
 #define OS_CONFIG_ALARM_END
 
 #define OS_CONFIG_ALARM_CALLBACK(Name)
+
+#define OS_CONFIG_SCHEDULE_TABLE_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_BEGIN(Name, Counter, AutoStart, \
+                                            Cyclic, FinalDelay)
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN(NumExpiryPoints)
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN(Offset, NumTaskActions, \
+                                                            NumEventActions)
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTION_DEF(Task)
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_END
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTION_DEF(Task, Event)
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_END
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_END
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_END
+#define OS_CONFIG_SCHEDULE_TABLE_END
 
 #endif /* OS_CONFIG_GEN_FUNC */
 
@@ -547,6 +771,32 @@
 
 #define OS_CONFIG_ALARM_CALLBACK(Name)
 
+#define OS_CONFIG_SCHEDULE_TABLE_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_BEGIN(Name, Counter, AutoStart, \
+                                            Cyclic, FinalDelay)                 struct scheduleTable_s ScheduleTable##Name##_s = { \
+                                                                                    .counter = Counter, \
+                                                                                    .autoStart = AutoStart, \
+                                                                                    .cyclic = Cyclic, \
+                                                                                    .finalDelay = FinalDelay, \
+                                                                                    .currentState = SCHEDULETABLE_STOPPED, \
+                                                                                    .next = INVALID_SCHEDULETABLE,
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN(NumExpiryPoints)               .numExpiryPoints = NumExpiryPoints, \
+                                                                                    .expiryPointList = (struct scheduleTableExpiryPoint_s[]) {
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN(Offset, NumTaskActions, \
+                                                            NumEventActions)            { .offset = Offset, \
+                                                                                          .numTaskActions = NumTaskActions, \
+                                                                                          .numEventActions = NumEventActions,
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_BEGIN                                       .taskActionList = (struct scheduleTableExpiryActionTask_s[]) {
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTION_DEF(Task)                                        { .task = Task },
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_END                                         },
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_BEGIN                                      .eventActionList = (struct scheduleTableExpiryActionEvent_s[]) {
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTION_DEF(Task, Event)                                { .task = Task, .event = Event },
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_END                                        },
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_END                                   },
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END                                  },
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_END                                        };
+#define OS_CONFIG_SCHEDULE_TABLE_END
+
 #endif /* OS_CONFIG_GEN_DATA_STRUCT */
 
 /* Generate OS Task Control Block */
@@ -581,6 +831,23 @@
 #define OS_CONFIG_ALARM_END                                                     };
 
 #define OS_CONFIG_ALARM_CALLBACK(Name)
+
+#define OS_CONFIG_SCHEDULE_TABLE_BEGIN                                          struct scheduleTable_s* ScheduleTable_Cfg[SCHEDULETABLE_COUNT] = {
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_BEGIN(Name, Counter, AutoStart, \
+                                            Cyclic, FinalDelay)                 &ScheduleTable##Name##_s,
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN(NumExpiryPoints)
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_BEGIN(Offset, NumTaskActions, \
+                                                            NumEventActions)
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTION_DEF(Task)
+#define OS_CONFIG_SCHEDULE_TABLE_TASK_ACTIONS_END
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_BEGIN
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTION_DEF(Task, Event)
+#define OS_CONFIG_SCHEDULE_TABLE_EVENT_ACTIONS_END
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINT_DEF_END
+#define OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END
+#define OS_CONFIG_SCHEDULE_TABLE_DEF_END
+#define OS_CONFIG_SCHEDULE_TABLE_END                                            };
 
 #endif /* OS_CONFIG_GEN_TCB */
 
