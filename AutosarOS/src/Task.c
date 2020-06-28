@@ -194,7 +194,7 @@ extern StatusType Task_GetTaskState(TaskType TaskID, TaskStateRefType State)
         return E_OS_ID;
     }
 
-    if (OS_EXTENDED && (value == NULL || State == NULL)) {
+    if (OS_EXTENDED && State == NULL) {
         OS_CALL_ERROR_HOOK();
 
         return E_OS_PARAM_POINTER;
