@@ -103,7 +103,7 @@ extern StatusType Task_ChainTask(TaskType TaskID)
     return E_OK;
 }
 
-extern StatusType Task_TerminateTask()
+extern StatusType Task_TerminateTask(void)
 {
     OS_SET_ERROR_INFO0(OSServiceId_TerminateTask);
 
@@ -139,7 +139,7 @@ extern StatusType Task_TerminateTask()
     return E_OK;
 }
 
-extern StatusType Task_Schedule()
+extern StatusType Task_Schedule(void)
 {
     OS_SET_ERROR_INFO0(OSServiceId_Schedule);
 

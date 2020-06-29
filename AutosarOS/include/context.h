@@ -33,18 +33,18 @@ extern pTaskFxn ptrCurrentFxnAddr;
 /**
  * @brief   Save context of current task
  */
-extern void save_context();
+extern void save_context(void);
 
 /**
  * @brief   Restore context of current task
  */
-extern void restore_context();
+extern void restore_context(void);
 
 /**
  * @brief   Initialize context of current task
  *
  * This function is used to initialize the context of the current task.
  */
-extern void init_context();
+extern void init_context(void);
 
 #endif /* CONTEXT_H_ */

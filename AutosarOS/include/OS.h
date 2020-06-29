@@ -60,7 +60,7 @@ extern void OS_Schedule(void);
  * the current context accordingly. It should not be called directly and instead be used with
  * OS_Schedule().
  */
-extern void __attribute__((naked)) OS_ScheduleC();
+extern void __attribute__((naked)) OS_ScheduleC(void);
 
 /**
  * @brief   Switch to new task
@@ -68,7 +68,7 @@ extern void __attribute__((naked)) OS_ScheduleC();
  * Select the task with the highest priority that is ready and change the state for the context
  * switch.
  */
-extern void OS_Switch();
+extern void OS_Switch(void);
 
 /**
  * @brief   Enable all interrupts
@@ -174,7 +174,7 @@ extern void ShutdownHook(StatusType error);
  *
  * @warning This function is executed with interrupts disabled and must not activate them!
  */
-extern void PreTaskHook();
+extern void PreTaskHook(void);
 #endif
 
 #if (defined(OS_CONFIG_HOOK_POST_TASK) && OS_CONFIG_HOOK_POST_TASK == true) || defined(__DOXYGEN__)
@@ -186,7 +186,7 @@ extern void PreTaskHook();
  *
  * @warning This function is executed with interrupts disabled and must not activate them!
  */
-extern void PostTaskHook();
+extern void PostTaskHook(void);
 #endif
 
 #if (defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true) || defined(__DOXYGEN__)
@@ -197,7 +197,7 @@ extern void PostTaskHook();
  *
  * @warning This function is executed with interrupts disabled and must not activate them!
  */
-extern void ErrorHook();
+extern void ErrorHook(void);
 #endif
 
 #endif /* OS_H_ */

@@ -158,7 +158,7 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID)
     return E_OK;
 }
 
-extern void Resource_GetInternalResource()
+extern void Resource_GetInternalResource(void)
 {
     if (TCB_Cfg[currentTask]->internalResource != &IntResourceNULL_s) {
         assert(TCB_Cfg[currentTask]->internalResource->prio >= TCB_Cfg[currentTask]->prio);
@@ -171,7 +171,7 @@ extern void Resource_GetInternalResource()
     }
 }
 
-extern void Resource_ReleaseInternalResource()
+extern void Resource_ReleaseInternalResource(void)
 {
     if (TCB_Cfg[currentTask]->internalResource != &IntResourceNULL_s) {
         assert(TCB_Cfg[currentTask]->internalResource->assigned == true);

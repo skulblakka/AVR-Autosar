@@ -60,7 +60,7 @@ extern StatusType Task_ChainTask(TaskType TaskID);
  * @return  E_OS_RESOURCE           Task still occupies resources \n
  *          E_OS_CALLLEVEL          Call at interrupt level
  */
-extern StatusType Task_TerminateTask();
+extern StatusType Task_TerminateTask(void);
 
 /**
  * @brief   Reschedule current task
@@ -75,7 +75,7 @@ extern StatusType Task_TerminateTask();
  *          E_OS_CALLLEVEL          Call at interrupt level
  *
  */
-extern StatusType Task_Schedule();
+extern StatusType Task_Schedule(void);
 
 /**
  * @brief   Return the ID of the task currently running
