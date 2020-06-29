@@ -134,7 +134,7 @@ extern void OS_ShutdownOS(StatusType error)
     while (1);
 }
 
-extern void __attribute__((naked)) OS_ScheduleC()
+extern void __attribute__((naked)) OS_ScheduleC(void)
 {
     save_context();
 
@@ -221,7 +221,7 @@ extern void __attribute__((naked)) OS_ScheduleC()
     asm volatile ("ret");
 }
 
-extern void OS_Switch()
+extern void OS_Switch(void)
 {
     int16_t highestPrio = -1;
     highestPrioTask = INVALID_TASK;

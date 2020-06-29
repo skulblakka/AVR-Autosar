@@ -60,14 +60,14 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID);
  *
  * @warning This function should only be called with interrupts disabled!
  */
-extern void Resource_GetInternalResource();
+extern void Resource_GetInternalResource(void);
 
 /**
  * @brief   Release internal resource of the current task if one is assigned
  *
  * @warning This function should only be called with interrupts disabled!
  */
-extern void Resource_ReleaseInternalResource();
+extern void Resource_ReleaseInternalResource(void);
 
 
 #endif /* RESOURCE_H_ */
