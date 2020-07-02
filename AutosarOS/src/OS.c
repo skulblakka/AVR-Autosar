@@ -138,7 +138,6 @@ extern void __attribute__((naked)) OS_ScheduleC(void)
 {
     save_context();
 
-
 #if defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1
     /* Calculate stack usage */
     if (currentTask != INVALID_TASK) {
