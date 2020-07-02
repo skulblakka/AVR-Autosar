@@ -221,7 +221,7 @@
 /**
  * @brief   Specify size of system stack
  * 
- * Specify the size of the system stack in bytes. The stack will be used during Category 2 ISRs.
+ * Specify the size of the system stack in bytes. The stack will be used during ISRs.
  * 
  * @param   Size                    Size of the stack created
  */
