@@ -47,8 +47,20 @@ typedef enum StatusType_e {
     E_OS_STATE,
     E_OS_VALUE,
     E_OS_STACKFAULT,
-    E_OS_PARAM_POINTER
+    E_OS_PARAM_POINTER,
+    E_OS_PROTECTION_ARRIVAL
 } StatusType;
+
+/**
+ * @brief   Return type for protection hook
+ */
+typedef enum ProtectionReturnType_e {
+    PRO_IGNORE,                 /**< Ignore protection error */
+    PRO_TERMINATETASKISR,       /**< Terminate faulty task or ISR */
+    PRO_TERMINATEAPPL,          /**< Terminate faulty OS application */
+    PRO_TERMINATEAPPLR_RESTART, /**< Terminate and restart faulty OS application */
+    PRO_SHUTDOWN                /**< Shutdown system */
+} ProtectionReturnType;
 
 /**
  * @brief   Type for application mode
