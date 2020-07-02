@@ -663,9 +663,15 @@
                             Autostart, TaskType, TaskSchedule, Res, Events)
 #define OS_CONFIG_TASK_END
 
+#ifndef OS_CONFIG_STACK_MONITORING
+#define OS_CONFIG_STACK_MONITORING                                              0
+#endif
+
 #define OS_CONFIG_INT_BEGIN
 #define OS_CONFIG_INT_DEF(Name, Prio)                                           ISR(Name, ISR_NAKED) { \
                                                                                     save_context(); \
+                                                                                    if (OS_CONFIG_STACK_MONITORING) \
+                                                                                        OS_SystemStack[0] = 0xBE; \
                                                                                     SP = (uint16_t) (OS_SystemStack + sizeof(OS_SystemStack) - 1); \
                                                                                     isISR = true; \
                                                                                     isCat2ISR = Prio; \
@@ -674,6 +680,8 @@
                                                                                         Func ## Name(); \
                                                                                     isISR = false; \
                                                                                     isCat2ISR = 0; \
+                                                                                    if (OS_CONFIG_STACK_MONITORING && OS_SystemStack[0] != 0xBE) \
+                                                                                        OS_ProtectionHookInternal(E_OS_STACKFAULT); \
                                                                                     restore_context(); \
                                                                                     asm volatile("reti"); \
                                                                                 }
@@ -727,7 +735,7 @@
 #define OS_STACK_MONITORING_MARKER_SIZE                                         0
 #endif
 
-#define OS_CONFIG_SYSTEM_STACK(Size)                                            uint8_t OS_SystemStack[Size];
+#define OS_CONFIG_SYSTEM_STACK(Size)                                            uint8_t OS_SystemStack[Size + 1];
 
 #define OS_CONFIG_TASK_BEGIN
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
