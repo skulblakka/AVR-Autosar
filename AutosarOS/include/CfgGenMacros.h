@@ -114,6 +114,9 @@
 #ifdef OS_CONFIG_SCHEDULE_TABLE_END
 #undef OS_CONFIG_SCHEDULE_TABLE_END
 #endif
+#ifdef OS_CONFIG_SYSTEM_STACK
+#undef OS_CONFIG_SYSTEM_STACK
+#endif
 
 /* Generate documentation */
 #ifdef __DOXYGEN__
@@ -161,6 +164,14 @@
 #define OS_CONFIG_HOOK_ERROR
 
 /**
+ * @brief   Enable ProtectionHook
+ * 
+ * If defined and set to true the ProtectionHook() will be called when any of the 
+ * protection facilities (e.g. stack monitoring) detects an error.
+ */
+#define OS_CONFIG_HOOK_PROTECTION
+
+/**
  * @brief   Enable extended mode
  *
  * If set to true the system will be compiled in extended mode with extended error checks
@@ -206,6 +217,15 @@
  * structure #task_s.
  */
 #define OS_CONFIG_STACK_MONITORING
+
+/**
+ * @brief   Specify size of system stack
+ * 
+ * Specify the size of the system stack in bytes. The stack will be used during Category 2 ISRs.
+ * 
+ * @param   Size                    Size of the stack created
+ */
+#define OS_CONFIG_SYSTEM_STACK(Size)
 
 /**
  * @brief   Beginning of task definitions
@@ -519,6 +539,8 @@
 /* Generate enumerations based on config */
 #ifdef OS_CONFIG_GEN_ENUM
 
+#define OS_CONFIG_SYSTEM_STACK(Size)
+
 #define OS_CONFIG_TASK_BEGIN                                                    enum tasks_e {
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
                             Autostart, TaskType, TaskSchedule, Res, Events)     Name,
@@ -581,6 +603,8 @@
 /* Generate function declarations based on config */
 #ifdef OS_CONFIG_GEN_FUNC_DECL
 
+#define OS_CONFIG_SYSTEM_STACK(Size)
+
 #define OS_CONFIG_TASK_BEGIN
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
                             Autostart, TaskType, TaskSchedule, Res, Events)     TASK(Name);
@@ -632,20 +656,26 @@
 /* Generate functions based on config */
 #ifdef OS_CONFIG_GEN_FUNC
 
+#define OS_CONFIG_SYSTEM_STACK(Size)
+
 #define OS_CONFIG_TASK_BEGIN
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
                             Autostart, TaskType, TaskSchedule, Res, Events)
 #define OS_CONFIG_TASK_END
 
 #define OS_CONFIG_INT_BEGIN
-#define OS_CONFIG_INT_DEF(Name, Prio)                                           ISR(Name) { \
+#define OS_CONFIG_INT_DEF(Name, Prio)                                           ISR(Name, ISR_NAKED) { \
+                                                                                    save_context(); \
+                                                                                    SP = (uint16_t) (OS_SystemStack + sizeof(OS_SystemStack) - 1); \
                                                                                     isISR = true; \
                                                                                     isCat2ISR = Prio; \
                                                                                     if (currentTask == INVALID_TASK || Prio == 0 \
                                                                                             || Prio > TCB_Cfg[currentTask]->curPrio) \
                                                                                         Func ## Name(); \
-                                                                                        isISR = false; \
-                                                                                        isCat2ISR = 0; \
+                                                                                    isISR = false; \
+                                                                                    isCat2ISR = 0; \
+                                                                                    restore_context(); \
+                                                                                    asm volatile("reti"); \
                                                                                 }
 #define OS_CONFIG_INT_END
 
@@ -696,6 +726,8 @@
 #else
 #define OS_STACK_MONITORING_MARKER_SIZE                                         0
 #endif
+
+#define OS_CONFIG_SYSTEM_STACK(Size)                                            uint8_t OS_SystemStack[Size];
 
 #define OS_CONFIG_TASK_BEGIN
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
@@ -801,6 +833,8 @@
 
 /* Generate OS Task Control Block */
 #ifdef OS_CONFIG_GEN_TCB
+
+#define OS_CONFIG_SYSTEM_STACK(Size)
 
 #define OS_CONFIG_TASK_BEGIN                                                    volatile struct task_s* TCB_Cfg[TASK_COUNT] = {
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \
