@@ -13,6 +13,7 @@
 
 #include "OCB.h"
 #include "OS.h"
+#include "context.h"
 #include "assert.h"
 #include <avr/interrupt.h>
 
