@@ -363,6 +363,9 @@ extern void OS_ProtectionHookInternal(StatusType error)
             restore_context();
             asm  volatile("reti");
         } else {
+            // Reset tasks priority because we force-released all resources
+            TCB_Cfg[currentTask]->curPrio = TCB_Cfg[currentTask]->prio;
+            
             // Terminate task
             Task_TerminateTask();
         }
