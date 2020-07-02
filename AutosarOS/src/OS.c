@@ -161,7 +161,9 @@ extern void __attribute__((naked)) OS_ScheduleC(void)
     }
 #endif /* defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1 */
 
-    if (!isISR && (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceScheduling))) {
+    assert(!isISR);
+
+    if (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceScheduling)) {
         // Enter critical section
         OS_DisableAllInterrupts();
 
