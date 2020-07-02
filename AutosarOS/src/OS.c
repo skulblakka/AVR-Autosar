@@ -295,3 +295,81 @@ extern AppModeType OS_GetActiveApplicationMode(void)
 
     return activeApplicationMode;
 }
+
+extern void OS_ProtectionHookInternal(StatusType error)
+{
+    ProtectionReturnType ret = PRO_SHUTDOWN;
+
+#if defined(OS_CONFIG_HOOK_PROTECTION) && OS_CONFIG_HOOK_PROTECTION == true
+    // Call hook function if configured
+    ret = ProtectionHook(error);
+#endif /* defined(OS_CONFIG_HOOK_PROTECTION) && OS_CONFIG_HOOK_PROTECTION == true */
+
+    if (ret == PRO_IGNORE && error == E_OS_PROTECTION_ARRIVAL) {
+        // Return control to application
+        return;
+    } else if (ret == PRO_TERMINATETASKISR && error != E_OS_PROTECTION_ARRIVAL) {
+        /* Terminate task or ISR */
+        struct resource_s* volatile* resPtr = NULL;
+
+        if (isISR) {
+            if (isCat2ISR == 0) {
+                // No Cat2 ISR active => shutdown system
+                OS_ShutdownOS(error);
+            }
+
+            // Set pointer to start of resource queue
+            resPtr = &isrResourceQueue;
+        } else {
+            if (currentTask == INVALID_TASK) {
+                // No task active => shutdown system
+                OS_ShutdownOS(error);
+            }
+
+            // Set pointer to start of resource queue
+            resPtr = &TCB_Cfg[currentTask]->resourceQueue;
+        }
+
+        /* Release all resources if necessary */
+        while (*resPtr != NULL) {
+            assert((*resPtr)->assigned == true);
+
+            // Reset assigned state
+            (*resPtr)->assigned = false;
+
+            struct resource_s* volatile* tmpPtr = &(*resPtr)->next;
+
+            // Remove pointer from queue
+            *resPtr = NULL;
+
+            resPtr = tmpPtr;
+        }
+
+        /* Resume OS interrupts if necessary */
+        while (osIntStates != 0) {
+            OS_ResumeOSInterrupts();
+        }
+
+        /* Resume all interrupts if necessary */
+        while (intStates != 0) {
+            OS_ResumeAllInterrupts();
+        }
+
+        if (isISR) {
+            /* Terminate ISR */
+            isISR = false;
+            isCat2ISR = 0;
+
+            restore_context();
+            asm  volatile("reti");
+        } else {
+            // Terminate task
+            Task_TerminateTask();
+        }
+    } else {
+        // Shutdown system
+        OS_ShutdownOS(error);
+    }
+
+    assert(false); // We should not reach this
+}

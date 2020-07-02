@@ -141,6 +141,16 @@ extern void OS_SuspendOSInterrupts(void);
  */
 extern AppModeType OS_GetActiveApplicationMode(void);
 
+/**
+ * @brief   Internal function for protection hook handling
+ * 
+ * This function is called when a protection error is detected. It will call the configured
+ * protection hook if available and handle its return value.
+ * 
+ * @param   error       Type of error that triggered the protection hook
+ */
+extern void OS_ProtectionHookInternal(StatusType error);
+
 #if defined(OS_CONFIG_HOOK_STARTUP) && OS_CONFIG_HOOK_STARTUP == true
 /**
  * @brief   Hook function for startup
@@ -198,6 +208,22 @@ extern void PostTaskHook(void);
  * @warning This function is executed with interrupts disabled and must not activate them!
  */
 extern void ErrorHook(void);
+#endif
+
+#if (defined(OS_CONFIG_HOOK_PROTECTION) && OS_CONFIG_HOOK_PROTECTION == true) || defined(__DOXYGEN__)
+/**
+ * @brief   ProtectionHook function
+ * 
+ * This hook function is called when an error is detected by the protection facilities (e.g.
+ * stack monitoring).
+ *
+ * @warning This function is executed with interrupts disabled and must not activate them!
+ * 
+ * @param   fatalError      Type of error that triggered the protection hook
+ * 
+ * @return  Action the OS shall take after the protection hook
+ */
+extern ProtectionReturnType ProtectionHook(StatusType fatalError);
 #endif
 
 #endif /* OS_H_ */
