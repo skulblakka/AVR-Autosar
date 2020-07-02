@@ -58,7 +58,7 @@ typedef enum ProtectionReturnType_e {
     PRO_IGNORE,                 /**< Ignore protection error */
     PRO_TERMINATETASKISR,       /**< Terminate faulty task or ISR */
     PRO_TERMINATEAPPL,          /**< Terminate faulty OS application */
-    PRO_TERMINATEAPPLR_RESTART, /**< Terminate and restart faulty OS application */
+    PRO_TERMINATEAPPL_RESTART,  /**< Terminate and restart faulty OS application */
     PRO_SHUTDOWN                /**< Shutdown system */
 } ProtectionReturnType;
 
