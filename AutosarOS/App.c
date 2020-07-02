@@ -698,6 +698,15 @@ extern void ErrorHook(void)
     //assert(inc == 123);
     //assert(cyc == 321);
 }
+extern ProtectionReturnType ProtectionHook(StatusType fatalError)
+{
+    if (fatalError == E_OS_PARAM_POINTER) {
+        return PRO_TERMINATETASKISR;
+    }
+
+    return PRO_SHUTDOWN;
+}
+
 
 ISR(INT0_vect)
 {
