@@ -83,7 +83,7 @@ extern bool forceScheduling;
 
 /**
  * @brief   SysTick must be evaluated during timer interrupt
- * 
+ *
  * This indicates whether or not the change in SysTick value must be evaluated
  * during the timer ISR. The value should be zero if no subsystem (like alarms)
  * require evaluation of the sysTick counter.
