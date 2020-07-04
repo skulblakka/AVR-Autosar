@@ -700,7 +700,7 @@ extern void ErrorHook(void)
 }
 extern ProtectionReturnType ProtectionHook(StatusType fatalError)
 {
-    if (fatalError == E_OS_PARAM_POINTER) {
+    if (fatalError == E_OS_PARAM_POINTER || fatalError == E_OS_STACKFAULT) {
         return PRO_TERMINATETASKISR;
     }
 
