@@ -151,6 +151,14 @@ extern AppModeType OS_GetActiveApplicationMode(void);
  */
 extern void OS_ProtectionHookInternal(StatusType error);
 
+/**
+ * @brief   Call OS_ShutdownOS() with #E_OS_STACKFAULT
+ * 
+ * This function will simply call OS_ShutdownOS() with #E_OS_STACKFAULT. This is mainly used
+ * to simplify the function call from the the sysTick timer ISR.
+ */
+extern void OS_ShutdownOSStackOverrun(void);
+
 #if defined(OS_CONFIG_HOOK_STARTUP) && OS_CONFIG_HOOK_STARTUP == true
 /**
  * @brief   Hook function for startup

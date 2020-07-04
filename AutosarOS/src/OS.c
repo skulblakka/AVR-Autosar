@@ -376,3 +376,8 @@ extern void OS_ProtectionHookInternal(StatusType error)
 
     assert(false); // We should not reach this
 }
+
+extern void OS_ShutdownOSStackOverrun(void)
+{
+    OS_ShutdownOS(E_OS_STACKFAULT);
+}
