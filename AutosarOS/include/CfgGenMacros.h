@@ -215,6 +215,9 @@
  *
  * For values above zero the current and maximum stack use will be saved in the task
  * structure #task_s.
+ *
+ * Note that the above settings are only applied to task stacks. Stack monitoring for the
+ * system stack is always enabled and will always use the marker method.
  */
 #define OS_CONFIG_STACK_MONITORING
 
@@ -663,16 +666,11 @@
                             Autostart, TaskType, TaskSchedule, Res, Events)
 #define OS_CONFIG_TASK_END
 
-#ifndef OS_CONFIG_STACK_MONITORING
-#define OS_CONFIG_STACK_MONITORING                                              0
-#endif
-
 #define OS_CONFIG_INT_BEGIN
 #define OS_CONFIG_INT_DEF(Name, Prio)                                           ISR(Name, ISR_NAKED) { \
                                                                                     save_context(); \
-                                                                                    if (OS_CONFIG_STACK_MONITORING) \
-                                                                                        OS_SystemStack[0] = 0xBE; \
-                                                                                    SP = (uint16_t) (OS_SystemStack + sizeof(OS_SystemStack) - 1); \
+                                                                                    OS_SystemStack[0] = 0xBE; \
+                                                                                    SP = (uint16_t) OS_SystemStackPtr; \
                                                                                     isISR = true; \
                                                                                     isCat2ISR = Prio; \
                                                                                     if (currentTask == INVALID_TASK || Prio == 0 \
@@ -680,7 +678,7 @@
                                                                                         Func ## Name(); \
                                                                                     isISR = false; \
                                                                                     isCat2ISR = 0; \
-                                                                                    if (OS_CONFIG_STACK_MONITORING && OS_SystemStack[0] != 0xBE) \
+                                                                                    if (OS_SystemStack[0] != 0xBE) \
                                                                                         OS_ProtectionHookInternal(E_OS_STACKFAULT); \
                                                                                     restore_context(); \
                                                                                     asm volatile("reti"); \
@@ -735,7 +733,8 @@
 #define OS_STACK_MONITORING_MARKER_SIZE                                         0
 #endif
 
-#define OS_CONFIG_SYSTEM_STACK(Size)                                            uint8_t OS_SystemStack[Size + 1];
+#define OS_CONFIG_SYSTEM_STACK(Size)                                            uint8_t OS_SystemStack[Size + 1]; \
+                                                                                uint8_t* const OS_SystemStackPtr = OS_SystemStack + sizeof(OS_SystemStack) - 1;
 
 #define OS_CONFIG_TASK_BEGIN
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, \

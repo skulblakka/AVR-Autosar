@@ -82,6 +82,16 @@ extern volatile uint8_t blockScheduling;
 extern bool forceScheduling;
 
 /**
+ * @brief   Array used as SystemStack (value points to stack top)
+ */
+extern uint8_t OS_SystemStack[];
+
+/**
+ * @brief   Pointer to SystemStack base
+ */
+extern uint8_t* const OS_SystemStackPtr;
+
+/**
  * @brief   Current resource control blocks
  */
 extern volatile struct resource_s* Res_Cfg[];
