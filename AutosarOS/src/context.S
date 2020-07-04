@@ -224,6 +224,12 @@ TIMER0_OVF_vect:
     /* Save current context */
     call    save_context
 
+    /* Switch to system stack */
+    lds     r24, OS_SystemStackPtr
+    lds     r25, OS_SystemStackPtr + 1
+    out     _SFR_IO_ADDR(SPL), r24      // Change to new SP
+    out     _SFR_IO_ADDR(SPH), r25
+
     /* Block scheduling */
     ldi     r24, 1
     lds     r2, blockScheduling
