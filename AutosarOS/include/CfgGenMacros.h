@@ -165,8 +165,8 @@
 
 /**
  * @brief   Enable ProtectionHook
- * 
- * If defined and set to true the ProtectionHook() will be called when any of the 
+ *
+ * If defined and set to true the ProtectionHook() will be called when any of the
  * protection facilities (e.g. stack monitoring) detects an error.
  */
 #define OS_CONFIG_HOOK_PROTECTION
@@ -198,7 +198,8 @@
  * @brief   Configure stack monitoring
  *
  * Stack monitoring will check for task stack overrun on context switch. If a overrun is
- * detected ShutdownOS() will be called with #E_OS_STACKFAULT.
+ * detected the ProtectionHook() is called with #E_OS_STACKFAULT if configured. Otherwise
+ * ShutdownOS() will be called with #E_OS_STACKFAULT.
  *
  * The following values are possible:
  * * If not configured or set to 0 stack monitoring is disabled and related variables
@@ -223,9 +224,9 @@
 
 /**
  * @brief   Specify size of system stack
- * 
+ *
  * Specify the size of the system stack in bytes. The stack will be used during ISRs.
- * 
+ *
  * @param   Size                    Size of the stack created
  */
 #define OS_CONFIG_SYSTEM_STACK(Size)
@@ -729,9 +730,9 @@
 
 #if defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 2
 #define OS_STACK_MONITORING_MARKER_SIZE                                         1
-#else
+#else /* defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 2 */
 #define OS_STACK_MONITORING_MARKER_SIZE                                         0
-#endif
+#endif /* defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 2 */
 
 #define OS_CONFIG_SYSTEM_STACK(Size)                                            uint8_t OS_SystemStack[Size + 1]; \
                                                                                 uint8_t* const OS_SystemStackPtr = OS_SystemStack + sizeof(OS_SystemStack) - 1;
