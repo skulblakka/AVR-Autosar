@@ -677,10 +677,10 @@
                                                                                     if (currentTask == INVALID_TASK || Prio == 0 \
                                                                                             || Prio > TCB_Cfg[currentTask]->curPrio) \
                                                                                         Func ## Name(); \
-                                                                                    isISR = false; \
-                                                                                    isCat2ISR = 0; \
                                                                                     if (OS_SystemStack[0] != 0xBE) \
                                                                                         OS_ProtectionHookInternal(E_OS_STACKFAULT); \
+                                                                                    isISR = false; \
+                                                                                    isCat2ISR = 0; \
                                                                                     restore_context(); \
                                                                                     asm volatile("reti"); \
                                                                                 }
