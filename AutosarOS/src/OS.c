@@ -17,6 +17,7 @@
 #include "Task.h"
 #include "Resource.h"
 #include "ScheduleTables.h"
+#include "Alarm.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -98,6 +99,7 @@ extern void OS_StartOS(AppModeType mode)
     /* Startup subsystems */
     Task_startup();
     ScheduleTable_startup();
+    Alarm_startup();
 
 #if defined(OS_CONFIG_HOOK_STARTUP) && OS_CONFIG_HOOK_STARTUP == true
     StartupHook();
@@ -138,7 +140,6 @@ extern void __attribute__((naked)) OS_ScheduleC(void)
 {
     save_context();
 
-
 #if defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1
     /* Calculate stack usage */
     if (currentTask != INVALID_TASK) {
@@ -157,12 +158,14 @@ extern void __attribute__((naked)) OS_ScheduleC(void)
 #endif /* OS_CONFIG_STACK_MONITORING >= 2 */
 
         if (TCB_Cfg[currentTask]->maxStackUse > TCB_Cfg[currentTask]->stackSize) {
-            OS_ShutdownOS(E_OS_STACKFAULT);
+            OS_ProtectionHookInternal(E_OS_STACKFAULT);
         }
     }
 #endif /* defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1 */
 
-    if (!isISR && (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceScheduling))) {
+    assert(!isISR);
+
+    if (currentTask == INVALID_TASK || (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE || forceScheduling)) {
         // Enter critical section
         OS_DisableAllInterrupts();
 
@@ -293,4 +296,90 @@ extern AppModeType OS_GetActiveApplicationMode(void)
     OS_SET_ERROR_INFO0(OSServiceId_GetActiveApplicationMode);
 
     return activeApplicationMode;
+}
+
+extern void OS_ProtectionHookInternal(StatusType error)
+{
+    ProtectionReturnType ret = PRO_SHUTDOWN;
+
+#if defined(OS_CONFIG_HOOK_PROTECTION) && OS_CONFIG_HOOK_PROTECTION == true
+    // Call hook function if configured
+    ret = ProtectionHook(error);
+#endif /* defined(OS_CONFIG_HOOK_PROTECTION) && OS_CONFIG_HOOK_PROTECTION == true */
+
+    if (ret == PRO_IGNORE && error == E_OS_PROTECTION_ARRIVAL) {
+        // Return control to application
+        return;
+    } else if (ret == PRO_TERMINATETASKISR && error != E_OS_PROTECTION_ARRIVAL) {
+        /* Terminate task or ISR */
+        struct resource_s* volatile* resPtr = NULL;
+
+        if (isISR) {
+            if (isCat2ISR == 0) {
+                // No Cat2 ISR active => shutdown system
+                OS_ShutdownOS(error);
+            }
+
+            // Set pointer to start of resource queue
+            resPtr = &isrResourceQueue;
+        } else {
+            if (currentTask == INVALID_TASK) {
+                // No task active => shutdown system
+                OS_ShutdownOS(error);
+            }
+
+            // Set pointer to start of resource queue
+            resPtr = &TCB_Cfg[currentTask]->resourceQueue;
+        }
+
+        /* Release all resources if necessary */
+        while (*resPtr != NULL) {
+            assert((*resPtr)->assigned == true);
+
+            // Reset assigned state
+            (*resPtr)->assigned = false;
+
+            struct resource_s* volatile* tmpPtr = &(*resPtr)->next;
+
+            // Remove pointer from queue
+            *resPtr = NULL;
+
+            resPtr = tmpPtr;
+        }
+
+        /* Resume OS interrupts if necessary */
+        while (osIntStates != 0) {
+            OS_ResumeOSInterrupts();
+        }
+
+        /* Resume all interrupts if necessary */
+        while (intStates != 0) {
+            OS_ResumeAllInterrupts();
+        }
+
+        if (isISR) {
+            /* Terminate ISR */
+            isISR = false;
+            isCat2ISR = 0;
+
+            restore_context();
+            asm  volatile("reti");
+        } else {
+            // Reset tasks priority because we force-released all resources
+            TCB_Cfg[currentTask]->curPrio = TCB_Cfg[currentTask]->prio;
+
+            // Terminate task
+            Task_TerminateTask();
+        }
+    } else {
+        // Shutdown system
+        OS_ShutdownOS(error);
+    }
+
+    assert(false); // We should not reach this
+}
+
+extern void OS_ShutdownOSStackOverrun(void)
+{
+    OS_ShutdownOS(E_OS_STACKFAULT);
 }

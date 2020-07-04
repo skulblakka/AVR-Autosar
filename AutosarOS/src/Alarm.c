@@ -132,7 +132,8 @@ extern StatusType Alarm_SetRelAlarm(AlarmType alarmID, TickType increment, TickT
 
 extern StatusType Alarm_SetAbsAlarm(AlarmType alarmID, TickType start, TickType cycle)
 {
-    OS_SET_ERROR_INFO3(OSServiceId_SetRelAlarm, &alarmID, sizeof(alarmID), &start, sizeof(start), &cycle, sizeof(cycle));
+    OS_SET_ERROR_INFO3(OSServiceId_SetRelAlarm, &alarmID, sizeof(alarmID), &start, sizeof(start), &cycle,
+            sizeof(cycle));
 
     if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
         OS_CALL_ERROR_HOOK();
@@ -162,6 +163,10 @@ extern StatusType Alarm_SetAbsAlarm(AlarmType alarmID, TickType start, TickType 
             return E_OS_STATE;
         }
 
+        if (Alarm_Cfg[alarmID]->alarmBase == Counter_Cfg[SYSTEM_COUNTER]) {
+            needSysTickEval += 1;
+        }
+
         Alarm_Cfg[alarmID]->expiration = start;
         Alarm_Cfg[alarmID]->cycle = cycle;
         Alarm_Cfg[alarmID]->running = true;
@@ -185,6 +190,10 @@ extern StatusType Alarm_CancelAlarm(AlarmType alarmID)
             OS_CALL_ERROR_HOOK();
 
             return E_OS_NOFUNC;
+        }
+
+        if (Alarm_Cfg[alarmID]->alarmBase == Counter_Cfg[SYSTEM_COUNTER]) {
+            needSysTickEval -= 1;
         }
 
         Alarm_Cfg[alarmID]->running = false;
@@ -229,10 +238,23 @@ extern void Alarm_evaluateSysTickAlarm(void)
 
         ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
             expired = Alarm_Cfg[i]->running && (sysTick == Alarm_Cfg[i]->expiration);
+
+            if (expired) {
+                needSysTickEval -= 1;
+            }
         }
 
         if (expired) {
             Alarm_handleAlarmExpiration(i);
+        }
+    }
+}
+
+extern void Alarm_startup(void)
+{
+    for (uint8_t i = 0; i < ALARM_COUNT; i++) {
+        if (Alarm_Cfg[i]->running && Alarm_Cfg[i]->alarmBase == Counter_Cfg[SYSTEM_COUNTER]) {
+            needSysTickEval += 1;
         }
     }
 }

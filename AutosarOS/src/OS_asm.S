@@ -27,6 +27,11 @@ OS_Schedule:
     tst     r24
     brne    blocked
 
+    /* Test if scheduling blocked by ISR */
+    lds     r24, isISR
+    tst     r24
+    brne    blocked
+
     /* Restore r24 and SREG */
     pop     r24
     out     _SFR_IO_ADDR(SREG), r24

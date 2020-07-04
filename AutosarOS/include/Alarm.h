@@ -113,4 +113,9 @@ extern void Alarm_evaluateAlarm(CounterType counter);
  */
 extern void Alarm_evaluateSysTickAlarm(void);
 
+/**
+ * @brief   Startup function for alarm management
+ */
+extern void Alarm_startup(void);
+
 #endif /* ALARM_H_ */

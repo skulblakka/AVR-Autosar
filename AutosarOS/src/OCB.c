@@ -13,6 +13,7 @@
 
 #include "OCB.h"
 #include "OS.h"
+#include "context.h"
 #include "assert.h"
 #include <avr/interrupt.h>
 
@@ -25,6 +26,8 @@ volatile uint32_t sysTick;
 volatile uint8_t needScheduling;
 volatile uint8_t blockScheduling;
 bool forceScheduling;
+
+volatile uint8_t needSysTickEval;
 
 struct resource_s* volatile isrResourceQueue = NULL;
 
