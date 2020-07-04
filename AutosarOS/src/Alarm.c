@@ -132,7 +132,8 @@ extern StatusType Alarm_SetRelAlarm(AlarmType alarmID, TickType increment, TickT
 
 extern StatusType Alarm_SetAbsAlarm(AlarmType alarmID, TickType start, TickType cycle)
 {
-    OS_SET_ERROR_INFO3(OSServiceId_SetRelAlarm, &alarmID, sizeof(alarmID), &start, sizeof(start), &cycle, sizeof(cycle));
+    OS_SET_ERROR_INFO3(OSServiceId_SetRelAlarm, &alarmID, sizeof(alarmID), &start, sizeof(start), &cycle,
+            sizeof(cycle));
 
     if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
         OS_CALL_ERROR_HOOK();
