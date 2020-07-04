@@ -102,6 +102,10 @@ extern StatusType ScheduleTable_StartScheduleTableRel(ScheduleTableType schedule
             return E_OS_STATE;
         }
 
+        if (ScheduleTable_Cfg[scheduleTableID]->counter == SYSTEM_COUNTER) {
+            needSysTickEval += 1;
+        }
+
         ScheduleTable_Cfg[scheduleTableID]->currentTick = 0 - offset;
         ScheduleTable_Cfg[scheduleTableID]->currentState = SCHEDULETABLE_RUNNING;
     }
@@ -155,6 +159,10 @@ extern StatusType ScheduleTable_StopScheduleTable(ScheduleTableType scheduleTabl
             OS_CALL_ERROR_HOOK();
 
             return E_OS_NOFUNC;
+        }
+
+        if (ScheduleTable_Cfg[scheduleTableID]->counter == SYSTEM_COUNTER) {
+            needSysTickEval -= 1;
         }
 
         ScheduleTable_Cfg[scheduleTableID]->currentState = SCHEDULETABLE_STOPPED;
@@ -260,17 +268,31 @@ extern void ScheduleTable_handleTick(CounterType counter)
                         // Schedule table is cyclic => restart it
                         ScheduleTable_handleScheduleTableStart(i);
                     } else {
-                        // Stop schedule table
+                        /* Stop schedule table */
                         ScheduleTable_Cfg[i]->currentState = SCHEDULETABLE_STOPPED;
 
+                        if (ScheduleTable_Cfg[i]->counter == SYSTEM_COUNTER) {
+                            needSysTickEval -= 1;
+                        }
+
+                        /* Check if another schedule table is queued */
                         if (ScheduleTable_Cfg[i]->next != INVALID_SCHEDULETABLE) {
                             if (i < ScheduleTable_Cfg[i]->next
                                     && ScheduleTable_Cfg[ScheduleTable_Cfg[i]->next]->counter == counter) {
+
                                 /* Start queued schedule table (will be handled within this tick evaluation) */
+                                if (ScheduleTable_Cfg[ScheduleTable_Cfg[i]->next]->counter == SYSTEM_COUNTER) {
+                                    needSysTickEval += 1;
+                                }
+
                                 ScheduleTable_Cfg[ScheduleTable_Cfg[i]->next]->currentState = SCHEDULETABLE_RUNNING;
                                 ScheduleTable_Cfg[ScheduleTable_Cfg[i]->next]->currentTick = -1;
                             } else {
-                                // Start queued schedule table and handle initial expiry point if necessary
+                                /* Start queued schedule table and handle initial expiry point if necessary */
+                                if (ScheduleTable_Cfg[ScheduleTable_Cfg[i]->next]->counter == SYSTEM_COUNTER) {
+                                    needSysTickEval += 1;
+                                }
+
                                 ScheduleTable_handleScheduleTableStart(ScheduleTable_Cfg[i]->next);
                             }
 
@@ -297,6 +319,10 @@ extern void ScheduleTable_startup(void)
         for (uint8_t i = 0; i < SCHEDULETABLE_COUNT; i++) {
             /* Start all schedule tables configured as autostart */
             if (ScheduleTable_Cfg[i]->autoStart == true) {
+                if (ScheduleTable_Cfg[i]->counter == SYSTEM_COUNTER) {
+                    needSysTickEval += 1;
+                }
+
                 ScheduleTable_handleScheduleTableStart(i);
             }
         }

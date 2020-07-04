@@ -216,6 +216,11 @@ TIMER0_OVF_vect:
     pop     r25
     pop     r24
 
+    /* Check if sysTick change must be handled */
+    lds     r0, needSysTickEval
+    tst     r0
+    breq    noSysTickEval
+
     /* Restore r0 and SREG */
     pop     r0
     out     _SFR_IO_ADDR(SREG), r0
@@ -261,6 +266,7 @@ noError:
     in      r0, _SFR_IO_ADDR(SREG)
     push    r0
 
+noSysTickEval:
     /* Test if rescheduling is needed */
     lds     r0, needScheduling
     tst     r0

@@ -82,6 +82,15 @@ extern volatile uint8_t blockScheduling;
 extern bool forceScheduling;
 
 /**
+ * @brief   SysTick must be evaluated during timer interrupt
+ * 
+ * This indicates whether or not the change in SysTick value must be evaluated
+ * during the timer ISR. The value should be zero if no subsystem (like alarms)
+ * require evaluation of the sysTick counter.
+ */
+extern volatile uint8_t needSysTickEval;
+
+/**
  * @brief   Array used as SystemStack (value points to stack top)
  */
 extern uint8_t OS_SystemStack[];

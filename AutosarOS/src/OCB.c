@@ -27,6 +27,8 @@ volatile uint8_t needScheduling;
 volatile uint8_t blockScheduling;
 bool forceScheduling;
 
+volatile uint8_t needSysTickEval;
+
 struct resource_s* volatile isrResourceQueue = NULL;
 
 #if (defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true)
