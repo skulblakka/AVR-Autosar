@@ -224,6 +224,16 @@ TIMER0_OVF_vect:
     /* Save current context */
     call    save_context
 
+    /* Set marker at stack top */
+    ldi     r24, 0xBE
+    sts     OS_SystemStack, r24
+
+    /* Switch to system stack */
+    lds     r24, OS_SystemStackPtr
+    lds     r25, OS_SystemStackPtr + 1
+    out     _SFR_IO_ADDR(SPL), r24      // Change to new SP
+    out     _SFR_IO_ADDR(SPH), r25
+
     /* Block scheduling */
     ldi     r24, 1
     lds     r2, blockScheduling
@@ -236,6 +246,13 @@ TIMER0_OVF_vect:
     /* Release scheduling */
     sts     blockScheduling, r2
 
+    /* Check marker at stack top indicating overrun */
+    lds     r24, OS_SystemStack
+    cpi     r24, 0xBE
+    breq    noError
+    call    OS_ShutdownOSStackOverrun
+
+noError:
     /* Restore context */
     call    restore_context
 
