@@ -149,6 +149,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="test\TM\TM5\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM5\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
     <None Include="test\TM\TM4\App.c">
       <SubType>compile</SubType>
     </None>
@@ -282,6 +288,7 @@
     <Folder Include="test" />
     <Folder Include="src" />
     <Folder Include="test\TM" />
+    <Folder Include="test\TM\TM5" />
     <Folder Include="test\TM\TM4" />
     <Folder Include="test\TM\TM3" />
     <Folder Include="test\TM\TM2" />
