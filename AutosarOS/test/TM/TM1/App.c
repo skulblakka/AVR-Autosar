@@ -1,9 +1,16 @@
-/*
- * TM1.c
+/**
+ * @file
  *
- * Created: 13.07.2020 13:43:35
- *  Author: pascal
+ * @brief       Application code for task management test procedure 1
+ *
+ * @date        2020-07-13
+ * @author      Pascal Romahn
+ * @copyright   This program is free software: you can redistribute it and/or modify
+ *              it under the terms of the GNU General Public License as published by
+ *              the Free Software Foundation, either version 3 of the License, or
+ *              (at your option) any later version.
  */
+
 #include "assert.h"
 
 #include "OS_API.h"

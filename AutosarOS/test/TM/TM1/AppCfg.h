@@ -1,18 +1,9 @@
-/*
- * TM1.h
- *
- * Created: 13.07.2020 13:32:15
- *  Author: pascal
- */ 
-
 /**
  * @file
  *
- * @brief       User application configuration
+ * @brief       Application configuration for task management test procedure 1
  *
- * This file contains the configuration for the user application.
- *
- * @date        2019-09-02
+ * @date        2020-07-13
  * @author      Pascal Romahn
  * @copyright   This program is free software: you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
