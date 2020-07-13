@@ -157,8 +157,6 @@ extern StatusType Task_Schedule(void)
         }
 
         if (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
-            OS_CALL_ERROR_HOOK();
-
             return E_OK;
         }
 
