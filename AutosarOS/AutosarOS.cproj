@@ -149,6 +149,54 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="test\TM\TM15\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM15\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM14\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM14\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM13\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM13\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM12\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM12\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM11\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM11\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM10\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM10\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM9\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM9\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM8\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM8\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
     <None Include="test\TM\TM7\App.c">
       <SubType>compile</SubType>
     </None>
@@ -300,6 +348,14 @@
     <Folder Include="test" />
     <Folder Include="src" />
     <Folder Include="test\TM" />
+    <Folder Include="test\TM\TM15" />
+    <Folder Include="test\TM\TM14" />
+    <Folder Include="test\TM\TM13" />
+    <Folder Include="test\TM\TM12" />
+    <Folder Include="test\TM\TM11" />
+    <Folder Include="test\TM\TM10" />
+    <Folder Include="test\TM\TM9" />
+    <Folder Include="test\TM\TM8" />
     <Folder Include="test\TM\TM7" />
     <Folder Include="test\TM\TM6" />
     <Folder Include="test\TM\TM5" />
