@@ -117,8 +117,8 @@
             <Value>ASSERT_BUFFER_SIZE=512</Value>
             <Value>STATIC_ASSERT_BUFFER</Value>
             <Value>BREAK_ON_ASSERT</Value>
-            <Value>EXTERNAL_CONFIG='"test/TM/TM1/AppCfg.h"'</Value>
-            <Value>EXTERNAL_APP='"test/TM/TM1/App.c"'</Value>
+            <Value>EXTERNAL_CONFIG='"test/TM/TM2/AppCfg.h"'</Value>
+            <Value>EXTERNAL_APP='"test/TM/TM2/App.c"'</Value>
           </ListValues>
         </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.directories.IncludePaths>
@@ -149,6 +149,10 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="test\TM\TM2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM2\AppCfg.h">
       <SubType>compile</SubType>
     </None>
     <None Include="test\TM\TM1\App.c">
@@ -266,6 +270,7 @@
     <Folder Include="test" />
     <Folder Include="src" />
     <Folder Include="test\TM" />
+    <Folder Include="test\TM\TM2" />
     <Folder Include="test\TM\TM1\" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
