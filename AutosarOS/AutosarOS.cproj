@@ -117,6 +117,8 @@
             <Value>ASSERT_BUFFER_SIZE=512</Value>
             <Value>STATIC_ASSERT_BUFFER</Value>
             <Value>BREAK_ON_ASSERT</Value>
+            <Value>EXTERNAL_CONFIG='"test/TM/TM2/AppCfg.h"'</Value>
+            <Value>EXTERNAL_APP='"test/TM/TM2/App.c"'</Value>
           </ListValues>
         </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.directories.IncludePaths>
@@ -147,6 +149,96 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="test\TM\TM15\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM15\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM14\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM14\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM13\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM13\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM12\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM12\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM11\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM11\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM10\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM10\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM9\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM9\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM8\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM8\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM7\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM7\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM6\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM6\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM5\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM5\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM4\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM4\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM3\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM3\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
     <None Include="AppCfg.h">
       <SubType>compile</SubType>
     </None>
@@ -253,7 +345,24 @@
   <ItemGroup>
     <Folder Include="include" />
     <Folder Include="include\Types" />
+    <Folder Include="test" />
     <Folder Include="src" />
+    <Folder Include="test\TM" />
+    <Folder Include="test\TM\TM15" />
+    <Folder Include="test\TM\TM14" />
+    <Folder Include="test\TM\TM13" />
+    <Folder Include="test\TM\TM12" />
+    <Folder Include="test\TM\TM11" />
+    <Folder Include="test\TM\TM10" />
+    <Folder Include="test\TM\TM9" />
+    <Folder Include="test\TM\TM8" />
+    <Folder Include="test\TM\TM7" />
+    <Folder Include="test\TM\TM6" />
+    <Folder Include="test\TM\TM5" />
+    <Folder Include="test\TM\TM4" />
+    <Folder Include="test\TM\TM3" />
+    <Folder Include="test\TM\TM2" />
+    <Folder Include="test\TM\TM1\" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
