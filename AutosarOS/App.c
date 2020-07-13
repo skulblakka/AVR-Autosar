@@ -20,6 +20,10 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#if defined(EXTERNAL_APP)
+#include EXTERNAL_APP
+#else /* defined(EXTERNAL_APP) */
+
 #if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
 #define DELAY_MS(ms)
 #else
@@ -748,3 +752,5 @@ ISR(TIMER2_OVF_vect)
 {
 
 }
+
+#endif /* defined(EXTERNAL_APP) */
