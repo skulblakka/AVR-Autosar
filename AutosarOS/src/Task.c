@@ -150,16 +150,16 @@ extern StatusType Task_Schedule(void)
     OS_SET_ERROR_INFO0(OSServiceId_Schedule);
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        if (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
-            OS_CALL_ERROR_HOOK();
-
-            return E_OK;
-        }
-
         if (OS_EXTENDED && isISR) {
             OS_CALL_ERROR_HOOK();
 
             return E_OS_CALLLEVEL;
+        }
+
+        if (TCB_Cfg[currentTask]->taskSchedule == PREEMPTIVE) {
+            OS_CALL_ERROR_HOOK();
+
+            return E_OK;
         }
 
         if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
