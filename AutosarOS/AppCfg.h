@@ -20,7 +20,7 @@
 #define OS_CONFIG_HOOK_PRE_TASK     true
 #define OS_CONFIG_HOOK_POST_TASK    true
 #define OS_CONFIG_HOOK_ERROR        true
-#define OS_CONFIG_HOOK_PROTECTION   true
+#define OS_CONFIG_HOOK_PROTECTION   false
 
 #define OS_CONFIG_EXTENDED          true
 
