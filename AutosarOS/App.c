@@ -642,13 +642,13 @@ extern void StartupHook(void)
 #if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
 #if defined (__AVR_ATmega128__)
     TCCR2 = (1 << CS20);                                        // Enable Timer2 with Prescaler 1
-    TIMSK |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
+    TIMSK |= 1 << TOIE2;                                        // Enable Overflow Interrupt (Timer2)
 #else /* defined (__AVR_ATmega128__) */
     TCCR2B = (1 << CS20);                                       // Enable Timer2 with Prescaler 1
     TIMSK2 |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
 #endif /* defined (__AVR_ATmega128__) */
 #endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
-#else
+#else /* defined (__AVR_ATmega32__) */
 #error Unknown CPU defined!
 #endif /* defined (__AVR_ATmega32__) */
 
