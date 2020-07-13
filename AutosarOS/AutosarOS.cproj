@@ -117,8 +117,8 @@
             <Value>ASSERT_BUFFER_SIZE=512</Value>
             <Value>STATIC_ASSERT_BUFFER</Value>
             <Value>BREAK_ON_ASSERT</Value>
-            <Value>EXTERNAL_CONFIG='"test/TM/TM1/TM1.h"'</Value>
-            <Value>EXTERNAL_APP='"test/TM/TM1/TM1.c"'</Value>
+            <Value>EXTERNAL_CONFIG='"test/TM/TM1/AppCfg.h"'</Value>
+            <Value>EXTERNAL_APP='"test/TM/TM1/App.c"'</Value>
           </ListValues>
         </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.directories.IncludePaths>
@@ -149,10 +149,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="test\TM\TM1\TM1.c">
       <SubType>compile</SubType>
     </None>
-    <None Include="test\TM\TM1\TM1.h">
+    <None Include="test\TM\TM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM1\AppCfg.h">
       <SubType>compile</SubType>
     </None>
     <None Include="AppCfg.h">
