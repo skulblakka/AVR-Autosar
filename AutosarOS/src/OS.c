@@ -171,12 +171,12 @@ extern void __attribute__((naked)) OS_ScheduleC(void)
 
         if (currentTask != INVALID_TASK) {
             if (TCB_Cfg[currentTask]->curState == RUNNING) {
+#if defined(OS_CONFIG_HOOK_PRE_TASK) && OS_CONFIG_HOOK_PRE_TASK == true
+                PostTaskHook();
+#endif
+
                 TCB_Cfg[currentTask]->curState = READY;
             }
-
-#if defined(OS_CONFIG_HOOK_PRE_TASK) && OS_CONFIG_HOOK_PRE_TASK == true
-            PreTaskHook();
-#endif
         }
 
         OS_Switch();
@@ -194,7 +194,7 @@ extern void __attribute__((naked)) OS_ScheduleC(void)
         TCB_Cfg[currentTask]->curState = RUNNING;
 
 #if defined(OS_CONFIG_HOOK_POST_TASK) && OS_CONFIG_HOOK_POST_TASK == true
-        PostTaskHook();
+        PreTaskHook();
 #endif
 
         if (prevState == PRE_READY) {
