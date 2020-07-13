@@ -634,19 +634,19 @@ extern void StartupHook(void)
 
 #if defined (__AVR_ATmega128__)
     TIMSK |= (1 << OCIE1A);                                     // Enable interrupt on compare match
-#else /* #if defined (__AVR_ATmega128__) */
+#else /* defined (__AVR_ATmega128__) */
     TIMSK1 |= (1 << OCIE1A);                                    // Enable interrupt on compare match
-#endif /* #if defined (__AVR_ATmega128__) */
+#endif /* defined (__AVR_ATmega128__) */
 
     /* Timer 2 */
 #if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
 #if defined (__AVR_ATmega128__)
     TCCR2 = (1 << CS20);                                        // Enable Timer2 with Prescaler 1
     TIMSK |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
-#else /* #if defined (__AVR_ATmega128__) */
+#else /* defined (__AVR_ATmega128__) */
     TCCR2B = (1 << CS20);                                       // Enable Timer2 with Prescaler 1
     TIMSK2 |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
-#endif /* #if defined (__AVR_ATmega128__) */
+#endif /* defined (__AVR_ATmega128__) */
 #endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
 #else
 #error Unknown CPU defined!
