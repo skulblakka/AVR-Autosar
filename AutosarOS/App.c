@@ -678,12 +678,16 @@ extern void PreTaskHook(void)
 {
     TaskType task;
     GetTaskID(&task);
+    TaskStateType state = SUSPENDED;
+    GetTaskState(task, &state);
 }
 
 extern void PostTaskHook(void)
 {
     TaskType task;
     GetTaskID(&task);
+    TaskStateType state = SUSPENDED;
+    GetTaskState(task, &state);
 }
 
 extern void ErrorHook(void)

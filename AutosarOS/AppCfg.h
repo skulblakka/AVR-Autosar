@@ -17,8 +17,8 @@
 
 #define OS_CONFIG_HOOK_STARTUP      true
 #define OS_CONFIG_HOOK_SHUTDOWN     true
-#define OS_CONFIG_HOOK_PRE_TASK     false
-#define OS_CONFIG_HOOK_POST_TASK    false
+#define OS_CONFIG_HOOK_PRE_TASK     true
+#define OS_CONFIG_HOOK_POST_TASK    true
 #define OS_CONFIG_HOOK_ERROR        true
 #define OS_CONFIG_HOOK_PROTECTION   true
 
