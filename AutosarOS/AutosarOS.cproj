@@ -149,6 +149,48 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="test\AM\AM7\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM7\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM6\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM6\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM5\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM5\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM4\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM4\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM3\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM3\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
     <None Include="test\RM\RM5\App.c">
       <SubType>compile</SubType>
     </None>
@@ -413,6 +455,13 @@
     <Folder Include="include\Types" />
     <Folder Include="test" />
     <Folder Include="src" />
+    <Folder Include="test\AM\AM1" />
+    <Folder Include="test\AM\AM2" />
+    <Folder Include="test\AM\AM3" />
+    <Folder Include="test\AM\AM4" />
+    <Folder Include="test\AM\AM5" />
+    <Folder Include="test\AM\AM6" />
+    <Folder Include="test\AM\AM7" />
     <Folder Include="test\EM\EM1" />
     <Folder Include="test\EM\EM2" />
     <Folder Include="test\EM\EM3" />
@@ -421,6 +470,7 @@
     <Folder Include="test\IM\IM1" />
     <Folder Include="test\IM\IM2" />
     <Folder Include="test\EM" />
+    <Folder Include="test\AM" />
     <Folder Include="test\RM" />
     <Folder Include="test\RM\RM5" />
     <Folder Include="test\RM\RM4" />
