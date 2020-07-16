@@ -118,7 +118,7 @@ extern StatusType Events_GetEvent(TaskType TaskID, EventMaskRefType events)
         }
 
         // Copy pending events
-        *events = TCB_Cfg[currentTask]->pendingEvents;
+        *events = TCB_Cfg[TaskID]->pendingEvents;
     }
 
     return E_OK;
