@@ -16,7 +16,7 @@
     <Name>AutosarOS</Name>
     <RootNamespace>AutosarOS</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
-    <KeepTimersRunning>true</KeepTimersRunning>
+    <KeepTimersRunning>false</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
     <ProgFlashFromRam>true</ProgFlashFromRam>
