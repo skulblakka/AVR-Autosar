@@ -105,7 +105,7 @@ extern StatusType Alarm_SetRelAlarm(AlarmType alarmID, TickType increment, TickT
         return E_OS_ID;
     }
 
-    if (increment == 0) {
+    if (increment == 0 || increment > Alarm_Cfg[alarmID]->alarmBase->maxallowedvalue) {
         OS_CALL_ERROR_HOOK();
 
         return E_OS_VALUE;
