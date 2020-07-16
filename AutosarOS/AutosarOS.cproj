@@ -149,6 +149,36 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="test\RM\RM5\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM5\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM4\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM4\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM3\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM3\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
     <None Include="test\EM\EM4\App.c">
       <SubType>compile</SubType>
     </None>
@@ -391,6 +421,12 @@
     <Folder Include="test\IM\IM1" />
     <Folder Include="test\IM\IM2" />
     <Folder Include="test\EM" />
+    <Folder Include="test\RM" />
+    <Folder Include="test\RM\RM5" />
+    <Folder Include="test\RM\RM4" />
+    <Folder Include="test\RM\RM3" />
+    <Folder Include="test\RM\RM2" />
+    <Folder Include="test\RM\RM1" />
     <Folder Include="test\TM" />
     <Folder Include="test\TM\TM15" />
     <Folder Include="test\TM\TM14" />
