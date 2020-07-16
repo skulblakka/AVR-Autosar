@@ -112,6 +112,10 @@ extern void OS_StartOS(AppModeType mode)
     init_context();
     TCB_Cfg[currentTask]->curState = RUNNING;
 
+#if defined(OS_CONFIG_HOOK_POST_TASK) && OS_CONFIG_HOOK_POST_TASK == true
+    PreTaskHook();
+#endif
+
     assert(TCB_Cfg[currentTask]->curNumberOfActivations > 0);
 
     Resource_GetInternalResource();
