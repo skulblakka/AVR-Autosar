@@ -37,7 +37,7 @@ TASK(Task1)
         ;
     }
     
-    StatusType stat = stat = TerminateTask();
+    StatusType stat = TerminateTask();
     assert(stat == E_OK);
 }
 
