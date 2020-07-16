@@ -35,10 +35,10 @@ TASK(Task1)
 {
     StatusType stat = ActivateTask(Task2);
     assert(stat == E_OK);
-    
+
     stat = ActivateTask(Task3);
     assert(stat == E_OK);
-    
+
     stat = Schedule();
     assert(stat == E_OK);
 

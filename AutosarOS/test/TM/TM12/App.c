@@ -35,19 +35,19 @@ TASK(Task1)
 {
     StatusType stat = ActivateTask(Task2);
     assert(stat == E_OK);
-    
+
     ActivateTask(Task3);
     assert(stat == E_OK);
-    
+
     ActivateTask(Task2);
     assert(stat == E_OK);
-    
+
     ActivateTask(Task2);
     assert(stat == E_OK);
-    
+
     ActivateTask(Task3);
     assert(stat == E_OK);
-    
+
     ActivateTask(Task3);
     assert(stat == E_OK);
 

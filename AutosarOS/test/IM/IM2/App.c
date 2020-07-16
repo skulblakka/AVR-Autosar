@@ -36,7 +36,7 @@ TASK(Task1)
     while (!isrFlag) {
         ;
     }
-    
+
     StatusType stat = TerminateTask();
     assert(stat == E_OK);
 }

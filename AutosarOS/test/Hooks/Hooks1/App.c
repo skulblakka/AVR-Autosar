@@ -30,10 +30,10 @@ volatile bool errorHookCalled = false;
 TASK(Idle)
 {
     assert(startupHooksCalled == true);
-    
+
     StatusType stat = ActivateTask(Task1);
     assert(stat == E_OK);
-    
+
     while (1);
 }
 
@@ -95,7 +95,7 @@ extern void StartupHook(void)
         DELAY_MS(50);
         t++;
     }
-    
+
     startupHooksCalled = true;
 }
 

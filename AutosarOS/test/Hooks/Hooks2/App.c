@@ -86,7 +86,7 @@ extern void ShutdownHook(StatusType error)
 
 extern void PreTaskHook(void)
 {
-  
+
 }
 
 extern void PostTaskHook(void)
@@ -96,7 +96,7 @@ extern void PostTaskHook(void)
 
 extern void ErrorHook(void)
 {
-    
+
 }
 
 ISR(TIMER2_OVF_vect)
