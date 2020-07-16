@@ -149,6 +149,30 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="test\EM\EM4\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM4\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM3\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM3\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
     <None Include="test\IM\IM2\App.c">
       <SubType>compile</SubType>
     </None>
@@ -359,9 +383,14 @@
     <Folder Include="include\Types" />
     <Folder Include="test" />
     <Folder Include="src" />
+    <Folder Include="test\EM\EM1" />
+    <Folder Include="test\EM\EM2" />
+    <Folder Include="test\EM\EM3" />
+    <Folder Include="test\EM\EM4" />
     <Folder Include="test\IM" />
     <Folder Include="test\IM\IM1" />
     <Folder Include="test\IM\IM2" />
+    <Folder Include="test\EM" />
     <Folder Include="test\TM" />
     <Folder Include="test\TM\TM15" />
     <Folder Include="test\TM\TM14" />
