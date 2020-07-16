@@ -117,6 +117,8 @@
             <Value>ASSERT_BUFFER_SIZE=512</Value>
             <Value>STATIC_ASSERT_BUFFER</Value>
             <Value>BREAK_ON_ASSERT</Value>
+            <Value>_EXTERNAL_CONFIG='"test/TM/TM7/AppCfg.h"'</Value>
+            <Value>_EXTERNAL_APP='"test/TM/TM7/App.c"'</Value>
           </ListValues>
         </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.directories.IncludePaths>
