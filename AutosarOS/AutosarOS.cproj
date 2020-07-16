@@ -149,6 +149,18 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="test\Hooks\Hooks2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\Hooks\Hooks2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\Hooks\Hooks1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\Hooks\Hooks1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
     <None Include="test\AM\AM7\App.c">
       <SubType>compile</SubType>
     </None>
@@ -466,11 +478,14 @@
     <Folder Include="test\EM\EM2" />
     <Folder Include="test\EM\EM3" />
     <Folder Include="test\EM\EM4" />
+    <Folder Include="test\Hooks\Hooks1" />
+    <Folder Include="test\Hooks\Hooks2" />
     <Folder Include="test\IM" />
     <Folder Include="test\IM\IM1" />
     <Folder Include="test\IM\IM2" />
     <Folder Include="test\EM" />
     <Folder Include="test\AM" />
+    <Folder Include="test\Hooks" />
     <Folder Include="test\RM" />
     <Folder Include="test\RM\RM5" />
     <Folder Include="test\RM\RM4" />
