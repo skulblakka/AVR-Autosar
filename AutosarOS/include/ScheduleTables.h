@@ -80,7 +80,7 @@ extern StatusType ScheduleTable_StopScheduleTable(ScheduleTableType scheduleTabl
  * @return  E_OK                    No error \n
  *          E_OS_ID                 Invalid schedule table IDs or counters not matching \n
  *          E_OS_NOFUNC             Current schedule table is not started \n
- *          E_OS_STATE              Schedule table to be queues is not stopped
+ *          E_OS_STATE              Schedule table to be queued is not stopped
  */
 extern StatusType ScheduleTable_NextScheduleTable(ScheduleTableType scheduleTableID_from,
         ScheduleTableType scheduleTableID_to);
@@ -113,7 +113,7 @@ extern void ScheduleTable_handleTick(CounterType counter);
 /**
  * @brief   Handle system tick
  *
- * Calls ScheduleTable_handleTick() where counter euqals SYSTEM_COUNTER. This only exists
+ * Calls ScheduleTable_handleTick() where counter equals SYSTEM_COUNTER. This only exists
  * to simplify the function call within the SysTick interrupt.
  */
 extern void ScheduleTable_handleSysTick(void);
