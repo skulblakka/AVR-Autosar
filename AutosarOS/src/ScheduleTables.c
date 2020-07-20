@@ -220,6 +220,12 @@ extern StatusType ScheduleTable_GetScheduleTableStatus(ScheduleTableType schedul
         return E_OS_ID;
     }
 
+    if (OS_EXTENDED && scheduleStatus == NULL) {
+        OS_CALL_ERROR_HOOK();
+
+        return E_OS_PARAM_POINTER;
+    }
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         *scheduleStatus = ScheduleTable_Cfg[scheduleTableID]->currentState;
     }

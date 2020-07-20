@@ -92,7 +92,8 @@ extern StatusType ScheduleTable_NextScheduleTable(ScheduleTableType scheduleTabl
  * @param   scheduleStatus          Reference to status
  *
  * @return  E_OK                    No error \n
- *          E_OS_ID                 Invalid schedule table ID
+ *          E_OS_ID                 Invalid schedule table ID \n
+ *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType ScheduleTable_GetScheduleTableStatus(ScheduleTableType scheduleTableID,
         ScheduleTableStatusRefType scheduleStatus);
