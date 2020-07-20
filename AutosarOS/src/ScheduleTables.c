@@ -183,6 +183,13 @@ extern StatusType ScheduleTable_NextScheduleTable(ScheduleTableType scheduleTabl
         return E_OS_ID;
     }
 
+    if (OS_EXTENDED
+            && (ScheduleTable_Cfg[scheduleTableID_from]->counter != ScheduleTable_Cfg[scheduleTableID_to]->counter)) {
+        OS_CALL_ERROR_HOOK();
+
+        return E_OS_ID;
+    }
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (ScheduleTable_Cfg[scheduleTableID_from]->currentState == SCHEDULETABLE_STOPPED
                 || ScheduleTable_Cfg[scheduleTableID_from]->currentState == SCHEDULETABLE_NEXT) {
@@ -194,7 +201,7 @@ extern StatusType ScheduleTable_NextScheduleTable(ScheduleTableType scheduleTabl
         if (ScheduleTable_Cfg[scheduleTableID_to]->currentState != SCHEDULETABLE_STOPPED) {
             OS_CALL_ERROR_HOOK();
 
-            return E_OS_NOFUNC;
+            return E_OS_STATE;
         }
 
         if (ScheduleTable_Cfg[scheduleTableID_from]->next != INVALID_SCHEDULETABLE) {
@@ -218,6 +225,12 @@ extern StatusType ScheduleTable_GetScheduleTableStatus(ScheduleTableType schedul
         OS_CALL_ERROR_HOOK();
 
         return E_OS_ID;
+    }
+
+    if (OS_EXTENDED && scheduleStatus == NULL) {
+        OS_CALL_ERROR_HOOK();
+
+        return E_OS_PARAM_POINTER;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
@@ -264,8 +277,8 @@ extern void ScheduleTable_handleTick(CounterType counter)
                 if (ScheduleTable_Cfg[i]->finalDelay == 0
                         || ScheduleTable_Cfg[i]->finalDelay == ScheduleTable_Cfg[i]->currentTick -
                         ScheduleTable_Cfg[i]->expiryPointList[expiryPoint - 1].offset) {
-                    if (ScheduleTable_Cfg[i]->cyclic) {
-                        // Schedule table is cyclic => restart it
+                    if (ScheduleTable_Cfg[i]->cyclic && ScheduleTable_Cfg[i]->next == INVALID_SCHEDULETABLE) {
+                        // Schedule table is cyclic and no other schedule table has been queued => restart it
                         ScheduleTable_handleScheduleTableStart(i);
                     } else {
                         /* Stop schedule table */

@@ -72,13 +72,15 @@ extern StatusType ScheduleTable_StopScheduleTable(ScheduleTableType scheduleTabl
  * Queue schedule table to be executed after the current schedule table finishes
  * execution. If a there is already a next schedule table configured it will be replaced.
  *
+ * Both schedule tables must be driven by the same counter.
+ *
  * @param   scheduleTableID_from    ID of current schedule table
  * @param   scheduleTableID_to      ID of schedule table to be queued
  *
  * @return  E_OK                    No error \n
- *          E_OS_ID                 Invalid schedule table IDs \n
+ *          E_OS_ID                 Invalid schedule table IDs or counters not matching \n
  *          E_OS_NOFUNC             Current schedule table is not started \n
- *          E_OS_STATE              Schedule table to be queues is not stopped
+ *          E_OS_STATE              Schedule table to be queued is not stopped
  */
 extern StatusType ScheduleTable_NextScheduleTable(ScheduleTableType scheduleTableID_from,
         ScheduleTableType scheduleTableID_to);
@@ -92,7 +94,8 @@ extern StatusType ScheduleTable_NextScheduleTable(ScheduleTableType scheduleTabl
  * @param   scheduleStatus          Reference to status
  *
  * @return  E_OK                    No error \n
- *          E_OS_ID                 Invalid schedule table ID
+ *          E_OS_ID                 Invalid schedule table ID \n
+ *          E_OS_PARAM_POINTER      Pointer parameter is invalid
  */
 extern StatusType ScheduleTable_GetScheduleTableStatus(ScheduleTableType scheduleTableID,
         ScheduleTableStatusRefType scheduleStatus);
@@ -110,7 +113,7 @@ extern void ScheduleTable_handleTick(CounterType counter);
 /**
  * @brief   Handle system tick
  *
- * Calls ScheduleTable_handleTick() where counter euqals SYSTEM_COUNTER. This only exists
+ * Calls ScheduleTable_handleTick() where counter equals SYSTEM_COUNTER. This only exists
  * to simplify the function call within the SysTick interrupt.
  */
 extern void ScheduleTable_handleSysTick(void);
