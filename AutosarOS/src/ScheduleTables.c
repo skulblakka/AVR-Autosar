@@ -183,6 +183,13 @@ extern StatusType ScheduleTable_NextScheduleTable(ScheduleTableType scheduleTabl
         return E_OS_ID;
     }
 
+    if (OS_EXTENDED
+            && (ScheduleTable_Cfg[scheduleTableID_from]->counter != ScheduleTable_Cfg[scheduleTableID_to]->counter)) {
+        OS_CALL_ERROR_HOOK();
+
+        return E_OS_ID;
+    }
+
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (ScheduleTable_Cfg[scheduleTableID_from]->currentState == SCHEDULETABLE_STOPPED
                 || ScheduleTable_Cfg[scheduleTableID_from]->currentState == SCHEDULETABLE_NEXT) {
