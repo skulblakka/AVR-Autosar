@@ -194,7 +194,7 @@ extern StatusType ScheduleTable_NextScheduleTable(ScheduleTableType scheduleTabl
         if (ScheduleTable_Cfg[scheduleTableID_to]->currentState != SCHEDULETABLE_STOPPED) {
             OS_CALL_ERROR_HOOK();
 
-            return E_OS_NOFUNC;
+            return E_OS_STATE;
         }
 
         if (ScheduleTable_Cfg[scheduleTableID_from]->next != INVALID_SCHEDULETABLE) {
