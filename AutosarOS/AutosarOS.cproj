@@ -149,6 +149,30 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="test\ST\ST3\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\ST\ST3\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\ST\ST2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\ST\ST2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\ST\ST1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\ST\ST1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\CM\CM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\CM\CM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
     <None Include="test\AM\AM8\App.c">
       <SubType>compile</SubType>
     </None>
@@ -499,6 +523,7 @@
     <Folder Include="test\AM\AM6" />
     <Folder Include="test\AM\AM7" />
     <Folder Include="test\AM\AM8" />
+    <Folder Include="test\CM\CM1" />
     <Folder Include="test\EM\EM1" />
     <Folder Include="test\EM\EM2" />
     <Folder Include="test\EM\EM3" />
@@ -512,6 +537,8 @@
     <Folder Include="test\EM" />
     <Folder Include="test\AM" />
     <Folder Include="test\Hooks" />
+    <Folder Include="test\CM" />
+    <Folder Include="test\ST" />
     <Folder Include="test\RM" />
     <Folder Include="test\RM\RM6" />
     <Folder Include="test\RM\RM5" />
@@ -519,6 +546,9 @@
     <Folder Include="test\RM\RM3" />
     <Folder Include="test\RM\RM2" />
     <Folder Include="test\RM\RM1" />
+    <Folder Include="test\ST\ST3" />
+    <Folder Include="test\ST\ST2" />
+    <Folder Include="test\ST\ST1" />
     <Folder Include="test\TM" />
     <Folder Include="test\TM\TM16" />
     <Folder Include="test\TM\TM15" />
