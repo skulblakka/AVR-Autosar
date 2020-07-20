@@ -277,8 +277,8 @@ extern void ScheduleTable_handleTick(CounterType counter)
                 if (ScheduleTable_Cfg[i]->finalDelay == 0
                         || ScheduleTable_Cfg[i]->finalDelay == ScheduleTable_Cfg[i]->currentTick -
                         ScheduleTable_Cfg[i]->expiryPointList[expiryPoint - 1].offset) {
-                    if (ScheduleTable_Cfg[i]->cyclic) {
-                        // Schedule table is cyclic => restart it
+                    if (ScheduleTable_Cfg[i]->cyclic && ScheduleTable_Cfg[i]->next == INVALID_SCHEDULETABLE) {
+                        // Schedule table is cyclic and no other schedule table has been queued => restart it
                         ScheduleTable_handleScheduleTableStart(i);
                     } else {
                         /* Stop schedule table */
