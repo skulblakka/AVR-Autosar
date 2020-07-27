@@ -31,68 +31,68 @@ TASK(Idle)
 
 TASK(Task1)
 {
-    StatusType stat = StartScheduleTableRel(INVALID_SCHEDULETABLE, 1); //2
+    StatusType stat = StartScheduleTableRel(INVALID_SCHEDULETABLE, 1);
     assert(stat == E_OS_ID);
 
-    stat = StartScheduleTableRel(ST1, 0); //3
+    stat = StartScheduleTableRel(ST1, 0);
     assert(stat == E_OS_VALUE);
 
-    stat = StartScheduleTableRel(ST1, Counter_Cfg[Counter1]->maxallowedvalue + 1); //3
+    stat = StartScheduleTableRel(ST1, Counter_Cfg[Counter1]->maxallowedvalue + 1);
     assert(stat == E_OS_VALUE);
 
-    stat = StartScheduleTableRel(ST1, 1); //20
+    stat = StartScheduleTableRel(ST1, 1);
     assert(stat == E_OK);
 
-    stat = StartScheduleTableRel(ST1, 1); //4
+    stat = StartScheduleTableRel(ST1, 1);
     assert(stat == E_OS_STATE);
 
-    stat = StopScheduleTable(INVALID_SCHEDULETABLE); //10
+    stat = StopScheduleTable(INVALID_SCHEDULETABLE);
     assert(stat == E_OS_ID);
 
-    stat = StopScheduleTable(ST1); //9
+    stat = StopScheduleTable(ST1);
     assert(stat == E_OK);
 
-    stat = StopScheduleTable(ST1); //11
+    stat = StopScheduleTable(ST1);
     assert(stat == E_OS_NOFUNC);
 
-    stat = StartScheduleTableAbs(INVALID_SCHEDULETABLE, 1); //6
+    stat = StartScheduleTableAbs(INVALID_SCHEDULETABLE, 1);
     assert(stat == E_OS_ID);
 
-    stat = StartScheduleTableAbs(ST1, Counter_Cfg[Counter1]->maxallowedvalue + 1); //7
+    stat = StartScheduleTableAbs(ST1, Counter_Cfg[Counter1]->maxallowedvalue + 1);
     assert(stat == E_OS_VALUE);
 
-    ScheduleTableStatusType status = SCHEDULETABLE_STOPPED; // 17
+    ScheduleTableStatusType status = SCHEDULETABLE_STOPPED;
     stat = GetScheduleTableStatus(INVALID_SCHEDULETABLE, &status);
     assert(stat == E_OS_ID);
 
-    stat = GetScheduleTableStatus(ST1, NULL); //23
+    stat = GetScheduleTableStatus(ST1, NULL);
     assert(stat == E_OS_PARAM_POINTER);
 
-    stat = GetScheduleTableStatus(ST1, &status); //16
+    stat = GetScheduleTableStatus(ST1, &status);
     assert(stat == E_OK && status == SCHEDULETABLE_STOPPED);
 
-    stat = NextScheduleTable(INVALID_SCHEDULETABLE, INVALID_SCHEDULETABLE); //13
+    stat = NextScheduleTable(INVALID_SCHEDULETABLE, INVALID_SCHEDULETABLE);
     assert(stat == E_OS_ID);
 
-    stat = NextScheduleTable(ST1, INVALID_SCHEDULETABLE); //13
+    stat = NextScheduleTable(ST1, INVALID_SCHEDULETABLE);
     assert(stat == E_OS_ID);
 
-    stat = NextScheduleTable(INVALID_SCHEDULETABLE, ST1); //13
+    stat = NextScheduleTable(INVALID_SCHEDULETABLE, ST1);
     assert(stat == E_OS_ID);
 
-    stat = NextScheduleTable(ST1, ST1); //15
+    stat = NextScheduleTable(ST1, ST1);
     assert(stat == E_OS_NOFUNC);
 
-    stat = StartScheduleTableAbs(ST1, 0); //21
+    stat = StartScheduleTableAbs(ST1, 0);
     assert(stat == E_OK);
 
-    stat = GetScheduleTableStatus(ST1, &status); //16
+    stat = GetScheduleTableStatus(ST1, &status);
     assert(stat == E_OK && status == SCHEDULETABLE_RUNNING);
 
-    stat = NextScheduleTable(ST1, ST1); //14
+    stat = NextScheduleTable(ST1, ST1);
     assert(stat == E_OS_STATE);
 
-    stat = StartScheduleTableAbs(ST1, 0); //8
+    stat = StartScheduleTableAbs(ST1, 0);
     assert(stat == E_OS_STATE);
 
     stat = TerminateTask();
