@@ -367,7 +367,7 @@ extern void OS_ProtectionHookInternal(StatusType error)
             isCat2ISR = 0;
 
             restore_context();
-            asm  volatile("reti");
+            asm volatile("reti");
         } else {
             // Reset tasks priority because we force-released all resources
             TCB_Cfg[currentTask]->curPrio = TCB_Cfg[currentTask]->prio;
