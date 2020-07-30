@@ -273,7 +273,11 @@ TASK(T7)
     stat = CancelAlarm(Alarm3);
     assert(stat == E_OK);
 
-    stat = SetRelAlarm(Alarm8, 6840, 0);
+    stat = SetRelAlarm(Alarm8, 6840, UINT32_MAX);
+    assert(stat == E_OK);
+
+    TickType tick = 0;
+    stat = GetAlarm(Alarm8, &tick);
     assert(stat == E_OK);
 
     WaitEvent(0x02);
@@ -281,6 +285,9 @@ TASK(T7)
     GetEvent(T7, &ev);
     assert(ev == 0x02);
     ClearEvent(0x02);
+
+    stat = CancelAlarm(Alarm8);
+    assert(stat == E_OK);
 
     stat = SetRelAlarm(Alarm3, 3, 0);
     assert(stat == E_OK);
