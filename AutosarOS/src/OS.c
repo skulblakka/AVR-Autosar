@@ -267,6 +267,7 @@ extern void OS_ResumeAllInterrupts(void)
         OS_EnableAllInterrupts();
     }
 }
+
 extern void OS_SuspendAllInterrupts(void)
 {
     OS_SET_ERROR_INFO0(OSServiceId_SuspendAllInterrupts);
@@ -275,6 +276,7 @@ extern void OS_SuspendAllInterrupts(void)
 
     OS_DisableAllInterrupts();
 }
+
 extern void OS_ResumeOSInterrupts(void)
 {
     OS_SET_ERROR_INFO0(OSServiceId_ResumeOSInterrupts);
@@ -286,6 +288,7 @@ extern void OS_ResumeOSInterrupts(void)
         OS_EnableAllInterrupts();
     }
 }
+
 extern void OS_SuspendOSInterrupts(void)
 {
     OS_SET_ERROR_INFO0(OSServiceId_SuspendOSInterrupts);
