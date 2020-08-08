@@ -20,6 +20,10 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#if defined(EXTERNAL_APP)
+#include EXTERNAL_APP
+#else /* defined(EXTERNAL_APP) */
+
 #if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
 #define DELAY_MS(ms)
 #else
@@ -269,7 +273,11 @@ TASK(T7)
     stat = CancelAlarm(Alarm3);
     assert(stat == E_OK);
 
-    stat = SetRelAlarm(Alarm8, 6840, 0);
+    stat = SetRelAlarm(Alarm8, 6840, UINT32_MAX);
+    assert(stat == E_OK);
+
+    TickType tick = 0;
+    stat = GetAlarm(Alarm8, &tick);
     assert(stat == E_OK);
 
     WaitEvent(0x02);
@@ -277,6 +285,9 @@ TASK(T7)
     GetEvent(T7, &ev);
     assert(ev == 0x02);
     ClearEvent(0x02);
+
+    stat = CancelAlarm(Alarm8);
+    assert(stat == E_OK);
 
     stat = SetRelAlarm(Alarm3, 3, 0);
     assert(stat == E_OK);
@@ -634,21 +645,21 @@ extern void StartupHook(void)
 
 #if defined (__AVR_ATmega128__)
     TIMSK |= (1 << OCIE1A);                                     // Enable interrupt on compare match
-#else /* #if defined (__AVR_ATmega128__) */
+#else /* defined (__AVR_ATmega128__) */
     TIMSK1 |= (1 << OCIE1A);                                    // Enable interrupt on compare match
-#endif /* #if defined (__AVR_ATmega128__) */
+#endif /* defined (__AVR_ATmega128__) */
 
     /* Timer 2 */
 #if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
 #if defined (__AVR_ATmega128__)
     TCCR2 = (1 << CS20);                                        // Enable Timer2 with Prescaler 1
-    TIMSK |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
-#else /* #if defined (__AVR_ATmega128__) */
+    TIMSK |= 1 << TOIE2;                                        // Enable Overflow Interrupt (Timer2)
+#else /* defined (__AVR_ATmega128__) */
     TCCR2B = (1 << CS20);                                       // Enable Timer2 with Prescaler 1
     TIMSK2 |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
-#endif /* #if defined (__AVR_ATmega128__) */
+#endif /* defined (__AVR_ATmega128__) */
 #endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
-#else
+#else /* defined (__AVR_ATmega32__) */
 #error Unknown CPU defined!
 #endif /* defined (__AVR_ATmega32__) */
 
@@ -678,12 +689,16 @@ extern void PreTaskHook(void)
 {
     TaskType task;
     GetTaskID(&task);
+    TaskStateType state = SUSPENDED;
+    GetTaskState(task, &state);
 }
 
 extern void PostTaskHook(void)
 {
     TaskType task;
     GetTaskID(&task);
+    TaskStateType state = SUSPENDED;
+    GetTaskState(task, &state);
 }
 
 extern void ErrorHook(void)
@@ -744,3 +759,5 @@ ISR(TIMER2_OVF_vect)
 {
 
 }
+
+#endif /* defined(EXTERNAL_APP) */

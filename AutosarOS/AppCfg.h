@@ -15,12 +15,16 @@
 
 #include "CfgGenMacros.h"
 
+#if defined(EXTERNAL_CONFIG)
+#include EXTERNAL_CONFIG
+#else /* defined(EXTERNAL_CONFIG) */
+
 #define OS_CONFIG_HOOK_STARTUP      true
 #define OS_CONFIG_HOOK_SHUTDOWN     true
-#define OS_CONFIG_HOOK_PRE_TASK     false
-#define OS_CONFIG_HOOK_POST_TASK    false
+#define OS_CONFIG_HOOK_PRE_TASK     true
+#define OS_CONFIG_HOOK_POST_TASK    true
 #define OS_CONFIG_HOOK_ERROR        true
-#define OS_CONFIG_HOOK_PROTECTION   true
+#define OS_CONFIG_HOOK_PROTECTION   false
 
 #define OS_CONFIG_EXTENDED          true
 
@@ -83,16 +87,16 @@ OS_CONFIG_COUNTER_END
 OS_CONFIG_ALARM_CALLBACK(AlarmCb);
 
 OS_CONFIG_ALARM_BEGIN
-    OS_CONFIG_ALARM_DEF(Alarm1,             C3, true,  0x01,    ALARM_ACTION_EVENT,      T7,    1,    1)
-    OS_CONFIG_ALARM_DEF(Alarm2,             C2, true,  0x00,     ALARM_ACTION_TASK,      T7,   30,   60)
-    OS_CONFIG_ALARM_DEF(Alarm3,             C2, false, 0x00,  ALARM_ACTION_COUNTER,      C3,    0,    0)
-    OS_CONFIG_ALARM_DEF(Alarm4,             C2, true,  0x00, ALARM_ACTION_CALLBACK, AlarmCb,    6,   12)
-    OS_CONFIG_ALARM_DEF(Alarm5, SYSTEM_COUNTER, true,  0x00,  ALARM_ACTION_COUNTER,      C4,  570,  570)
-    OS_CONFIG_ALARM_DEF(Alarm6, SYSTEM_COUNTER, true,  0x00,     ALARM_ACTION_TASK,      T7,  285,  570)
-    OS_CONFIG_ALARM_DEF(Alarm7, SYSTEM_COUNTER, true,  0x00, ALARM_ACTION_CALLBACK, AlarmCb, 2568, 5130)
-    OS_CONFIG_ALARM_DEF(Alarm8, SYSTEM_COUNTER, false, 0x02,    ALARM_ACTION_EVENT,      T7,    0,    0)
-    OS_CONFIG_ALARM_DEF(Alarm9,             C1, false, 0x02,     ALARM_ACTION_TASK,      T7,    0,    0)
-    OS_CONFIG_ALARM_DEF(Alarm10,SYSTEM_COUNTER,  true, 0x00,  ALARM_ACTION_COUNTER,      C5,  171,  171)
+    OS_CONFIG_ALARM_DEF(Alarm1,             C3, true,  0b01,    ALARM_ACTION_EVENT,      T7,    1,    1)
+    OS_CONFIG_ALARM_DEF(Alarm2,             C2, true,  0b00,     ALARM_ACTION_TASK,      T7,   30,   60)
+    OS_CONFIG_ALARM_DEF(Alarm3,             C2, false, 0b00,  ALARM_ACTION_COUNTER,      C3,    0,    0)
+    OS_CONFIG_ALARM_DEF(Alarm4,             C2, true,  0b00, ALARM_ACTION_CALLBACK, AlarmCb,    6,   12)
+    OS_CONFIG_ALARM_DEF(Alarm5, SYSTEM_COUNTER, true,  0b00,  ALARM_ACTION_COUNTER,      C4,  570,  570)
+    OS_CONFIG_ALARM_DEF(Alarm6, SYSTEM_COUNTER, true,  0b00,     ALARM_ACTION_TASK,      T7,  285,  570)
+    OS_CONFIG_ALARM_DEF(Alarm7, SYSTEM_COUNTER, true,  0b00, ALARM_ACTION_CALLBACK, AlarmCb, 2568, 5130)
+    OS_CONFIG_ALARM_DEF(Alarm8, SYSTEM_COUNTER, false, 0b10,    ALARM_ACTION_EVENT,      T7,    0,    0)
+    OS_CONFIG_ALARM_DEF(Alarm9,             C1, false, 0b10,     ALARM_ACTION_TASK,      T7,    0,    0)
+    OS_CONFIG_ALARM_DEF(Alarm10,SYSTEM_COUNTER,  true, 0b00,  ALARM_ACTION_COUNTER,      C5,  171,  171)
 OS_CONFIG_ALARM_END
 
 OS_CONFIG_SCHEDULE_TABLE_BEGIN
@@ -215,3 +219,5 @@ OS_CONFIG_SCHEDULE_TABLE_BEGIN
         OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END
     OS_CONFIG_SCHEDULE_TABLE_DEF_END
 OS_CONFIG_SCHEDULE_TABLE_END
+
+#endif /* defined(EXTERNAL_CONFIG) */
