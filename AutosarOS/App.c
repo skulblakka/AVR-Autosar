@@ -177,12 +177,15 @@ TASK(T2)
 
 TASK(T3)
 {
+    EventMaskType ev = 0;
+    GetEvent(T3, &ev);
+    assert(ev == 0x00);
+
     for (uint8_t i = 0; i < 3; i++) {
         PORTB &= ~(1 << 3);   // turn LED on
         DELAY_MS(1000);
 
         WaitEvent(0x01);
-        EventMaskType ev = 0;
         GetEvent(T3, &ev);
         assert(ev == 0x01);
         ClearEvent(0x01);
@@ -200,6 +203,10 @@ TASK(T3)
     TaskStateType state = SUSPENDED;
     GetTaskState(T3, &state);
     assert(state == RUNNING);
+
+    WaitEvent(0x01);
+    GetEvent(T3, &ev);
+    assert(ev == 0x01);
 
     TerminateTask();
 }
