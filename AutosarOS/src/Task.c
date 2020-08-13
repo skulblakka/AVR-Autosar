@@ -83,6 +83,11 @@ extern StatusType Task_ChainTask(TaskType TaskID)
         TCB_Cfg[currentTask]->curNumberOfActivations -= 1;
         assert(TCB_Cfg[currentTask]->curNumberOfActivations >= 0);
         assert(TCB_Cfg[currentTask]->curNumberOfActivations <= TCB_Cfg[currentTask]->numberOfActivations);
+
+#if defined(OS_CONFIG_HOOK_PRE_TASK) && OS_CONFIG_HOOK_PRE_TASK == true
+        PostTaskHook();
+#endif
+
         if (TCB_Cfg[currentTask]->curNumberOfActivations > 0) {
             TCB_Cfg[currentTask]->curState = PRE_READY;
         } else {
