@@ -67,6 +67,12 @@ extern StatusType Alarm_GetAlarm(AlarmType alarmID, TickRefType tick)
         return E_OS_ID;
     }
 
+    if (OS_EXTENDED && tick == NULL) {
+        OS_CALL_ERROR_HOOK();
+
+        return E_OS_PARAM_POINTER;
+    }
+
     TickType currentTick = 0;
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {

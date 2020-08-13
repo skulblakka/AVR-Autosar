@@ -43,7 +43,8 @@ extern StatusType Alarm_GetAlarmBase(AlarmType alarmID, AlarmBaseRefType info);
  *
  * @return  E_OK                    No error \n
  *          E_OS_ID                 alarmID is invalid \n
- *          E_OS_NOFUNC             Alarm is not used
+ *          E_OS_NOFUNC             Alarm is not used \n
+ *          E_OS_PARAM_POINT        Pointer parameter is invalid
  */
 extern StatusType Alarm_GetAlarm(AlarmType alarmID, TickRefType tick);
 
