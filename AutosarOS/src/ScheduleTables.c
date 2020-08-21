@@ -82,7 +82,7 @@ extern StatusType ScheduleTable_StartScheduleTableRel(ScheduleTableType schedule
             sizeof(offset));
 
     if (OS_EXTENDED && scheduleTableID >= INVALID_SCHEDULETABLE) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
@@ -90,14 +90,14 @@ extern StatusType ScheduleTable_StartScheduleTableRel(ScheduleTableType schedule
     if (OS_EXTENDED && (offset == 0
                     || offset > Counter_Cfg[ScheduleTable_Cfg[scheduleTableID]->counter]->maxallowedvalue -
                     ScheduleTable_Cfg[scheduleTableID]->expiryPointList[0].offset)) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_VALUE);
 
         return E_OS_VALUE;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (ScheduleTable_Cfg[scheduleTableID]->currentState != SCHEDULETABLE_STOPPED) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_STATE);
 
             return E_OS_STATE;
         }
@@ -119,13 +119,13 @@ extern StatusType ScheduleTable_StartScheduleTableAbs(ScheduleTableType schedule
             sizeof(start));
 
     if (OS_EXTENDED && scheduleTableID >= INVALID_SCHEDULETABLE) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && start > Counter_Cfg[ScheduleTable_Cfg[scheduleTableID]->counter]->maxallowedvalue) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_VALUE);
 
         return E_OS_VALUE;
     }
@@ -149,14 +149,14 @@ extern StatusType ScheduleTable_StopScheduleTable(ScheduleTableType scheduleTabl
     OS_SET_ERROR_INFO1(OSServiceId_StopScheduleTable, &scheduleTableID, sizeof(scheduleTableID));
 
     if (OS_EXTENDED && scheduleTableID >= INVALID_SCHEDULETABLE) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (ScheduleTable_Cfg[scheduleTableID]->currentState == SCHEDULETABLE_STOPPED) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_NOFUNC);
 
             return E_OS_NOFUNC;
         }
@@ -178,14 +178,14 @@ extern StatusType ScheduleTable_NextScheduleTable(ScheduleTableType scheduleTabl
             &scheduleTableID_to, sizeof(scheduleTableID_to));
 
     if (OS_EXTENDED && (scheduleTableID_from >= INVALID_SCHEDULETABLE || scheduleTableID_to >= INVALID_SCHEDULETABLE)) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED
             && (ScheduleTable_Cfg[scheduleTableID_from]->counter != ScheduleTable_Cfg[scheduleTableID_to]->counter)) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
@@ -193,13 +193,13 @@ extern StatusType ScheduleTable_NextScheduleTable(ScheduleTableType scheduleTabl
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (ScheduleTable_Cfg[scheduleTableID_from]->currentState == SCHEDULETABLE_STOPPED
                 || ScheduleTable_Cfg[scheduleTableID_from]->currentState == SCHEDULETABLE_NEXT) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_NOFUNC);
 
             return E_OS_NOFUNC;
         }
 
         if (ScheduleTable_Cfg[scheduleTableID_to]->currentState != SCHEDULETABLE_STOPPED) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_STATE);
 
             return E_OS_STATE;
         }
@@ -222,13 +222,13 @@ extern StatusType ScheduleTable_GetScheduleTableStatus(ScheduleTableType schedul
             sizeof(scheduleStatus));
 
     if (OS_EXTENDED && scheduleTableID >= INVALID_SCHEDULETABLE) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && scheduleStatus == NULL) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_PARAM_POINTER);
 
         return E_OS_PARAM_POINTER;
     }

@@ -23,14 +23,14 @@ extern StatusType Resource_GetResource(ResourceType ResID)
     OS_SET_ERROR_INFO1(OSServiceId_GetResource, &ResID, sizeof(ResID));
 
     if (OS_EXTENDED && ResID >= RESOURCE_COUNT) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && Res_Cfg[ResID]->assigned) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_ACCESS);
 
             return E_OS_ACCESS;
         }
@@ -38,7 +38,7 @@ extern StatusType Resource_GetResource(ResourceType ResID)
         if (OS_EXTENDED && ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio)
                         || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio))) {
             // Prio of requested resource is lower than static prio of calling task or ISR
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_ACCESS);
 
             return E_OS_ACCESS;
         }
@@ -79,14 +79,14 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID)
     OS_SET_ERROR_INFO1(OSServiceId_ReleaseResource, &ResID, sizeof(ResID));
 
     if (OS_EXTENDED && ResID >= RESOURCE_COUNT) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && !Res_Cfg[ResID]->assigned) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_NOFUNC);
 
             return E_OS_NOFUNC;
         }
@@ -94,7 +94,7 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID)
         if (OS_EXTENDED &&  ((!isCat2ISR && TCB_Cfg[currentTask]->prio > Res_Cfg[ResID]->prio)
                         || (isCat2ISR && isCat2ISR > Res_Cfg[ResID]->prio))) {
             // Prio of requested resource is lower than static prio of calling task or ISR
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_ACCESS);
 
             return E_OS_ACCESS;
         }
@@ -121,7 +121,7 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID)
 
         /* Check if queue has any elements */
         if (OS_EXTENDED && *resPtr == NULL) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_NOFUNC);
 
             return E_OS_NOFUNC;
         }
@@ -136,7 +136,7 @@ extern StatusType Resource_ReleaseResource(ResourceType ResID)
         }
 
         if (OS_EXTENDED && *resPtr != Res_Cfg[ResID]) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_NOFUNC);
 
             return E_OS_NOFUNC;
         }

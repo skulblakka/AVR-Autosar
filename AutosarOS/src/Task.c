@@ -23,14 +23,14 @@ extern StatusType Task_ActivateTask(TaskType TaskID)
     OS_SET_ERROR_INFO1(OSServiceId_ActivateTask, &TaskID, sizeof(TaskID));
 
     if (OS_EXTENDED && TaskID >= INVALID_TASK) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (TCB_Cfg[TaskID]->curNumberOfActivations + 1 > TCB_Cfg[TaskID]->numberOfActivations) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_LIMIT);
 
             return E_OS_LIMIT;
         }
@@ -52,27 +52,27 @@ extern StatusType Task_ChainTask(TaskType TaskID)
     OS_SET_ERROR_INFO1(OSServiceId_ChainTask, &TaskID, sizeof(TaskID));
 
     if (OS_EXTENDED && isISR) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_CALLLEVEL);
 
         return E_OS_CALLLEVEL;
     }
 
     if (OS_EXTENDED && TaskID >= INVALID_TASK) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_RESOURCE);
 
             return E_OS_RESOURCE;
         }
 
         /* Handle multiple activations of chained task */
         if (TCB_Cfg[TaskID]->curNumberOfActivations + 1 > TCB_Cfg[TaskID]->numberOfActivations && TaskID != currentTask) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_LIMIT);
 
             return E_OS_LIMIT;
         }
@@ -113,14 +113,14 @@ extern StatusType Task_TerminateTask(void)
     OS_SET_ERROR_INFO0(OSServiceId_TerminateTask);
 
     if (OS_EXTENDED && isISR) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_CALLLEVEL);
 
         return E_OS_CALLLEVEL;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_RESOURCE);
 
             return E_OS_RESOURCE;
         }
@@ -156,7 +156,7 @@ extern StatusType Task_Schedule(void)
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && isISR) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_CALLLEVEL);
 
             return E_OS_CALLLEVEL;
         }
@@ -166,7 +166,7 @@ extern StatusType Task_Schedule(void)
         }
 
         if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_RESOURCE);
 
             return E_OS_RESOURCE;
         }
@@ -198,13 +198,13 @@ extern StatusType Task_GetTaskState(TaskType TaskID, TaskStateRefType State)
     OS_SET_ERROR_INFO2(OSServiceId_GetTaskState, &TaskID, sizeof(TaskID), &State, sizeof(State));
 
     if (OS_EXTENDED && TaskID >= INVALID_TASK) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && State == NULL) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_PARAM_POINTER);
 
         return E_OS_PARAM_POINTER;
     }
