@@ -708,7 +708,7 @@ extern void PostTaskHook(void)
     GetTaskState(task, &state);
 }
 
-extern void ErrorHook(void)
+extern void ErrorHook(StatusType error)
 {
     //OSServiceIdType id = OSErrorGetServiceId();
     //AlarmType alarm = OSError_SetRelAlarm_AlarmID();
