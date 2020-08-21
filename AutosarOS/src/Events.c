@@ -26,20 +26,20 @@ extern StatusType Events_SetEvent(TaskType TaskID, EventMaskType events)
     bool taskChanged = false;
 
     if (OS_EXTENDED && TaskID >= INVALID_TASK) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && TCB_Cfg[TaskID]->taskType != EXTENDED) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ACCESS);
 
         return E_OS_ACCESS;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && TCB_Cfg[TaskID]->curState == SUSPENDED) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_STATE);
 
             return E_OS_STATE;
         }
@@ -69,14 +69,14 @@ extern StatusType Events_ClearEvent(EventMaskType events)
     OS_SET_ERROR_INFO1(OSServiceId_ClearEvent, &events, sizeof(events));
 
     if (OS_EXTENDED && isISR) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_CALLLEVEL);
 
         return E_OS_CALLLEVEL;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && TCB_Cfg[currentTask]->taskType != EXTENDED) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_ACCESS);
 
             return E_OS_ACCESS;
         }
@@ -93,26 +93,26 @@ extern StatusType Events_GetEvent(TaskType TaskID, EventMaskRefType events)
     OS_SET_ERROR_INFO2(OSServiceId_GetEvent, &TaskID, sizeof(TaskID), &events, sizeof(events));
 
     if (TaskID >= INVALID_TASK) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && events == NULL) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_PARAM_POINTER);
 
         return E_OS_PARAM_POINTER;
     }
 
     if (OS_EXTENDED && TCB_Cfg[TaskID]->taskType != EXTENDED) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ACCESS);
 
         return E_OS_ACCESS;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && TCB_Cfg[TaskID]->curState == SUSPENDED) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_STATE);
 
             return E_OS_STATE;
         }
@@ -129,20 +129,20 @@ extern StatusType Events_WaitEvent(EventMaskType events)
     OS_SET_ERROR_INFO1(OSServiceId_WaitEvent, &events, sizeof(events));
 
     if (OS_EXTENDED && isISR) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_CALLLEVEL);
 
         return E_OS_CALLLEVEL;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (OS_EXTENDED && TCB_Cfg[currentTask]->taskType != EXTENDED) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_ACCESS);
 
             return E_OS_ACCESS;
         }
 
         if (OS_EXTENDED && TCB_Cfg[currentTask]->resourceQueue != NULL) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_RESOURCE);
 
             return E_OS_RESOURCE;
         }

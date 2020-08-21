@@ -39,13 +39,13 @@ extern StatusType Alarm_GetAlarmBase(AlarmType alarmID, AlarmBaseRefType info)
     OS_SET_ERROR_INFO2(OSServiceId_GetAlarmBase, &alarmID, sizeof(alarmID), &info, sizeof(info));
 
     if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && info == NULL) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_PARAM_POINTER);
 
         return E_OS_PARAM_POINTER;
     }
@@ -62,13 +62,13 @@ extern StatusType Alarm_GetAlarm(AlarmType alarmID, TickRefType tick)
     OS_SET_ERROR_INFO2(OSServiceId_GetAlarm, &alarmID, sizeof(alarmID), &tick, sizeof(tick));
 
     if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && tick == NULL) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_PARAM_POINTER);
 
         return E_OS_PARAM_POINTER;
     }
@@ -77,7 +77,7 @@ extern StatusType Alarm_GetAlarm(AlarmType alarmID, TickRefType tick)
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (!Alarm_Cfg[alarmID]->running) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_NOFUNC);
 
             return E_OS_NOFUNC;
         }
@@ -106,13 +106,13 @@ extern StatusType Alarm_SetRelAlarm(AlarmType alarmID, TickType increment, TickT
             sizeof(cycle));
 
     if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (increment == 0 || increment > Alarm_Cfg[alarmID]->alarmBase->maxallowedvalue) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_VALUE);
 
         return E_OS_VALUE;
     }
@@ -142,14 +142,14 @@ extern StatusType Alarm_SetAbsAlarm(AlarmType alarmID, TickType start, TickType 
             sizeof(cycle));
 
     if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && start > Alarm_Cfg[alarmID]->alarmBase->maxallowedvalue) {
         // Requested increment outside of allowed range
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_VALUE);
 
         return E_OS_VALUE;
     }
@@ -157,14 +157,14 @@ extern StatusType Alarm_SetAbsAlarm(AlarmType alarmID, TickType start, TickType 
     if (OS_EXTENDED && (cycle != 0 && (cycle < Alarm_Cfg[alarmID]->alarmBase->mincycle
                             || cycle > Alarm_Cfg[alarmID]->alarmBase->maxallowedvalue))) {
         // Requested cycle outside of allowed range
-        OS_CALL_ERROR_HOOK()
+        OS_CALL_ERROR_HOOK(E_OS_VALUE)
 
         return E_OS_VALUE;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (Alarm_Cfg[alarmID]->running) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_STATE);
 
             return E_OS_STATE;
         }
@@ -186,14 +186,14 @@ extern StatusType Alarm_CancelAlarm(AlarmType alarmID)
     OS_SET_ERROR_INFO1(OSServiceId_GetAlarm, &alarmID, sizeof(alarmID));
 
     if (OS_EXTENDED && alarmID >= INVALID_ALARM) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         if (!Alarm_Cfg[alarmID]->running) {
-            OS_CALL_ERROR_HOOK();
+            OS_CALL_ERROR_HOOK(E_OS_NOFUNC);
 
             return E_OS_NOFUNC;
         }

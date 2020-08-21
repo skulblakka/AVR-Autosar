@@ -74,10 +74,10 @@ struct errorInfo_s {
 };
 
 #if defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true && !defined(__DOXYGEN__)
-#define OS_CALL_ERROR_HOOK()                                ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
+#define OS_CALL_ERROR_HOOK(error)                           ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { \
                                                                 if (!blockErrorHook) { \
                                                                     blockErrorHook = true; \
-                                                                    ErrorHook(); \
+                                                                    ErrorHook(error); \
                                                                     blockErrorHook = false; \
                                                                 } \
                                                             }
@@ -87,8 +87,10 @@ struct errorInfo_s {
  *
  * Call the ErrorHook() if it is configured. Also block recursive calls of the hook
  * and disable interrupts if necessary.
+ * 
+ * @param   error       StatusType passed to the ErrorHook()
  */
-#define OS_CALL_ERROR_HOOK()
+#define OS_CALL_ERROR_HOOK(error)
 #endif /* defined(OS_CONFIG_HOOK_ERROR) && OS_CONFIG_HOOK_ERROR == true && !defined(__DOXYGEN__) */
 
 #if defined(OS_CONFIG_MAX_ERROR_PARAM) && OS_CONFIG_MAX_ERROR_PARAM >= 0 && !defined(__DOXYGEN__)

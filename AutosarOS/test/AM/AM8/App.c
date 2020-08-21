@@ -33,7 +33,7 @@ TASK(Task1)
 {
     StatusType stat = SetRelAlarm(Alarm1, 0, 1);
     assert(stat == E_OS_VALUE);
-    
+
     stat = Alarm_GetAlarmBase(Alarm1, NULL);
     assert(stat == E_OS_PARAM_POINTER);
 
@@ -104,7 +104,7 @@ extern void PostTaskHook(void)
     GetTaskState(task, &state);
 }
 
-extern void ErrorHook(void)
+extern void ErrorHook(StatusType error)
 {
 
 }

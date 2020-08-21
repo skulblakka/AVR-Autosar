@@ -23,13 +23,13 @@ extern StatusType Counter_IncrementCounter(CounterType counterID)
     OS_SET_ERROR_INFO1(OSServiceId_IncrementCounter, &counterID, sizeof(counterID));
 
     if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && Counter_Cfg[counterID]->type == HARDWARE) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
@@ -53,13 +53,13 @@ extern StatusType Counter_GetCounterValue(CounterType counterID, TickRefType val
     OS_SET_ERROR_INFO2(OSServiceId_GetCounterValue, &counterID, sizeof(counterID), &value, sizeof(value));
 
     if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && value == NULL) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_PARAM_POINTER);
 
         return E_OS_PARAM_POINTER;
     }
@@ -81,19 +81,19 @@ extern StatusType Counter_GetElapsedValue(CounterType counterID, TickRefType val
             sizeof(elapsedValue));
 
     if (OS_EXTENDED && counterID >= INVALID_COUNTER) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_ID);
 
         return E_OS_ID;
     }
 
     if (OS_EXTENDED && (value == NULL || elapsedValue == NULL)) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_PARAM_POINTER);
 
         return E_OS_PARAM_POINTER;
     }
 
     if (OS_EXTENDED && *value > Counter_Cfg[counterID]->maxallowedvalue) {
-        OS_CALL_ERROR_HOOK();
+        OS_CALL_ERROR_HOOK(E_OS_VALUE);
 
         return E_OS_VALUE;
     }

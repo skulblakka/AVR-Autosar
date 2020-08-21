@@ -94,7 +94,7 @@ extern void PostTaskHook(void)
 
 }
 
-extern void ErrorHook(void)
+extern void ErrorHook(StatusType error)
 {
 
 }
