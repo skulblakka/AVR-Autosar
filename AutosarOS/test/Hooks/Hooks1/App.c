@@ -188,7 +188,7 @@ extern void PostTaskHook(void)
     count += 1;
 }
 
-extern void ErrorHook(void)
+extern void ErrorHook(StatusType error)
 {
     errorHookCalled = true;
 }

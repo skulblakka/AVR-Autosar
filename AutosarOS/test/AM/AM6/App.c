@@ -136,7 +136,7 @@ extern void PostTaskHook(void)
     GetTaskState(task, &state);
 }
 
-extern void ErrorHook(void)
+extern void ErrorHook(StatusType error)
 {
 
 }
