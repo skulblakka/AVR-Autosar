@@ -214,8 +214,10 @@ extern void PostTaskHook(void);
  * This hook function is called when a system service return StatusType not equal E_OK.
  *
  * @warning This function is executed with interrupts disabled and must not activate them!
+ * 
+ * @param   error           Error that caused the ErrorHook to be called.
  */
-extern void ErrorHook(void);
+extern void ErrorHook(StatusType error);
 #endif
 
 #if (defined(OS_CONFIG_HOOK_PROTECTION) && OS_CONFIG_HOOK_PROTECTION == true) || defined(__DOXYGEN__)
