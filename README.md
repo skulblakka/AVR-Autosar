@@ -1,7 +1,7 @@
 # AVR-AUTOSAR
 
 This project contains an real-time operating system for AVR microcontrollers
-based on the OSEK/VDX OS and AUTOSAR OS 4.2 standards.
+based on the OSEK/VDX OS and AUTOSAR OS 4.4 standards.
 
 The project was created with the Atmel Studio 7 and the current AVR8-GCC-Toolchain
 on Windows.
