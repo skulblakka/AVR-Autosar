@@ -36,7 +36,7 @@ The operating system was tested on ATmega32, ATmega128 and ATmega1284. Other mic
 
 ## Known limitations
 
-* The system does not used ready queues for tasks. If multiple tasks with the
+* The system does not use ready queues for tasks. If multiple tasks with the
   same priority get activated they will be selected based on their order in the
   configuration not on the time of activation.
 * The system does not support hardware-based counters (instead a timer that
