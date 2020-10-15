@@ -5,7 +5,7 @@
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
     <ProjectGuid>dce6c7e3-ee26-4d79-826b-08594b9ad897</ProjectGuid>
-    <avrdevice>ATmega32</avrdevice>
+    <avrdevice>ATmega1284</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
     <Language>C</Language>
@@ -16,7 +16,7 @@
     <Name>AutosarOS</Name>
     <RootNamespace>AutosarOS</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
-    <KeepTimersRunning>true</KeepTimersRunning>
+    <KeepTimersRunning>false</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
     <ProgFlashFromRam>true</ProgFlashFromRam>
@@ -30,23 +30,23 @@
     <EraseKey />
     <AsfFrameworkConfig>
       <framework-data xmlns="">
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.46.0" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.46.0" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
     <avrtoolserialnumber>J41800112081</avrtoolserialnumber>
-    <avrdeviceexpectedsignature>0x1E9502</avrdeviceexpectedsignature>
+    <avrdeviceexpectedsignature>0x1E9706</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
         <InterfaceProperties>
-          <JtagDbgClock>3500000</JtagDbgClock>
+          <JtagDbgClock>3686400</JtagDbgClock>
         </InterfaceProperties>
         <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
@@ -55,89 +55,517 @@
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>JTAG</avrtoolinterface>
-    <avrtoolinterfaceclock>3500000</avrtoolinterfaceclock>
+    <avrtoolinterfaceclock>3686400</avrtoolinterfaceclock>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
       <AvrGcc>
-  <avrgcc.common.Device>-mmcu=atmega32 -B "%24(PackRepoDir)\Atmel\ATmega_DFP\1.3.300\gcc\dev\atmega32"</avrgcc.common.Device>
-  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
-  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
-  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
-  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
-  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
-  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
-  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
-  <avrgcc.compiler.symbols.DefSymbols>
-    <ListValues>
-      <Value>NDEBUG</Value>
-    </ListValues>
-  </avrgcc.compiler.symbols.DefSymbols>
-  <avrgcc.compiler.directories.IncludePaths>
-    <ListValues>
-      <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\1.3.300\include</Value>
-    </ListValues>
-  </avrgcc.compiler.directories.IncludePaths>
-  <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
-  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
-  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
-  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
-  <avrgcc.linker.libraries.Libraries>
-    <ListValues>
-      <Value>libm</Value>
-    </ListValues>
-  </avrgcc.linker.libraries.Libraries>
-  <avrgcc.assembler.general.IncludePaths>
-    <ListValues>
-      <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\1.3.300\include</Value>
-    </ListValues>
-  </avrgcc.assembler.general.IncludePaths>
-</AvrGcc>
+        <avrgcc.common.Device>-mmcu=atmega1284 -B "%24(PackRepoDir)\Atmel\ATmega_DFP\1.4.351\gcc\dev\atmega1284"</avrgcc.common.Device>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>F_CPU=14745600UL</Value>
+            <Value>NDEBUG</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>../include</Value>
+            <Value>..</Value>
+            <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\1.4.351\include</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.compiler.miscellaneous.DoNotDeleteTemporaryFiles>True</avrgcc.compiler.miscellaneous.DoNotDeleteTemporaryFiles>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+        <avrgcc.assembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\1.4.351\include</Value>
+          </ListValues>
+        </avrgcc.assembler.general.IncludePaths>
+      </AvrGcc>
     </ToolchainSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
       <AvrGcc>
-  <avrgcc.common.Device>-mmcu=atmega32 -B "%24(PackRepoDir)\Atmel\ATmega_DFP\1.3.300\gcc\dev\atmega32"</avrgcc.common.Device>
-  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
-  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
-  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
-  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
-  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
-  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
-  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
-  <avrgcc.compiler.symbols.DefSymbols>
-    <ListValues>
-      <Value>DEBUG</Value>
-    </ListValues>
-  </avrgcc.compiler.symbols.DefSymbols>
-  <avrgcc.compiler.directories.IncludePaths>
-    <ListValues>
-      <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\1.3.300\include</Value>
-    </ListValues>
-  </avrgcc.compiler.directories.IncludePaths>
-  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
-  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
-  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
-  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
-  <avrgcc.linker.libraries.Libraries>
-    <ListValues>
-      <Value>libm</Value>
-    </ListValues>
-  </avrgcc.linker.libraries.Libraries>
-  <avrgcc.assembler.general.IncludePaths>
-    <ListValues>
-      <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\1.3.300\include</Value>
-    </ListValues>
-  </avrgcc.assembler.general.IncludePaths>
-  <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
-</AvrGcc>
+        <avrgcc.common.Device>-mmcu=atmega1284 -B "%24(PackRepoDir)\Atmel\ATmega_DFP\1.4.351\gcc\dev\atmega1284"</avrgcc.common.Device>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>F_CPU=14745600UL</Value>
+            <Value>DEBUG</Value>
+            <Value>ASSERT_BUFFER_SIZE=512</Value>
+            <Value>STATIC_ASSERT_BUFFER</Value>
+            <Value>BREAK_ON_ASSERT</Value>
+            <Value>_EXTERNAL_CONFIG='"test/TM/TM7/AppCfg.h"'</Value>
+            <Value>_EXTERNAL_APP='"test/TM/TM7/App.c"'</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>../include</Value>
+            <Value>..</Value>
+            <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\1.4.351\include</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize debugging experience (-Og)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.optimization.DebugLevel>Maximum (-g3)</avrgcc.compiler.optimization.DebugLevel>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.compiler.miscellaneous.DoNotDeleteTemporaryFiles>True</avrgcc.compiler.miscellaneous.DoNotDeleteTemporaryFiles>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+        <avrgcc.assembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\1.4.351\include</Value>
+          </ListValues>
+        </avrgcc.assembler.general.IncludePaths>
+        <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+      </AvrGcc>
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="test\ST\ST3\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\ST\ST3\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\ST\ST2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\ST\ST2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\ST\ST1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\ST\ST1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\CM\CM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\CM\CM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM8\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM8\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM6\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM6\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM5\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM5\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM16\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM16\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\Hooks\Hooks2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\Hooks\Hooks2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\Hooks\Hooks1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\Hooks\Hooks1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM7\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM7\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM6\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM6\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM5\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM5\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM4\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM4\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM3\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM3\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\AM\AM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM5\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM5\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM4\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM4\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM3\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM3\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\RM\RM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM4\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM4\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM3\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM3\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\EM\EM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\IM\IM2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\IM\IM2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\IM\IM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\IM\IM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM15\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM15\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM14\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM14\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM13\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM13\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM12\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM12\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM11\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM11\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM10\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM10\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM9\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM9\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM8\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM8\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM7\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM7\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM6\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM6\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM5\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM5\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM4\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM4\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM3\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM3\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM2\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM2\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM1\App.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test\TM\TM1\AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="AppCfg.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="App.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Alarm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\assert.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\CfgGenMacros.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\context.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Counter.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Events.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\OS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\OS_API.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Resource.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\ScheduleTables.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Task.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\OCB.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types\CounterTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types\AlarmTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types\ErrorTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types\EventTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types\ResourceTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types\ScheduleTableTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\Types\TaskTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Alarm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\assert.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\context.S">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Counter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Events.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\OS.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\OCB.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\OS_asm.S">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Resource.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ScheduleTables.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Task.c">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="include" />
+    <Folder Include="include\Types" />
+    <Folder Include="test" />
+    <Folder Include="src" />
+    <Folder Include="test\AM\AM1" />
+    <Folder Include="test\AM\AM2" />
+    <Folder Include="test\AM\AM3" />
+    <Folder Include="test\AM\AM4" />
+    <Folder Include="test\AM\AM5" />
+    <Folder Include="test\AM\AM6" />
+    <Folder Include="test\AM\AM7" />
+    <Folder Include="test\AM\AM8" />
+    <Folder Include="test\CM\CM1" />
+    <Folder Include="test\EM\EM1" />
+    <Folder Include="test\EM\EM2" />
+    <Folder Include="test\EM\EM3" />
+    <Folder Include="test\EM\EM4" />
+    <Folder Include="test\EM\EM5" />
+    <Folder Include="test\Hooks\Hooks1" />
+    <Folder Include="test\Hooks\Hooks2" />
+    <Folder Include="test\IM" />
+    <Folder Include="test\IM\IM1" />
+    <Folder Include="test\IM\IM2" />
+    <Folder Include="test\EM" />
+    <Folder Include="test\AM" />
+    <Folder Include="test\Hooks" />
+    <Folder Include="test\CM" />
+    <Folder Include="test\ST" />
+    <Folder Include="test\RM" />
+    <Folder Include="test\RM\RM6" />
+    <Folder Include="test\RM\RM5" />
+    <Folder Include="test\RM\RM4" />
+    <Folder Include="test\RM\RM3" />
+    <Folder Include="test\RM\RM2" />
+    <Folder Include="test\RM\RM1" />
+    <Folder Include="test\ST\ST3" />
+    <Folder Include="test\ST\ST2" />
+    <Folder Include="test\ST\ST1" />
+    <Folder Include="test\TM" />
+    <Folder Include="test\TM\TM16" />
+    <Folder Include="test\TM\TM15" />
+    <Folder Include="test\TM\TM14" />
+    <Folder Include="test\TM\TM13" />
+    <Folder Include="test\TM\TM12" />
+    <Folder Include="test\TM\TM11" />
+    <Folder Include="test\TM\TM10" />
+    <Folder Include="test\TM\TM9" />
+    <Folder Include="test\TM\TM8" />
+    <Folder Include="test\TM\TM7" />
+    <Folder Include="test\TM\TM6" />
+    <Folder Include="test\TM\TM5" />
+    <Folder Include="test\TM\TM4" />
+    <Folder Include="test\TM\TM3" />
+    <Folder Include="test\TM\TM2" />
+    <Folder Include="test\TM\TM1\" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

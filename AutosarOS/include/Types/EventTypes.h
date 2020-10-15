@@ -1,9 +1,9 @@
 /**
  * @file
  *
- * @brief       Main loop (Program entry point)
+ * @brief       Types used for events
  *
- * @date        2019-09-02
+ * @date        2020-05-28
  * @author      Pascal Romahn
  * @copyright   This program is free software: you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -11,12 +11,20 @@
  *              (at your option) any later version.
  */
 
-#include "OS.h"
 
+#ifndef EVENTTYPES_H_
+#define EVENTTYPES_H_
 
-int main(void)
-{
-    OS_StartOS(OSDEFAULTAPPMODE);
+/**
+ * @brief   Data type of the event mask
+ */
+typedef uint8_t EventMaskType;
 
-    while (1);
-}
+/**
+ * @brief   Reference to an event mask
+ *
+ * Reference an #EventMaskType
+ */
+typedef EventMaskType* EventMaskRefType;
+
+#endif /* EVENTTYPES_H_ */
