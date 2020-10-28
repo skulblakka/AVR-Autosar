@@ -24,11 +24,11 @@
 #include EXTERNAL_APP
 #else /* defined(EXTERNAL_APP) */
 
-#if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
+#if defined(OS_CONFIG_SIM) && OS_CONFIG_SIM == true
 #define DELAY_MS(ms)
 #else
 #define DELAY_MS(ms)    _delay_ms(ms)
-#endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
+#endif /* defined(OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
 
 TASK(Idle)
 {
@@ -634,7 +634,7 @@ extern void StartupHook(void)
     DDRD  = 0x00;   // PD as input
     PORTD = 0xFF;   // enable PU on PD
 
-#if defined (__AVR_ATmega32__)
+#if defined(__AVR_ATmega32__)
     GICR  = 1 << INT0 | 1 << INT1;                              // Enable INT0 and INT1
     MCUCR = 1 << ISC01 | 0 << ISC00 | 1 << ISC11 | 0 << ISC10;  // Trigger INT0 and INT1 on falling edge
 #elif defined(__AVR_ATmega128__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega2560__)
@@ -650,25 +650,25 @@ extern void StartupHook(void)
     TCCR1B |= (1 << WGM12);                                     // Enable CTC mode
     TCCR1B |= (1 << CS12) | (1 << CS10);                        // Set prescaler to 1024
 
-#if defined (__AVR_ATmega128__)
+#if defined(__AVR_ATmega128__)
     TIMSK |= (1 << OCIE1A);                                     // Enable interrupt on compare match
-#else /* defined (__AVR_ATmega128__) */
+#else /* defined(__AVR_ATmega128__) */
     TIMSK1 |= (1 << OCIE1A);                                    // Enable interrupt on compare match
-#endif /* defined (__AVR_ATmega128__) */
+#endif /* defined(__AVR_ATmega128__) */
 
     /* Timer 2 */
-#if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
-#if defined (__AVR_ATmega128__)
+#if defined(OS_CONFIG_SIM) && OS_CONFIG_SIM == true
+#if defined(__AVR_ATmega128__)
     TCCR2 = (1 << CS20);                                        // Enable Timer2 with Prescaler 1
     TIMSK |= 1 << TOIE2;                                        // Enable Overflow Interrupt (Timer2)
-#else /* defined (__AVR_ATmega128__) */
+#else /* defined(__AVR_ATmega128__) */
     TCCR2B = (1 << CS20);                                       // Enable Timer2 with Prescaler 1
     TIMSK2 |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
-#endif /* defined (__AVR_ATmega128__) */
-#endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
-#else /* defined (__AVR_ATmega32__) */
+#endif /* defined(__AVR_ATmega128__) */
+#endif /* defined(OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
+#else /* defined(__AVR_ATmega32__) */
 #error Unknown CPU defined!
-#endif /* defined (__AVR_ATmega32__) */
+#endif /* defined(__AVR_ATmega32__) */
 
     uint8_t t = 0;
 

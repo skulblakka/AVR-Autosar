@@ -73,7 +73,7 @@ pTaskFxn ptrCurrentFxnAddr;
  */
 static void OS_StartSysTimer()
 {
-#if defined (__AVR_ATmega32__) || defined (__AVR_ATmega128__)
+#if defined(__AVR_ATmega32__) || defined(__AVR_ATmega128__)
     TCCR0 = 1 << CS02 | 1 << CS00;      // Enable Timer0 with Prescaler 1024
     TIMSK |= 1 << TOIE0;                // Enable Overflow Interrupt (Timer0)
 #elif defined(__AVR_ATmega1284__) || defined(__AVR_ATmega2560__)
@@ -144,7 +144,7 @@ extern void __attribute__((naked)) OS_ScheduleC(void)
 {
     save_context();
 
-#if defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1
+#if defined(OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1
     /* Calculate stack usage */
     if (currentTask != INVALID_TASK) {
         TCB_Cfg[currentTask]->curStackUse = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize
@@ -165,7 +165,7 @@ extern void __attribute__((naked)) OS_ScheduleC(void)
             OS_ProtectionHookInternal(E_OS_STACKFAULT);
         }
     }
-#endif /* defined (OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1 */
+#endif /* defined(OS_CONFIG_STACK_MONITORING) && OS_CONFIG_STACK_MONITORING >= 1 */
 
     assert(!isISR);
 
