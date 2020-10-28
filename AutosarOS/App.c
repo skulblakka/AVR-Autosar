@@ -637,7 +637,7 @@ extern void StartupHook(void)
 #if defined (__AVR_ATmega32__)
     GICR  = 1 << INT0 | 1 << INT1;                              // Enable INT0 and INT1
     MCUCR = 1 << ISC01 | 0 << ISC00 | 1 << ISC11 | 0 << ISC10;  // Trigger INT0 and INT1 on falling edge
-#elif defined (__AVR_ATmega128__) || defined (__AVR_ATmega1284__)
+#elif defined(__AVR_ATmega128__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega2560__)
     EICRA = 1 << ISC11 | 0 << ISC10 | 1 << ISC01 | 0 << ISC00;  // Trigger INT0 and INT1 on falling edge
     EIMSK |= 1 << INT1 | 1 << INT0;                             // Enable INT0 and INT1
 

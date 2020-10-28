@@ -15,7 +15,11 @@
 #include <avr/io.h>
 
 .section .bss
-retAddr1:   .skip 2
+#ifdef defined(__AVR_3_BYTE_PC__)
+retAddr:    .skip 3
+#else /* defined(__AVR_3_BYTE_PC__) */
+retAddr:    .skip 2
+#endif /* defined(__AVR_3_BYTE_PC__) */
 tempReg:    .skip 1
 
 .global needScheduling
@@ -30,9 +34,13 @@ save_context:
 
     /* Get return address */
     pop     r0
-    sts     retAddr1, r0
+    sts     retAddr, r0
     pop     r0
-    sts     retAddr1 + 1, r0
+    sts     retAddr + 1, r0
+#ifdef defined(__AVR_3_BYTE_PC__)
+    pop     r0
+    sts     retAddr + 2, r0
+#endif /* defined(__AVR_3_BYTE_PC__) */
 
     lds r0, tempReg                     // Restore r0
 
@@ -80,9 +88,13 @@ save_context:
     st      x+, r0
 
     /* Push return address */
-    lds     r0, retAddr1 + 1
+#ifdef defined(__AVR_3_BYTE_PC__)
+    lds     r0, retAddr + 2
     push    r0
-    lds     r0, retAddr1
+#endif /* defined(__AVR_3_BYTE_PC__) */
+    lds     r0, retAddr + 1
+    push    r0
+    lds     r0, retAddr
     push    r0
 
     ret
@@ -92,9 +104,13 @@ save_context:
 restore_context:
     /* Get return address */
     pop     r0
-    sts     retAddr1, r0
+    sts     retAddr, r0
     pop     r0
-    sts     retAddr1 + 1, r0
+    sts     retAddr + 1, r0
+#ifdef defined(__AVR_3_BYTE_PC__)
+    pop     r0
+    sts     retAddr + 2, r0
+#endif /* defined(__AVR_3_BYTE_PC__) */
 
     lds     r26, ptrCurrentStack        // Load address containing SP
     lds     r27, ptrCurrentStack + 1
@@ -141,9 +157,13 @@ restore_context:
     sts     tempReg, r0                 // Save r0
 
     /* Push return address */
-    lds     r0, retAddr1 + 1
+#ifdef defined(__AVR_3_BYTE_PC__)
+    lds     r0, retAddr + 2
     push    r0
-    lds     r0, retAddr1
+#endif /* defined(__AVR_3_BYTE_PC__) */
+    lds     r0, retAddr + 1
+    push    r0
+    lds     r0, retAddr
     push    r0
 
     lds     r0, tempReg                 // Restore r0
@@ -154,8 +174,11 @@ restore_context:
 .global init_context
 init_context:
     /* Get return address */
+    pop     r21
     pop     r22
+#ifdef defined(__AVR_3_BYTE_PC__)
     pop     r23
+#endif /* defined(__AVR_3_BYTE_PC__) */
 
     /* Switch to new task stack */
     lds     r26, ptrCurrentStack        // Load new SP address
@@ -165,17 +188,23 @@ init_context:
     out     _SFR_IO_ADDR(SPL), r24      // Change to new SP
     out     _SFR_IO_ADDR(SPH), r25
 
+    clr     r1                          // Make sure R1 is cleared
+
     /* Place return address to taskFxn */
-    lds     r26, ptrCurrentFxnAddr      // Load address of taskFxn
-    lds     r27, ptrCurrentFxnAddr + 1
-    push    r26                         // Push "return" to taskFxn
-    push    r27
+    lds     r24, ptrCurrentFxnAddr      // Load address of taskFxn
+    lds     r25, ptrCurrentFxnAddr + 1
+    push    r24                         // Push "return" to taskFxn
+    push    r25
+#ifdef defined(__AVR_3_BYTE_PC__)
+	push    r1                          // Push extra byte
+#endif /* defined(__AVR_3_BYTE_PC__) */
 
     /* Push return address */
+#ifdef defined(__AVR_3_BYTE_PC__)
     push    r23
+#endif /* defined(__AVR_3_BYTE_PC__) */
     push    r22
-
-    clr     r1                          // Compiler generated code assumes R1 is set zero
+    push    r21
 
     ret
 
