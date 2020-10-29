@@ -136,7 +136,7 @@ extern StatusType ScheduleTable_StartScheduleTableAbs(ScheduleTableType schedule
     if (start > currentTick) {
         start -= currentTick;
     } else if (start < currentTick) {
-        start -= Counter_Cfg[ScheduleTable_Cfg[scheduleTableID]->counter]->maxallowedvalue - currentTick;
+        start += (Counter_Cfg[ScheduleTable_Cfg[scheduleTableID]->counter]->maxallowedvalue - currentTick) + 1;
     } else {
         start = Counter_Cfg[ScheduleTable_Cfg[scheduleTableID]->counter]->maxallowedvalue;
     }
