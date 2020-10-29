@@ -15,7 +15,7 @@
 #include <avr/io.h>
 
 .section .bss
-#ifdef defined(__AVR_3_BYTE_PC__)
+#if defined(__AVR_3_BYTE_PC__)
 retAddr:    .skip 3
 #else /* defined(__AVR_3_BYTE_PC__) */
 retAddr:    .skip 2
@@ -37,7 +37,7 @@ save_context:
     sts     retAddr, r0
     pop     r0
     sts     retAddr + 1, r0
-#ifdef defined(__AVR_3_BYTE_PC__)
+#if defined(__AVR_3_BYTE_PC__)
     pop     r0
     sts     retAddr + 2, r0
 #endif /* defined(__AVR_3_BYTE_PC__) */
@@ -88,7 +88,7 @@ save_context:
     st      x+, r0
 
     /* Push return address */
-#ifdef defined(__AVR_3_BYTE_PC__)
+#if defined(__AVR_3_BYTE_PC__)
     lds     r0, retAddr + 2
     push    r0
 #endif /* defined(__AVR_3_BYTE_PC__) */
@@ -107,7 +107,7 @@ restore_context:
     sts     retAddr, r0
     pop     r0
     sts     retAddr + 1, r0
-#ifdef defined(__AVR_3_BYTE_PC__)
+#if defined(__AVR_3_BYTE_PC__)
     pop     r0
     sts     retAddr + 2, r0
 #endif /* defined(__AVR_3_BYTE_PC__) */
@@ -157,7 +157,7 @@ restore_context:
     sts     tempReg, r0                 // Save r0
 
     /* Push return address */
-#ifdef defined(__AVR_3_BYTE_PC__)
+#if defined(__AVR_3_BYTE_PC__)
     lds     r0, retAddr + 2
     push    r0
 #endif /* defined(__AVR_3_BYTE_PC__) */
@@ -176,7 +176,7 @@ init_context:
     /* Get return address */
     pop     r21
     pop     r22
-#ifdef defined(__AVR_3_BYTE_PC__)
+#if defined(__AVR_3_BYTE_PC__)
     pop     r23
 #endif /* defined(__AVR_3_BYTE_PC__) */
 
@@ -195,12 +195,12 @@ init_context:
     lds     r25, ptrCurrentFxnAddr + 1
     push    r24                         // Push "return" to taskFxn
     push    r25
-#ifdef defined(__AVR_3_BYTE_PC__)
+#if defined(__AVR_3_BYTE_PC__)
 	push    r1                          // Push extra byte
 #endif /* defined(__AVR_3_BYTE_PC__) */
 
     /* Push return address */
-#ifdef defined(__AVR_3_BYTE_PC__)
+#if defined(__AVR_3_BYTE_PC__)
     push    r23
 #endif /* defined(__AVR_3_BYTE_PC__) */
     push    r22
