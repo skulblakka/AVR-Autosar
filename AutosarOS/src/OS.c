@@ -205,9 +205,6 @@ extern void __attribute__((naked)) OS_ScheduleC(void)
             // Set context to stack base
             TCB_Cfg[currentTask]->context = TCB_Cfg[currentTask]->stack + TCB_Cfg[currentTask]->stackSize - 1;
 
-            // Clear any pending events
-            TCB_Cfg[currentTask]->pendingEvents = 0;
-
             init_context();
         } else {
             restore_context();
