@@ -253,8 +253,15 @@ TASK(T7)
 {
     CancelAlarm(Alarm3);
 
-    StatusType stat = SetAbsAlarm(Alarm3, 10, 0);
+    TickType tick;
+    StatusType stat = GetAlarm(Alarm3, &tick);
+    assert(stat == E_OS_NOFUNC);
+
+    stat = SetAbsAlarm(Alarm3, 10, 0);
     assert(stat == E_OK);
+
+    stat = SetAbsAlarm(Alarm3, 10, 0);
+    assert(stat == E_OS_STATE);
 
     WaitEvent(0x01);
     EventMaskType ev = 0;
@@ -283,7 +290,7 @@ TASK(T7)
     stat = SetRelAlarm(Alarm8, 6840, UINT32_MAX);
     assert(stat == E_OK);
 
-    TickType tick = 0;
+    tick = 0;
     stat = GetAlarm(Alarm8, &tick);
     assert(stat == E_OK);
 
