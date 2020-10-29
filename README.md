@@ -1,6 +1,7 @@
 # AVR-AUTOSAR
 
-AVR-AUTOSAR a real-time operating system for AVR microcontrollers based on the
+[AVR-AUTOSAR](https://github.com/skulblakka/AVR-Autosar) a real-time operating
+system for AVR microcontrollers based on the
 [OSEK/VDX OS](https://www.irisa.fr/alf/downloads/puaut/TPNXT/images/os223.pdf)
 and [AUTOSAR OS 4.4](https://www.autosar.org/standards/classic-platform/classic-platform-440/) standards.
 
@@ -20,8 +21,9 @@ The project was created with the Atmel Studio 7 and the current AVR8-GCC-Toolcha
 on Windows. The solution and project files are included in the repository.
 
 Configuration of the system is done in the `AppCfg.h`. The macros necessary are
-defined and documented in `include/CfgGenMacros.h`. To generate the documentation
-from the code the provided doxyfile can be used.
+defined and documented in `include/CfgGenMacros.h`. The documentation from the
+current release can be found [here](https://skulblakka.github.io/AVR-Autosar/index.html).
+To generate the current documentation the provided doxyfile can be used.
 
 The application code is placed in `App.c`.
 
