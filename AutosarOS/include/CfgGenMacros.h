@@ -238,18 +238,21 @@
 
 /**
  * @brief   Task definition
+ * 
+ * This will create a new task and all required data structures. Each task will need a function TASK(Name).
+ * 
+ * @note    While it is possible to configure the maximum number of activations for tasks of type #EXTENDED
+ *          to be higher than 0 the system does not conform to the AUTOSAR standard in that case.
  *
  * @param   Name                    Name of task
  * @param   Prio                    Static priority of task
  * @param   StackSize               Size of task stack in bytes (maximum of UINT16_MAX)
- * @param   NumberOfActivations     Number of times the task can be activated
+ * @param   NumberOfActivations     Number of times the task can be activated. Must be at least 1.
  * @param   Autostart               Set task to autostart (::OsTaskAutostart)
  * @param   TaskType                Type of task (::OsTaskType)
  * @param   TaskSchedule            Type of task scheduling (::OsTaskSchedule)
  * @param   Res                     Internal resource assigned to task
  * @param   Events                  Events for this task (only applicable if TaskType equals #EXTENDED)
- *
- * This will create a new task and all required data structures. Each task will need a function TASK(Name).
  */
 #define OS_CONFIG_TASK_DEF(Name, Prio, StackSize, NumberOfActivations, Autostart, TaskType, TaskSchedule, Res, Events)
 
@@ -270,8 +273,10 @@
 
 /**
  * @brief   Interrupt definition
+ * 
+ * This will create a new interrupt and declare its ISR. Each interrupt will need a function ISR(Name).
  *
- * Define an interrupt service routine. The name must correspond to an interrupt vector of the processor.
+ * The name must correspond to an interrupt vector of the processor.
  * The priority is only used for resource management and does not correspond to the priorities used
  * in handling the interrupt vectors. Category 1 ISRs must have have a priority of zero. Priority of category 2 ISRs
  * must be at least one.
@@ -281,8 +286,6 @@
  *
  * @param   Name                    Name of the interrupt
  * @param   Prio                    Priority of the interrupt (0 for Cat. 1 ISR; >0 for Cat. 2 ISR)
- *
- * This will create a new interrupt and declare its ISR. Each interrupt will need a function ISR(Name).
  */
 #define OS_CONFIG_INT_DEF(Name, Prio)
 
