@@ -107,7 +107,7 @@ extern StatusType ScheduleTable_StartScheduleTableRel(ScheduleTableType schedule
         }
 
         ScheduleTable_Cfg[scheduleTableID]->currentTick = 0 - offset;
-        ScheduleTable_Cfg[scheduleTableID]->currentState = SCHEDULETABLE_RUNNING;
+        ScheduleTable_Cfg[scheduleTableID]->currentState = SCHEDULETABLE_PRE_RUNNING;
     }
 
     return E_OK;
@@ -237,6 +237,11 @@ extern StatusType ScheduleTable_GetScheduleTableStatus(ScheduleTableType schedul
         *scheduleStatus = ScheduleTable_Cfg[scheduleTableID]->currentState;
     }
 
+    /* Return SCHEDULETABLE_PRE_RUNNING as SCHEDULETABLE_RUNNING to conform to AUTOSAR standard */
+    if (*scheduleStatus == SCHEDULETABLE_PRE_RUNNING) {
+        *scheduleStatus = SCHEDULETABLE_RUNNING;
+    }
+
     return E_OK;
 }
 
@@ -249,11 +254,22 @@ extern void ScheduleTable_handleTick(CounterType counter)
         }
 
         ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-            if (ScheduleTable_Cfg[i]->currentState != SCHEDULETABLE_RUNNING) {
+            if (ScheduleTable_Cfg[i]->currentState != SCHEDULETABLE_RUNNING
+                    && ScheduleTable_Cfg[i]->currentState != SCHEDULETABLE_PRE_RUNNING) {
                 continue;
             }
 
             ScheduleTable_Cfg[i]->currentTick += 1;
+
+            if (ScheduleTable_Cfg[i]->currentState == SCHEDULETABLE_PRE_RUNNING) {
+                if (ScheduleTable_Cfg[i]->currentTick == 0) {
+                    // Counter wrapped => schedule table is now actually running
+                    ScheduleTable_Cfg[i]->currentState = SCHEDULETABLE_RUNNING;
+                } else {
+                    // Skip schedule table if not actually running yet
+                    continue;
+                }
+            }
 
             uint8_t expiryPoint;
             for (expiryPoint = 0; expiryPoint < ScheduleTable_Cfg[i]->numExpiryPoints; expiryPoint++) {
@@ -298,7 +314,7 @@ extern void ScheduleTable_handleTick(CounterType counter)
                                     needSysTickEval += 1;
                                 }
 
-                                ScheduleTable_Cfg[ScheduleTable_Cfg[i]->next]->currentState = SCHEDULETABLE_RUNNING;
+                                ScheduleTable_Cfg[ScheduleTable_Cfg[i]->next]->currentState = SCHEDULETABLE_PRE_RUNNING;
                                 ScheduleTable_Cfg[ScheduleTable_Cfg[i]->next]->currentTick = -1;
                             } else {
                                 /* Start queued schedule table and handle initial expiry point if necessary */
