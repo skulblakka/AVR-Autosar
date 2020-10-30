@@ -253,8 +253,15 @@ TASK(T7)
 {
     CancelAlarm(Alarm3);
 
-    StatusType stat = SetAbsAlarm(Alarm3, 10, 0);
+    TickType tick;
+    StatusType stat = GetAlarm(Alarm3, &tick);
+    assert(stat == E_OS_NOFUNC);
+
+    stat = SetAbsAlarm(Alarm3, 10, 0);
     assert(stat == E_OK);
+
+    stat = SetAbsAlarm(Alarm3, 10, 0);
+    assert(stat == E_OS_STATE);
 
     WaitEvent(0x01);
     EventMaskType ev = 0;
@@ -283,7 +290,7 @@ TASK(T7)
     stat = SetRelAlarm(Alarm8, 6840, UINT32_MAX);
     assert(stat == E_OK);
 
-    TickType tick = 0;
+    tick = 0;
     stat = GetAlarm(Alarm8, &tick);
     assert(stat == E_OK);
 
@@ -622,6 +629,72 @@ TASK(T10)
     ScheduleTableStatusType status;
     stat = GetScheduleTableStatus(ST6, &status);
     assert(stat == E_OK && status == SCHEDULETABLE_STOPPED);
+
+    TerminateTask();
+}
+
+TASK(T11)
+{
+    WaitEvent(0b01);
+    EventMaskType ev = 0;
+    GetEvent(T11, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    StatusType stat = NextScheduleTable(ST8, ST7);
+    assert(stat == E_OK);
+
+    stat = NextScheduleTable(ST8, ST9);
+    assert(stat == E_OK);
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T11, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    stat = NextScheduleTable(ST9, ST7);
+    assert(stat == E_OK);
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T11, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    stat = StartScheduleTableAbs(ST8, 0);
+    assert(stat == E_OK);
+
+    stat = StopScheduleTable(ST8);
+    assert(stat == E_OK);
+
+    for (uint8_t i = 0; i < 10; i++) {
+        stat = IncrementCounter(C8);
+        assert(stat == E_OK);
+
+        ev = 0;
+        GetEvent(T11, &ev);
+        assert(ev == 0b00);
+    }
+
+    stat = StartScheduleTableAbs(ST10, 5);
+    assert(stat == E_OK);
+
+    for (uint8_t i = 0; i < 15; i++) {
+        stat = IncrementCounter(C8);
+        assert(stat == E_OK);
+
+        ev = 0;
+        GetEvent(T11, &ev);
+        assert(ev == 0b00);
+    }
+
+    stat = IncrementCounter(C8);
+    assert(stat == E_OK);
+
+    ev = 0;
+    GetEvent(T11, &ev);
+    assert(ev == 0b01);
 
     TerminateTask();
 }
