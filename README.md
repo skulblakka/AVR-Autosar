@@ -36,6 +36,7 @@ under `AutosarOS/test`.
 
 The operating system was tested with the following devices:
 * ATmega32
+* ATmega328P
 * ATmega128
 * ATmega1284
 * ATmega2560
