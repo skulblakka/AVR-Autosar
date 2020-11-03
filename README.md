@@ -48,6 +48,8 @@ Other microprocessors of the ATmega-family should work with minimal work require
 During development a debugger-based system for tracing was used to record program flow.
 
 The tracepoints set in Atmel Studio can be imported from the `tracing.xml` file.
+Note that the tracepoints for the ISRs will probably not load correctly as they
+are set on the user functions outside the operating system.
 
 Additionally a data tracepoint can be set for `errorInfo.id` (write access) if
 error information is used. The following print message can be used to generate
