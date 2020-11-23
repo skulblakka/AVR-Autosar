@@ -24,11 +24,11 @@
 #include EXTERNAL_APP
 #else /* defined(EXTERNAL_APP) */
 
-#if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
+#if defined(OS_CONFIG_SIM) && OS_CONFIG_SIM == true
 #define DELAY_MS(ms)
 #else
 #define DELAY_MS(ms)    _delay_ms(ms)
-#endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
+#endif /* defined(OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
 
 TASK(Idle)
 {
@@ -253,8 +253,15 @@ TASK(T7)
 {
     CancelAlarm(Alarm3);
 
-    StatusType stat = SetAbsAlarm(Alarm3, 10, 0);
+    TickType tick;
+    StatusType stat = GetAlarm(Alarm3, &tick);
+    assert(stat == E_OS_NOFUNC);
+
+    stat = SetAbsAlarm(Alarm3, 10, 0);
     assert(stat == E_OK);
+
+    stat = SetAbsAlarm(Alarm3, 10, 0);
+    assert(stat == E_OS_STATE);
 
     WaitEvent(0x01);
     EventMaskType ev = 0;
@@ -283,7 +290,7 @@ TASK(T7)
     stat = SetRelAlarm(Alarm8, 6840, UINT32_MAX);
     assert(stat == E_OK);
 
-    TickType tick = 0;
+    tick = 0;
     stat = GetAlarm(Alarm8, &tick);
     assert(stat == E_OK);
 
@@ -626,6 +633,72 @@ TASK(T10)
     TerminateTask();
 }
 
+TASK(T11)
+{
+    WaitEvent(0b01);
+    EventMaskType ev = 0;
+    GetEvent(T11, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    StatusType stat = NextScheduleTable(ST8, ST7);
+    assert(stat == E_OK);
+
+    stat = NextScheduleTable(ST8, ST9);
+    assert(stat == E_OK);
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T11, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    stat = NextScheduleTable(ST9, ST7);
+    assert(stat == E_OK);
+
+    WaitEvent(0b01);
+    ev = 0;
+    GetEvent(T11, &ev);
+    assert(ev == 0b01);
+    ClearEvent(0b01);
+
+    stat = StartScheduleTableAbs(ST8, 0);
+    assert(stat == E_OK);
+
+    stat = StopScheduleTable(ST8);
+    assert(stat == E_OK);
+
+    for (uint8_t i = 0; i < 10; i++) {
+        stat = IncrementCounter(C8);
+        assert(stat == E_OK);
+
+        ev = 0;
+        GetEvent(T11, &ev);
+        assert(ev == 0b00);
+    }
+
+    stat = StartScheduleTableAbs(ST10, 5);
+    assert(stat == E_OK);
+
+    for (uint8_t i = 0; i < 15; i++) {
+        stat = IncrementCounter(C8);
+        assert(stat == E_OK);
+
+        ev = 0;
+        GetEvent(T11, &ev);
+        assert(ev == 0b00);
+    }
+
+    stat = IncrementCounter(C8);
+    assert(stat == E_OK);
+
+    ev = 0;
+    GetEvent(T11, &ev);
+    assert(ev == 0b01);
+
+    TerminateTask();
+}
+
 extern void StartupHook(void)
 {
     DDRB  = 0xFF;   // PB as output
@@ -634,10 +707,10 @@ extern void StartupHook(void)
     DDRD  = 0x00;   // PD as input
     PORTD = 0xFF;   // enable PU on PD
 
-#if defined (__AVR_ATmega32__)
+#if defined(__AVR_ATmega32__)
     GICR  = 1 << INT0 | 1 << INT1;                              // Enable INT0 and INT1
     MCUCR = 1 << ISC01 | 0 << ISC00 | 1 << ISC11 | 0 << ISC10;  // Trigger INT0 and INT1 on falling edge
-#elif defined (__AVR_ATmega128__) || defined (__AVR_ATmega1284__)
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega128__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega2560__)
     EICRA = 1 << ISC11 | 0 << ISC10 | 1 << ISC01 | 0 << ISC00;  // Trigger INT0 and INT1 on falling edge
     EIMSK |= 1 << INT1 | 1 << INT0;                             // Enable INT0 and INT1
 
@@ -650,25 +723,25 @@ extern void StartupHook(void)
     TCCR1B |= (1 << WGM12);                                     // Enable CTC mode
     TCCR1B |= (1 << CS12) | (1 << CS10);                        // Set prescaler to 1024
 
-#if defined (__AVR_ATmega128__)
+#if defined(__AVR_ATmega128__)
     TIMSK |= (1 << OCIE1A);                                     // Enable interrupt on compare match
-#else /* defined (__AVR_ATmega128__) */
+#else /* defined(__AVR_ATmega128__) */
     TIMSK1 |= (1 << OCIE1A);                                    // Enable interrupt on compare match
-#endif /* defined (__AVR_ATmega128__) */
+#endif /* defined(__AVR_ATmega128__) */
 
     /* Timer 2 */
-#if defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true
-#if defined (__AVR_ATmega128__)
+#if defined(OS_CONFIG_SIM) && OS_CONFIG_SIM == true
+#if defined(__AVR_ATmega128__)
     TCCR2 = (1 << CS20);                                        // Enable Timer2 with Prescaler 1
     TIMSK |= 1 << TOIE2;                                        // Enable Overflow Interrupt (Timer2)
-#else /* defined (__AVR_ATmega128__) */
+#else /* defined(__AVR_ATmega128__) */
     TCCR2B = (1 << CS20);                                       // Enable Timer2 with Prescaler 1
     TIMSK2 |= 1 << TOIE2;                                       // Enable Overflow Interrupt (Timer2)
-#endif /* defined (__AVR_ATmega128__) */
-#endif /* defined (OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
-#else /* defined (__AVR_ATmega32__) */
+#endif /* defined(__AVR_ATmega128__) */
+#endif /* defined(OS_CONFIG_SIM) && OS_CONFIG_SIM == true */
+#else /* defined(__AVR_ATmega32__) */
 #error Unknown CPU defined!
-#endif /* defined (__AVR_ATmega32__) */
+#endif /* defined(__AVR_ATmega32__) */
 
     uint8_t t = 0;
 

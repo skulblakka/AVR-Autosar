@@ -36,6 +36,10 @@ extern StatusType Task_ActivateTask(TaskType TaskID)
         }
 
         TCB_Cfg[TaskID]->curNumberOfActivations += 1;
+        
+        if (TCB_Cfg[TaskID]->taskType == EXTENDED) {
+            TCB_Cfg[TaskID]->pendingEvents = 0; // Clear any pending events
+        }
 
         if (TCB_Cfg[TaskID]->curState == SUSPENDED) {
             TCB_Cfg[TaskID]->curState = PRE_READY;

@@ -30,6 +30,7 @@ typedef enum scheduleTables_e ScheduleTableType;
 typedef enum scheduleTableState_e {
     SCHEDULETABLE_STOPPED = 0,  /**< Schedule table is stopped */
     SCHEDULETABLE_NEXT,         /**< Schedule table is queued after another table */
+    SCHEDULETABLE_PRE_RUNNING,  /**< Schedule table is running but not yet executing until the tick reaches zero */
     SCHEDULETABLE_RUNNING       /**< Schedule table is running */
 } ScheduleTableStatusType;
 

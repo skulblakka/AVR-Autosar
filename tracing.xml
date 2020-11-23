@@ -3,118 +3,6 @@
   <Breakpoints>
     <Breakpoint>
       <Version>15</Version>
-      <IsEnabled>0</IsEnabled>
-      <IsVisible>1</IsVisible>
-      <IsEmulated>0</IsEmulated>
-      <IsCondition>0</IsCondition>
-      <ConditionType>WhenTrue</ConditionType>
-      <LocationType>AddressLocation</LocationType>
-      <TextPosition>
-        <Version>4</Version>
-        <FileName>.\AutosarOS\App.c</FileName>
-        <startLine>725</startLine>
-        <StartColumn>0</StartColumn>
-        <EndLine>725</EndLine>
-        <EndColumn>22</EndColumn>
-        <MarkerId>0</MarkerId>
-        <IsLineBased>0</IsLineBased>
-        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
-        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
-        <Checksum>
-          <Version>1</Version>
-          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
-          <ByteCount>0</ByteCount>
-          <Bytes />
-        </Checksum>
-      </TextPosition>
-      <NamedLocationText>FuncINT0_vect</NamedLocationText>
-      <NamedLocationLine>0</NamedLocationLine>
-      <NamedLocationColumn>0</NamedLocationColumn>
-      <HitCountType>NoHitCount</HitCountType>
-      <HitCountTarget>1</HitCountTarget>
-      <Language>00000000-0000-0000-0000-000000000000</Language>
-      <IsMapped>0</IsMapped>
-      <BreakpointType>PendingBreakpoint</BreakpointType>
-      <AddressLocation>
-        <Version>4</Version>
-        <AddressName>0x002912,prog</AddressName>
-        <MarkerId>0</MarkerId>
-        <FunctionName>FuncINT0_vect</FunctionName>
-        <ModuleName>H:\\Tresors\\Studium\\Master\\Abschlussarbeiten\\Master-Thesis\\AutosarOS\\AutosarOS\\Debug/.././App.c</ModuleName>
-        <DisplayName>0x002912,prog</DisplayName>
-        <FunctionLine>0</FunctionLine>
-        <FunctionColumn>0</FunctionColumn>
-        <Language>3a12d0b7-c26c-11d0-b442-00a0244a1dd2</Language>
-      </AddressLocation>
-      <DataCount>4</DataCount>
-      <ModuleName>H:\\Tresors\\Studium\\Master\\Abschlussarbeiten\\Master-Thesis\\AutosarOS\\AutosarOS\\Debug/.././App.c</ModuleName>
-      <TracepointText>$TICK,Core_0,0,ISR,INT0_vect,0,terminate</TracepointText>
-      <IsTracepointActive>1</IsTracepointActive>
-      <IsBreakWhenHit>0</IsBreakWhenHit>
-      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
-      <UseChecksum>1</UseChecksum>
-      <Labels />
-      <RequestRemapped>0</RequestRemapped>
-      <parentIndex>-1</parentIndex>
-    </Breakpoint>
-    <Breakpoint>
-      <Version>15</Version>
-      <IsEnabled>0</IsEnabled>
-      <IsVisible>1</IsVisible>
-      <IsEmulated>0</IsEmulated>
-      <IsCondition>0</IsCondition>
-      <ConditionType>WhenTrue</ConditionType>
-      <LocationType>AddressLocation</LocationType>
-      <TextPosition>
-        <Version>4</Version>
-        <FileName>.\AutosarOS\App.c</FileName>
-        <startLine>732</startLine>
-        <StartColumn>0</StartColumn>
-        <EndLine>732</EndLine>
-        <EndColumn>14</EndColumn>
-        <MarkerId>0</MarkerId>
-        <IsLineBased>0</IsLineBased>
-        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
-        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
-        <Checksum>
-          <Version>1</Version>
-          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
-          <ByteCount>0</ByteCount>
-          <Bytes />
-        </Checksum>
-      </TextPosition>
-      <NamedLocationText>FuncINT1_vect</NamedLocationText>
-      <NamedLocationLine>0</NamedLocationLine>
-      <NamedLocationColumn>0</NamedLocationColumn>
-      <HitCountType>NoHitCount</HitCountType>
-      <HitCountTarget>1</HitCountTarget>
-      <Language>00000000-0000-0000-0000-000000000000</Language>
-      <IsMapped>0</IsMapped>
-      <BreakpointType>PendingBreakpoint</BreakpointType>
-      <AddressLocation>
-        <Version>4</Version>
-        <AddressName>0x00293C,prog</AddressName>
-        <MarkerId>0</MarkerId>
-        <FunctionName>FuncINT1_vect</FunctionName>
-        <ModuleName>H:\\Tresors\\Studium\\Master\\Abschlussarbeiten\\Master-Thesis\\AutosarOS\\AutosarOS\\Debug/.././App.c</ModuleName>
-        <DisplayName>0x00293C,prog</DisplayName>
-        <FunctionLine>0</FunctionLine>
-        <FunctionColumn>0</FunctionColumn>
-        <Language>3a12d0b7-c26c-11d0-b442-00a0244a1dd2</Language>
-      </AddressLocation>
-      <DataCount>4</DataCount>
-      <ModuleName>H:\\Tresors\\Studium\\Master\\Abschlussarbeiten\\Master-Thesis\\AutosarOS\\AutosarOS\\Debug/.././App.c</ModuleName>
-      <TracepointText>$TICK,Core_0,0,ISR,INT1_vect,0,terminate</TracepointText>
-      <IsTracepointActive>1</IsTracepointActive>
-      <IsBreakWhenHit>0</IsBreakWhenHit>
-      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
-      <UseChecksum>1</UseChecksum>
-      <Labels />
-      <RequestRemapped>0</RequestRemapped>
-      <parentIndex>-1</parentIndex>
-    </Breakpoint>
-    <Breakpoint>
-      <Version>15</Version>
       <IsEnabled>1</IsEnabled>
       <IsVisible>1</IsVisible>
       <IsEmulated>0</IsEmulated>
@@ -123,12 +11,12 @@
       <LocationType>SourceLocation</LocationType>
       <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\App.c</FileName>
-        <startLine>607</startLine>
+        <FileName>.\AutosarOS\src\Task.c</FileName>
+        <startLine>93</startLine>
         <StartColumn>0</StartColumn>
-        <EndLine>607</EndLine>
-        <EndColumn>20</EndColumn>
-        <MarkerId>57</MarkerId>
+        <EndLine>93</EndLine>
+        <EndColumn>0</EndColumn>
+        <MarkerId>0</MarkerId>
         <IsLineBased>0</IsLineBased>
         <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
         <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
@@ -154,56 +42,7 @@
         <Language>00000000-0000-0000-0000-000000000000</Language>
       </AddressLocation>
       <DataCount>4</DataCount>
-      <IsTracepointActive>0</IsTracepointActive>
-      <IsBreakWhenHit>1</IsBreakWhenHit>
-      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
-      <UseChecksum>1</UseChecksum>
-      <Labels />
-      <RequestRemapped>0</RequestRemapped>
-      <parentIndex>-1</parentIndex>
-    </Breakpoint>
-    <Breakpoint>
-      <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
-      <IsVisible>1</IsVisible>
-      <IsEmulated>0</IsEmulated>
-      <IsCondition>0</IsCondition>
-      <ConditionType>WhenTrue</ConditionType>
-      <LocationType>SourceLocation</LocationType>
-      <TextPosition>
-        <Version>4</Version>
-        <FileName>.\AutosarOS\App.c</FileName>
-        <startLine>715</startLine>
-        <StartColumn>0</StartColumn>
-        <EndLine>715</EndLine>
-        <EndColumn>1</EndColumn>
-        <MarkerId>68</MarkerId>
-        <IsLineBased>0</IsLineBased>
-        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
-        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
-        <Checksum>
-          <Version>1</Version>
-          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
-          <ByteCount>0</ByteCount>
-          <Bytes />
-        </Checksum>
-      </TextPosition>
-      <NamedLocationLine>0</NamedLocationLine>
-      <NamedLocationColumn>0</NamedLocationColumn>
-      <HitCountType>NoHitCount</HitCountType>
-      <HitCountTarget>1</HitCountTarget>
-      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
-      <IsMapped>0</IsMapped>
-      <BreakpointType>PendingBreakpoint</BreakpointType>
-      <AddressLocation>
-        <Version>0</Version>
-        <MarkerId>0</MarkerId>
-        <FunctionLine>0</FunctionLine>
-        <FunctionColumn>0</FunctionColumn>
-        <Language>00000000-0000-0000-0000-000000000000</Language>
-      </AddressLocation>
-      <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,ISR,INT0_vect,0,start</TracepointText>
+      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,terminate</TracepointText>
       <IsTracepointActive>1</IsTracepointActive>
       <IsBreakWhenHit>0</IsBreakWhenHit>
       <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
@@ -222,62 +61,12 @@
       <LocationType>SourceLocation</LocationType>
       <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\App.c</FileName>
-        <startLine>730</startLine>
+        <FileName>.\AutosarOS\src\Task.c</FileName>
+        <startLine>83</startLine>
         <StartColumn>0</StartColumn>
-        <EndLine>730</EndLine>
-        <EndColumn>1</EndColumn>
-        <MarkerId>68</MarkerId>
-        <IsLineBased>0</IsLineBased>
-        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
-        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
-        <Checksum>
-          <Version>1</Version>
-          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
-          <ByteCount>0</ByteCount>
-          <Bytes />
-        </Checksum>
-      </TextPosition>
-      <NamedLocationLine>0</NamedLocationLine>
-      <NamedLocationColumn>0</NamedLocationColumn>
-      <HitCountType>NoHitCount</HitCountType>
-      <HitCountTarget>1</HitCountTarget>
-      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
-      <IsMapped>0</IsMapped>
-      <BreakpointType>PendingBreakpoint</BreakpointType>
-      <AddressLocation>
-        <Version>0</Version>
-        <MarkerId>0</MarkerId>
-        <FunctionLine>0</FunctionLine>
-        <FunctionColumn>0</FunctionColumn>
-        <Language>00000000-0000-0000-0000-000000000000</Language>
-      </AddressLocation>
-      <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,ISR,INT1_vect,0,start</TracepointText>
-      <IsTracepointActive>1</IsTracepointActive>
-      <IsBreakWhenHit>0</IsBreakWhenHit>
-      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
-      <UseChecksum>1</UseChecksum>
-      <Labels />
-      <RequestRemapped>0</RequestRemapped>
-      <parentIndex>-1</parentIndex>
-    </Breakpoint>
-    <Breakpoint>
-      <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
-      <IsVisible>1</IsVisible>
-      <IsEmulated>0</IsEmulated>
-      <IsCondition>0</IsCondition>
-      <ConditionType>WhenTrue</ConditionType>
-      <LocationType>SourceLocation</LocationType>
-      <TextPosition>
-        <Version>4</Version>
-        <FileName>.\AutosarOS\src\Events.c</FileName>
-        <startLine>154</startLine>
-        <StartColumn>0</StartColumn>
-        <EndLine>154</EndLine>
+        <EndLine>83</EndLine>
         <EndColumn>53</EndColumn>
-        <MarkerId>68</MarkerId>
+        <MarkerId>0</MarkerId>
         <IsLineBased>0</IsLineBased>
         <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
         <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
@@ -303,7 +92,7 @@
         <Language>00000000-0000-0000-0000-000000000000</Language>
       </AddressLocation>
       <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,wait</TracepointText>
+      <TracepointText>$TICK,Core_0,0,T,{TaskID},0,activate</TracepointText>
       <IsTracepointActive>1</IsTracepointActive>
       <IsBreakWhenHit>0</IsBreakWhenHit>
       <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
@@ -322,12 +111,12 @@
       <LocationType>SourceLocation</LocationType>
       <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\src\Events.c</FileName>
-        <startLine>52</startLine>
+        <FileName>.\AutosarOS\src\Task.c</FileName>
+        <startLine>37</startLine>
         <StartColumn>0</StartColumn>
-        <EndLine>52</EndLine>
-        <EndColumn>46</EndColumn>
-        <MarkerId>68</MarkerId>
+        <EndLine>37</EndLine>
+        <EndColumn>53</EndColumn>
+        <MarkerId>0</MarkerId>
         <IsLineBased>0</IsLineBased>
         <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
         <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
@@ -353,7 +142,307 @@
         <Language>00000000-0000-0000-0000-000000000000</Language>
       </AddressLocation>
       <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{TaskID},0,release</TracepointText>
+      <TracepointText>$TICK,Core_0,0,T,{TaskID},0,activate</TracepointText>
+      <IsTracepointActive>1</IsTracepointActive>
+      <IsBreakWhenHit>0</IsBreakWhenHit>
+      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
+      <UseChecksum>1</UseChecksum>
+      <Labels />
+      <RequestRemapped>0</RequestRemapped>
+      <parentIndex>-1</parentIndex>
+    </Breakpoint>
+    <Breakpoint>
+      <Version>15</Version>
+      <IsEnabled>1</IsEnabled>
+      <IsVisible>1</IsVisible>
+      <IsEmulated>0</IsEmulated>
+      <IsCondition>0</IsCondition>
+      <ConditionType>WhenTrue</ConditionType>
+      <LocationType>SourceLocation</LocationType>
+      <TextPosition>
+        <Version>4</Version>
+        <FileName>.\AutosarOS\src\Task.c</FileName>
+        <startLine>235</startLine>
+        <StartColumn>0</StartColumn>
+        <EndLine>235</EndLine>
+        <EndColumn>56</EndColumn>
+        <MarkerId>0</MarkerId>
+        <IsLineBased>0</IsLineBased>
+        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
+        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
+        <Checksum>
+          <Version>1</Version>
+          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
+          <ByteCount>0</ByteCount>
+          <Bytes />
+        </Checksum>
+      </TextPosition>
+      <NamedLocationLine>0</NamedLocationLine>
+      <NamedLocationColumn>0</NamedLocationColumn>
+      <HitCountType>NoHitCount</HitCountType>
+      <HitCountTarget>1</HitCountTarget>
+      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
+      <IsMapped>0</IsMapped>
+      <BreakpointType>PendingBreakpoint</BreakpointType>
+      <AddressLocation>
+        <Version>0</Version>
+        <MarkerId>0</MarkerId>
+        <FunctionLine>0</FunctionLine>
+        <FunctionColumn>0</FunctionColumn>
+        <Language>00000000-0000-0000-0000-000000000000</Language>
+      </AddressLocation>
+      <DataCount>4</DataCount>
+      <TracepointText>$TICK,Core_0,0,T,{(TaskType) i},0,activate</TracepointText>
+      <IsTracepointActive>1</IsTracepointActive>
+      <IsBreakWhenHit>0</IsBreakWhenHit>
+      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
+      <UseChecksum>1</UseChecksum>
+      <Labels />
+      <RequestRemapped>0</RequestRemapped>
+      <parentIndex>-1</parentIndex>
+    </Breakpoint>
+    <Breakpoint>
+      <Version>15</Version>
+      <IsEnabled>1</IsEnabled>
+      <IsVisible>1</IsVisible>
+      <IsEmulated>0</IsEmulated>
+      <IsCondition>0</IsCondition>
+      <ConditionType>WhenTrue</ConditionType>
+      <LocationType>SourceLocation</LocationType>
+      <TextPosition>
+        <Version>4</Version>
+        <FileName>.\AutosarOS\src\Task.c</FileName>
+        <startLine>139</startLine>
+        <StartColumn>0</StartColumn>
+        <EndLine>139</EndLine>
+        <EndColumn>0</EndColumn>
+        <MarkerId>0</MarkerId>
+        <IsLineBased>0</IsLineBased>
+        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
+        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
+        <Checksum>
+          <Version>1</Version>
+          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
+          <ByteCount>0</ByteCount>
+          <Bytes />
+        </Checksum>
+      </TextPosition>
+      <NamedLocationLine>0</NamedLocationLine>
+      <NamedLocationColumn>0</NamedLocationColumn>
+      <HitCountType>NoHitCount</HitCountType>
+      <HitCountTarget>1</HitCountTarget>
+      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
+      <IsMapped>0</IsMapped>
+      <BreakpointType>PendingBreakpoint</BreakpointType>
+      <AddressLocation>
+        <Version>0</Version>
+        <MarkerId>0</MarkerId>
+        <FunctionLine>0</FunctionLine>
+        <FunctionColumn>0</FunctionColumn>
+        <Language>00000000-0000-0000-0000-000000000000</Language>
+      </AddressLocation>
+      <DataCount>4</DataCount>
+      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,terminate</TracepointText>
+      <IsTracepointActive>1</IsTracepointActive>
+      <IsBreakWhenHit>0</IsBreakWhenHit>
+      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
+      <UseChecksum>1</UseChecksum>
+      <Labels />
+      <RequestRemapped>0</RequestRemapped>
+      <parentIndex>-1</parentIndex>
+    </Breakpoint>
+    <Breakpoint>
+      <Version>15</Version>
+      <IsEnabled>1</IsEnabled>
+      <IsVisible>1</IsVisible>
+      <IsEmulated>0</IsEmulated>
+      <IsCondition>0</IsCondition>
+      <ConditionType>WhenTrue</ConditionType>
+      <LocationType>SourceLocation</LocationType>
+      <TextPosition>
+        <Version>4</Version>
+        <FileName>.\AutosarOS\src\OS.c</FileName>
+        <startLine>94</startLine>
+        <StartColumn>0</StartColumn>
+        <EndLine>94</EndLine>
+        <EndColumn>30</EndColumn>
+        <MarkerId>0</MarkerId>
+        <IsLineBased>0</IsLineBased>
+        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
+        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
+        <Checksum>
+          <Version>1</Version>
+          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
+          <ByteCount>0</ByteCount>
+          <Bytes />
+        </Checksum>
+      </TextPosition>
+      <NamedLocationLine>0</NamedLocationLine>
+      <NamedLocationColumn>0</NamedLocationColumn>
+      <HitCountType>NoHitCount</HitCountType>
+      <HitCountTarget>1</HitCountTarget>
+      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
+      <IsMapped>0</IsMapped>
+      <BreakpointType>PendingBreakpoint</BreakpointType>
+      <AddressLocation>
+        <Version>0</Version>
+        <MarkerId>0</MarkerId>
+        <FunctionLine>0</FunctionLine>
+        <FunctionColumn>0</FunctionColumn>
+        <Language>00000000-0000-0000-0000-000000000000</Language>
+      </AddressLocation>
+      <DataCount>4</DataCount>
+      <TracepointText>#version 1.0</TracepointText>
+      <IsTracepointActive>1</IsTracepointActive>
+      <IsBreakWhenHit>0</IsBreakWhenHit>
+      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
+      <UseChecksum>1</UseChecksum>
+      <Labels />
+      <RequestRemapped>0</RequestRemapped>
+      <parentIndex>-1</parentIndex>
+    </Breakpoint>
+    <Breakpoint>
+      <Version>15</Version>
+      <IsEnabled>1</IsEnabled>
+      <IsVisible>1</IsVisible>
+      <IsEmulated>0</IsEmulated>
+      <IsCondition>0</IsCondition>
+      <ConditionType>WhenTrue</ConditionType>
+      <LocationType>SourceLocation</LocationType>
+      <TextPosition>
+        <Version>4</Version>
+        <FileName>.\AutosarOS\src\OS.c</FileName>
+        <startLine>201</startLine>
+        <StartColumn>0</StartColumn>
+        <EndLine>201</EndLine>
+        <EndColumn>6</EndColumn>
+        <MarkerId>0</MarkerId>
+        <IsLineBased>0</IsLineBased>
+        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
+        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
+        <Checksum>
+          <Version>1</Version>
+          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
+          <ByteCount>0</ByteCount>
+          <Bytes />
+        </Checksum>
+      </TextPosition>
+      <NamedLocationLine>0</NamedLocationLine>
+      <NamedLocationColumn>0</NamedLocationColumn>
+      <HitCountType>NoHitCount</HitCountType>
+      <HitCountTarget>1</HitCountTarget>
+      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
+      <IsMapped>0</IsMapped>
+      <BreakpointType>PendingBreakpoint</BreakpointType>
+      <AddressLocation>
+        <Version>0</Version>
+        <MarkerId>0</MarkerId>
+        <FunctionLine>0</FunctionLine>
+        <FunctionColumn>0</FunctionColumn>
+        <Language>00000000-0000-0000-0000-000000000000</Language>
+      </AddressLocation>
+      <DataCount>4</DataCount>
+      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,start</TracepointText>
+      <IsTracepointActive>1</IsTracepointActive>
+      <IsBreakWhenHit>0</IsBreakWhenHit>
+      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
+      <UseChecksum>1</UseChecksum>
+      <Labels />
+      <RequestRemapped>0</RequestRemapped>
+      <parentIndex>-1</parentIndex>
+    </Breakpoint>
+    <Breakpoint>
+      <Version>15</Version>
+      <IsEnabled>1</IsEnabled>
+      <IsVisible>1</IsVisible>
+      <IsEmulated>0</IsEmulated>
+      <IsCondition>0</IsCondition>
+      <ConditionType>WhenTrue</ConditionType>
+      <LocationType>SourceLocation</LocationType>
+      <TextPosition>
+        <Version>4</Version>
+        <FileName>.\AutosarOS\src\OS.c</FileName>
+        <startLine>181</startLine>
+        <StartColumn>0</StartColumn>
+        <EndLine>181</EndLine>
+        <EndColumn>55</EndColumn>
+        <MarkerId>0</MarkerId>
+        <IsLineBased>0</IsLineBased>
+        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
+        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
+        <Checksum>
+          <Version>1</Version>
+          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
+          <ByteCount>0</ByteCount>
+          <Bytes />
+        </Checksum>
+      </TextPosition>
+      <NamedLocationLine>0</NamedLocationLine>
+      <NamedLocationColumn>0</NamedLocationColumn>
+      <HitCountType>NoHitCount</HitCountType>
+      <HitCountTarget>1</HitCountTarget>
+      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
+      <IsMapped>0</IsMapped>
+      <BreakpointType>PendingBreakpoint</BreakpointType>
+      <AddressLocation>
+        <Version>0</Version>
+        <MarkerId>0</MarkerId>
+        <FunctionLine>0</FunctionLine>
+        <FunctionColumn>0</FunctionColumn>
+        <Language>00000000-0000-0000-0000-000000000000</Language>
+      </AddressLocation>
+      <DataCount>4</DataCount>
+      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,preempt</TracepointText>
+      <IsTracepointActive>1</IsTracepointActive>
+      <IsBreakWhenHit>0</IsBreakWhenHit>
+      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
+      <UseChecksum>1</UseChecksum>
+      <Labels />
+      <RequestRemapped>0</RequestRemapped>
+      <parentIndex>-1</parentIndex>
+    </Breakpoint>
+    <Breakpoint>
+      <Version>15</Version>
+      <IsEnabled>1</IsEnabled>
+      <IsVisible>1</IsVisible>
+      <IsEmulated>0</IsEmulated>
+      <IsCondition>0</IsCondition>
+      <ConditionType>WhenTrue</ConditionType>
+      <LocationType>SourceLocation</LocationType>
+      <TextPosition>
+        <Version>4</Version>
+        <FileName>.\AutosarOS\src\OS.c</FileName>
+        <startLine>112</startLine>
+        <StartColumn>0</StartColumn>
+        <EndLine>112</EndLine>
+        <EndColumn>45</EndColumn>
+        <MarkerId>0</MarkerId>
+        <IsLineBased>0</IsLineBased>
+        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
+        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
+        <Checksum>
+          <Version>1</Version>
+          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
+          <ByteCount>0</ByteCount>
+          <Bytes />
+        </Checksum>
+      </TextPosition>
+      <NamedLocationLine>0</NamedLocationLine>
+      <NamedLocationColumn>0</NamedLocationColumn>
+      <HitCountType>NoHitCount</HitCountType>
+      <HitCountTarget>1</HitCountTarget>
+      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
+      <IsMapped>0</IsMapped>
+      <BreakpointType>PendingBreakpoint</BreakpointType>
+      <AddressLocation>
+        <Version>0</Version>
+        <MarkerId>0</MarkerId>
+        <FunctionLine>0</FunctionLine>
+        <FunctionColumn>0</FunctionColumn>
+        <Language>00000000-0000-0000-0000-000000000000</Language>
+      </AddressLocation>
+      <DataCount>4</DataCount>
+      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,start</TracepointText>
       <IsTracepointActive>1</IsTracepointActive>
       <IsBreakWhenHit>0</IsBreakWhenHit>
       <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
@@ -421,11 +510,11 @@
       <LocationType>SourceLocation</LocationType>
       <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\src\OS.c</FileName>
-        <startLine>112</startLine>
+        <FileName>.\AutosarOS\src\Events.c</FileName>
+        <startLine>52</startLine>
         <StartColumn>0</StartColumn>
-        <EndLine>112</EndLine>
-        <EndColumn>45</EndColumn>
+        <EndLine>52</EndLine>
+        <EndColumn>46</EndColumn>
         <MarkerId>0</MarkerId>
         <IsLineBased>0</IsLineBased>
         <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
@@ -452,7 +541,7 @@
         <Language>00000000-0000-0000-0000-000000000000</Language>
       </AddressLocation>
       <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,start</TracepointText>
+      <TracepointText>$TICK,Core_0,0,T,{TaskID},0,release</TracepointText>
       <IsTracepointActive>1</IsTracepointActive>
       <IsBreakWhenHit>0</IsBreakWhenHit>
       <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
@@ -471,11 +560,11 @@
       <LocationType>SourceLocation</LocationType>
       <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\src\OS.c</FileName>
-        <startLine>177</startLine>
+        <FileName>.\AutosarOS\src\Events.c</FileName>
+        <startLine>154</startLine>
         <StartColumn>0</StartColumn>
-        <EndLine>177</EndLine>
-        <EndColumn>55</EndColumn>
+        <EndLine>154</EndLine>
+        <EndColumn>53</EndColumn>
         <MarkerId>0</MarkerId>
         <IsLineBased>0</IsLineBased>
         <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
@@ -502,7 +591,7 @@
         <Language>00000000-0000-0000-0000-000000000000</Language>
       </AddressLocation>
       <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,preempt</TracepointText>
+      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,wait</TracepointText>
       <IsTracepointActive>1</IsTracepointActive>
       <IsBreakWhenHit>0</IsBreakWhenHit>
       <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
@@ -513,7 +602,7 @@
     </Breakpoint>
     <Breakpoint>
       <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
+      <IsEnabled>0</IsEnabled>
       <IsVisible>1</IsVisible>
       <IsEmulated>0</IsEmulated>
       <IsCondition>0</IsCondition>
@@ -521,12 +610,12 @@
       <LocationType>SourceLocation</LocationType>
       <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\src\OS.c</FileName>
-        <startLine>201</startLine>
+        <FileName>.\AutosarOS\App.c</FileName>
+        <startLine>842</startLine>
         <StartColumn>0</StartColumn>
-        <EndLine>201</EndLine>
-        <EndColumn>27</EndColumn>
-        <MarkerId>0</MarkerId>
+        <EndLine>842</EndLine>
+        <EndColumn>34</EndColumn>
+        <MarkerId>36</MarkerId>
         <IsLineBased>0</IsLineBased>
         <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
         <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
@@ -552,7 +641,7 @@
         <Language>00000000-0000-0000-0000-000000000000</Language>
       </AddressLocation>
       <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,start</TracepointText>
+      <TracepointText>$TICK,Core_0,0,ISR,INT0_vect,0,start</TracepointText>
       <IsTracepointActive>1</IsTracepointActive>
       <IsBreakWhenHit>0</IsBreakWhenHit>
       <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
@@ -563,7 +652,7 @@
     </Breakpoint>
     <Breakpoint>
       <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
+      <IsEnabled>0</IsEnabled>
       <IsVisible>1</IsVisible>
       <IsEmulated>0</IsEmulated>
       <IsCondition>0</IsCondition>
@@ -571,12 +660,12 @@
       <LocationType>SourceLocation</LocationType>
       <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\src\OS.c</FileName>
-        <startLine>203</startLine>
+        <FileName>.\AutosarOS\App.c</FileName>
+        <startLine>842</startLine>
         <StartColumn>0</StartColumn>
-        <EndLine>203</EndLine>
-        <EndColumn>30</EndColumn>
-        <MarkerId>0</MarkerId>
+        <EndLine>842</EndLine>
+        <EndColumn>34</EndColumn>
+        <MarkerId>36</MarkerId>
         <IsLineBased>0</IsLineBased>
         <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
         <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
@@ -602,7 +691,7 @@
         <Language>00000000-0000-0000-0000-000000000000</Language>
       </AddressLocation>
       <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,resume</TracepointText>
+      <TracepointText>$TICK,Core_0,0,ISR,INT1_vect,0,start</TracepointText>
       <IsTracepointActive>1</IsTracepointActive>
       <IsBreakWhenHit>0</IsBreakWhenHit>
       <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
@@ -613,19 +702,19 @@
     </Breakpoint>
     <Breakpoint>
       <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
+      <IsEnabled>0</IsEnabled>
       <IsVisible>1</IsVisible>
       <IsEmulated>0</IsEmulated>
       <IsCondition>0</IsCondition>
       <ConditionType>WhenTrue</ConditionType>
-      <LocationType>SourceLocation</LocationType>
+      <LocationType>AddressLocation</LocationType>
       <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\src\OS.c</FileName>
-        <startLine>90</startLine>
+        <FileName>.\AutosarOS\App.c</FileName>
+        <startLine>842</startLine>
         <StartColumn>0</StartColumn>
-        <EndLine>90</EndLine>
-        <EndColumn>40</EndColumn>
+        <EndLine>842</EndLine>
+        <EndColumn>34</EndColumn>
         <MarkerId>0</MarkerId>
         <IsLineBased>0</IsLineBased>
         <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
@@ -637,277 +726,28 @@
           <Bytes />
         </Checksum>
       </TextPosition>
+      <NamedLocationText>FuncINT1_vect</NamedLocationText>
       <NamedLocationLine>0</NamedLocationLine>
       <NamedLocationColumn>0</NamedLocationColumn>
       <HitCountType>NoHitCount</HitCountType>
       <HitCountTarget>1</HitCountTarget>
-      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
+      <Language>00000000-0000-0000-0000-000000000000</Language>
       <IsMapped>0</IsMapped>
       <BreakpointType>PendingBreakpoint</BreakpointType>
       <AddressLocation>
-        <Version>0</Version>
-        <MarkerId>0</MarkerId>
-        <FunctionLine>0</FunctionLine>
-        <FunctionColumn>0</FunctionColumn>
-        <Language>00000000-0000-0000-0000-000000000000</Language>
-      </AddressLocation>
-      <DataCount>4</DataCount>
-      <TracepointText>#version 1.0</TracepointText>
-      <IsTracepointActive>1</IsTracepointActive>
-      <IsBreakWhenHit>0</IsBreakWhenHit>
-      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
-      <UseChecksum>1</UseChecksum>
-      <Labels />
-      <RequestRemapped>0</RequestRemapped>
-      <parentIndex>-1</parentIndex>
-    </Breakpoint>
-    <Breakpoint>
-      <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
-      <IsVisible>1</IsVisible>
-      <IsEmulated>0</IsEmulated>
-      <IsCondition>0</IsCondition>
-      <ConditionType>WhenTrue</ConditionType>
-      <LocationType>SourceLocation</LocationType>
-      <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\src\Task.c</FileName>
-        <startLine>139</startLine>
-        <StartColumn>0</StartColumn>
-        <EndLine>139</EndLine>
-        <EndColumn>35</EndColumn>
+        <AddressName>0x00293C,prog</AddressName>
         <MarkerId>0</MarkerId>
-        <IsLineBased>0</IsLineBased>
-        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
-        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
-        <Checksum>
-          <Version>1</Version>
-          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
-          <ByteCount>0</ByteCount>
-          <Bytes />
-        </Checksum>
-      </TextPosition>
-      <NamedLocationLine>0</NamedLocationLine>
-      <NamedLocationColumn>0</NamedLocationColumn>
-      <HitCountType>NoHitCount</HitCountType>
-      <HitCountTarget>1</HitCountTarget>
-      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
-      <IsMapped>0</IsMapped>
-      <BreakpointType>PendingBreakpoint</BreakpointType>
-      <AddressLocation>
-        <Version>0</Version>
-        <MarkerId>0</MarkerId>
-        <FunctionLine>0</FunctionLine>
-        <FunctionColumn>0</FunctionColumn>
-        <Language>00000000-0000-0000-0000-000000000000</Language>
-      </AddressLocation>
-      <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,terminate</TracepointText>
-      <IsTracepointActive>1</IsTracepointActive>
-      <IsBreakWhenHit>0</IsBreakWhenHit>
-      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
-      <UseChecksum>1</UseChecksum>
-      <Labels />
-      <RequestRemapped>0</RequestRemapped>
-      <parentIndex>-1</parentIndex>
-    </Breakpoint>
-    <Breakpoint>
-      <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
-      <IsVisible>1</IsVisible>
-      <IsEmulated>0</IsEmulated>
-      <IsCondition>0</IsCondition>
-      <ConditionType>WhenTrue</ConditionType>
-      <LocationType>SourceLocation</LocationType>
-      <TextPosition>
-        <Version>4</Version>
-        <FileName>.\AutosarOS\src\Task.c</FileName>
-        <startLine>228</startLine>
-        <StartColumn>0</StartColumn>
-        <EndLine>228</EndLine>
-        <EndColumn>56</EndColumn>
-        <MarkerId>0</MarkerId>
-        <IsLineBased>0</IsLineBased>
-        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
-        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
-        <Checksum>
-          <Version>1</Version>
-          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
-          <ByteCount>0</ByteCount>
-          <Bytes />
-        </Checksum>
-      </TextPosition>
-      <NamedLocationLine>0</NamedLocationLine>
-      <NamedLocationColumn>0</NamedLocationColumn>
-      <HitCountType>NoHitCount</HitCountType>
-      <HitCountTarget>1</HitCountTarget>
-      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
-      <IsMapped>0</IsMapped>
-      <BreakpointType>PendingBreakpoint</BreakpointType>
-      <AddressLocation>
-        <Version>0</Version>
-        <MarkerId>0</MarkerId>
-        <FunctionLine>0</FunctionLine>
-        <FunctionColumn>0</FunctionColumn>
-        <Language>00000000-0000-0000-0000-000000000000</Language>
-      </AddressLocation>
-      <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{(TaskType) i},0,activate</TracepointText>
-      <IsTracepointActive>1</IsTracepointActive>
-      <IsBreakWhenHit>0</IsBreakWhenHit>
-      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
-      <UseChecksum>1</UseChecksum>
-      <Labels />
-      <RequestRemapped>0</RequestRemapped>
-      <parentIndex>-1</parentIndex>
-    </Breakpoint>
-    <Breakpoint>
-      <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
-      <IsVisible>1</IsVisible>
-      <IsEmulated>0</IsEmulated>
-      <IsCondition>0</IsCondition>
-      <ConditionType>WhenTrue</ConditionType>
-      <LocationType>SourceLocation</LocationType>
-      <TextPosition>
-        <Version>4</Version>
-        <FileName>.\AutosarOS\src\Task.c</FileName>
-        <startLine>228</startLine>
-        <StartColumn>0</StartColumn>
-        <EndLine>228</EndLine>
-        <EndColumn>56</EndColumn>
-        <MarkerId>0</MarkerId>
-        <IsLineBased>0</IsLineBased>
-        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
-        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
-        <Checksum>
-          <Version>1</Version>
-          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
-          <ByteCount>0</ByteCount>
-          <Bytes />
-        </Checksum>
-      </TextPosition>
-      <NamedLocationLine>0</NamedLocationLine>
-      <NamedLocationColumn>0</NamedLocationColumn>
-      <HitCountType>NoHitCount</HitCountType>
-      <HitCountTarget>1</HitCountTarget>
-      <Language>3a12d0b7-c26c-11d0-b442-00a0244a1dd2</Language>
-      <IsMapped>0</IsMapped>
-      <BreakpointType>BoundBreakpoint</BreakpointType>
-      <AddressLocation>
-        <Version>0</Version>
-        <MarkerId>0</MarkerId>
-        <FunctionLine>0</FunctionLine>
-        <FunctionColumn>0</FunctionColumn>
-        <Language>00000000-0000-0000-0000-000000000000</Language>
-      </AddressLocation>
-      <DataCount>4</DataCount>
-      <ModuleName>H:\Tresors\Studium\Master\Abschlussarbeiten\Master-Thesis\AutosarOS\AutosarOS\src\Task.c</ModuleName>
-      <TracepointText>$TICK,Core_0,0,T,{(TaskType) i},0,activate</TracepointText>
-      <IsTracepointActive>1</IsTracepointActive>
-      <IsBreakWhenHit>0</IsBreakWhenHit>
-      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
-      <UseChecksum>1</UseChecksum>
-      <Labels />
-      <RequestRemapped>0</RequestRemapped>
-      <parentIndex>14</parentIndex>
-    </Breakpoint>
-    <Breakpoint>
-      <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
-      <IsVisible>1</IsVisible>
-      <IsEmulated>0</IsEmulated>
-      <IsCondition>0</IsCondition>
-      <ConditionType>WhenTrue</ConditionType>
-      <LocationType>SourceLocation</LocationType>
-      <TextPosition>
-        <Version>4</Version>
-        <FileName>.\AutosarOS\src\Task.c</FileName>
-        <startLine>228</startLine>
-        <StartColumn>0</StartColumn>
-        <EndLine>228</EndLine>
-        <EndColumn>56</EndColumn>
-        <MarkerId>45</MarkerId>
-        <IsLineBased>0</IsLineBased>
-        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
-        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
-        <Checksum>
-          <Version>1</Version>
-          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
-          <ByteCount>0</ByteCount>
-          <Bytes />
-        </Checksum>
-      </TextPosition>
-      <NamedLocationLine>0</NamedLocationLine>
-      <NamedLocationColumn>0</NamedLocationColumn>
-      <HitCountType>NoHitCount</HitCountType>
-      <HitCountTarget>1</HitCountTarget>
-      <Language>3a12d0b7-c26c-11d0-b442-00a0244a1dd2</Language>
-      <IsMapped>0</IsMapped>
-      <BreakpointType>BoundBreakpoint</BreakpointType>
-      <AddressLocation>
-        <Version>4</Version>
-        <AddressName>0x176A,prog</AddressName>
-        <MarkerId>45</MarkerId>
-        <ModuleName>H:\Tresors\Studium\Master\Abschlussarbeiten\Master-Thesis\AutosarOS\AutosarOS\src\Task.c</ModuleName>
-        <DisplayName>0x176A,prog</DisplayName>
+        <FunctionName>FuncINT1_vect</FunctionName>
+        <ModuleName>H:\\Tresors\\Studium\\Master\\Abschlussarbeiten\\Master-Thesis\\AutosarOS\\AutosarOS\\Debug/.././App.c</ModuleName>
+        <DisplayName>0x00293C,prog</DisplayName>
         <FunctionLine>0</FunctionLine>
         <FunctionColumn>0</FunctionColumn>
         <Language>3a12d0b7-c26c-11d0-b442-00a0244a1dd2</Language>
       </AddressLocation>
       <DataCount>4</DataCount>
-      <ModuleName>H:\Tresors\Studium\Master\Abschlussarbeiten\Master-Thesis\AutosarOS\AutosarOS\src\Task.c</ModuleName>
-      <TracepointText>$TICK,Core_0,0,T,{(TaskType) i},0,activate</TracepointText>
-      <IsTracepointActive>1</IsTracepointActive>
-      <IsBreakWhenHit>0</IsBreakWhenHit>
-      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
-      <UseChecksum>1</UseChecksum>
-      <Labels />
-      <RequestRemapped>0</RequestRemapped>
-      <parentIndex>14</parentIndex>
-    </Breakpoint>
-    <Breakpoint>
-      <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
-      <IsVisible>1</IsVisible>
-      <IsEmulated>0</IsEmulated>
-      <IsCondition>0</IsCondition>
-      <ConditionType>WhenTrue</ConditionType>
-      <LocationType>SourceLocation</LocationType>
-      <TextPosition>
-        <Version>4</Version>
-        <FileName>.\AutosarOS\src\Task.c</FileName>
-        <startLine>37</startLine>
-        <StartColumn>0</StartColumn>
-        <EndLine>37</EndLine>
-        <EndColumn>53</EndColumn>
-        <MarkerId>0</MarkerId>
-        <IsLineBased>0</IsLineBased>
-        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
-        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
-        <Checksum>
-          <Version>1</Version>
-          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
-          <ByteCount>0</ByteCount>
-          <Bytes />
-        </Checksum>
-      </TextPosition>
-      <NamedLocationLine>0</NamedLocationLine>
-      <NamedLocationColumn>0</NamedLocationColumn>
-      <HitCountType>NoHitCount</HitCountType>
-      <HitCountTarget>1</HitCountTarget>
-      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
-      <IsMapped>0</IsMapped>
-      <BreakpointType>PendingBreakpoint</BreakpointType>
-      <AddressLocation>
-        <Version>0</Version>
-        <MarkerId>0</MarkerId>
-        <FunctionLine>0</FunctionLine>
-        <FunctionColumn>0</FunctionColumn>
-        <Language>00000000-0000-0000-0000-000000000000</Language>
-      </AddressLocation>
-      <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{TaskID},0,activate</TracepointText>
+      <ModuleName>H:\\Tresors\\Studium\\Master\\Abschlussarbeiten\\Master-Thesis\\AutosarOS\\AutosarOS\\Debug/.././App.c</ModuleName>
+      <TracepointText>$TICK,Core_0,0,ISR,INT1_vect,0,terminate</TracepointText>
       <IsTracepointActive>1</IsTracepointActive>
       <IsBreakWhenHit>0</IsBreakWhenHit>
       <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
@@ -918,19 +758,19 @@
     </Breakpoint>
     <Breakpoint>
       <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
+      <IsEnabled>0</IsEnabled>
       <IsVisible>1</IsVisible>
       <IsEmulated>0</IsEmulated>
       <IsCondition>0</IsCondition>
       <ConditionType>WhenTrue</ConditionType>
-      <LocationType>SourceLocation</LocationType>
+      <LocationType>AddressLocation</LocationType>
       <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\src\Task.c</FileName>
-        <startLine>79</startLine>
+        <FileName>.\AutosarOS\App.c</FileName>
+        <startLine>842</startLine>
         <StartColumn>0</StartColumn>
-        <EndLine>79</EndLine>
-        <EndColumn>53</EndColumn>
+        <EndLine>842</EndLine>
+        <EndColumn>34</EndColumn>
         <MarkerId>0</MarkerId>
         <IsLineBased>0</IsLineBased>
         <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
@@ -942,72 +782,28 @@
           <Bytes />
         </Checksum>
       </TextPosition>
+      <NamedLocationText>FuncINT0_vect</NamedLocationText>
       <NamedLocationLine>0</NamedLocationLine>
       <NamedLocationColumn>0</NamedLocationColumn>
       <HitCountType>NoHitCount</HitCountType>
       <HitCountTarget>1</HitCountTarget>
-      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
+      <Language>00000000-0000-0000-0000-000000000000</Language>
       <IsMapped>0</IsMapped>
       <BreakpointType>PendingBreakpoint</BreakpointType>
       <AddressLocation>
-        <Version>0</Version>
-        <MarkerId>0</MarkerId>
-        <FunctionLine>0</FunctionLine>
-        <FunctionColumn>0</FunctionColumn>
-        <Language>00000000-0000-0000-0000-000000000000</Language>
-      </AddressLocation>
-      <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{TaskID},0,activate</TracepointText>
-      <IsTracepointActive>1</IsTracepointActive>
-      <IsBreakWhenHit>0</IsBreakWhenHit>
-      <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
-      <UseChecksum>1</UseChecksum>
-      <Labels />
-      <RequestRemapped>0</RequestRemapped>
-      <parentIndex>-1</parentIndex>
-    </Breakpoint>
-    <Breakpoint>
-      <Version>15</Version>
-      <IsEnabled>1</IsEnabled>
-      <IsVisible>1</IsVisible>
-      <IsEmulated>0</IsEmulated>
-      <IsCondition>0</IsCondition>
-      <ConditionType>WhenTrue</ConditionType>
-      <LocationType>SourceLocation</LocationType>
-      <TextPosition>
         <Version>4</Version>
-        <FileName>.\AutosarOS\src\Task.c</FileName>
-        <startLine>93</startLine>
-        <StartColumn>0</StartColumn>
-        <EndLine>93</EndLine>
-        <EndColumn>35</EndColumn>
+        <AddressName>0x002912,prog</AddressName>
         <MarkerId>0</MarkerId>
-        <IsLineBased>0</IsLineBased>
-        <IsDocumentPathNotFound>0</IsDocumentPathNotFound>
-        <ShouldUpdateTextSpan>1</ShouldUpdateTextSpan>
-        <Checksum>
-          <Version>1</Version>
-          <Algorithm>00000000-0000-0000-0000-000000000000</Algorithm>
-          <ByteCount>0</ByteCount>
-          <Bytes />
-        </Checksum>
-      </TextPosition>
-      <NamedLocationLine>0</NamedLocationLine>
-      <NamedLocationColumn>0</NamedLocationColumn>
-      <HitCountType>NoHitCount</HitCountType>
-      <HitCountTarget>1</HitCountTarget>
-      <Language>bc47fa77-b642-4aba-abbf-8012c3fdd096</Language>
-      <IsMapped>0</IsMapped>
-      <BreakpointType>PendingBreakpoint</BreakpointType>
-      <AddressLocation>
-        <Version>0</Version>
-        <MarkerId>0</MarkerId>
+        <FunctionName>FuncINT0_vect</FunctionName>
+        <ModuleName>H:\\Tresors\\Studium\\Master\\Abschlussarbeiten\\Master-Thesis\\AutosarOS\\AutosarOS\\Debug/.././App.c</ModuleName>
+        <DisplayName>0x002912,prog</DisplayName>
         <FunctionLine>0</FunctionLine>
         <FunctionColumn>0</FunctionColumn>
-        <Language>00000000-0000-0000-0000-000000000000</Language>
+        <Language>3a12d0b7-c26c-11d0-b442-00a0244a1dd2</Language>
       </AddressLocation>
       <DataCount>4</DataCount>
-      <TracepointText>$TICK,Core_0,0,T,{currentTask},0,terminate</TracepointText>
+      <ModuleName>H:\\Tresors\\Studium\\Master\\Abschlussarbeiten\\Master-Thesis\\AutosarOS\\AutosarOS\\Debug/.././App.c</ModuleName>
+      <TracepointText>$TICK,Core_0,0,ISR,INT0_vect,0,terminate</TracepointText>
       <IsTracepointActive>1</IsTracepointActive>
       <IsBreakWhenHit>0</IsBreakWhenHit>
       <IsRunMacroWhenHit>0</IsRunMacroWhenHit>
