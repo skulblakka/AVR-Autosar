@@ -1,0 +1,4 @@
+<map id="Counter_GetCounterValue" name="Counter_GetCounterValue">
+<area shape="rect" id="node1" title="Read current counter value." alt="" coords="251,13,424,39"/>
+<area shape="rect" id="node2" href="$_schedule_tables_8c.html#a16749d80d0f75b4545ef9def1366e0be" title="Start schedule table from absolute start." alt="" coords="5,5,203,47"/>
+</map>

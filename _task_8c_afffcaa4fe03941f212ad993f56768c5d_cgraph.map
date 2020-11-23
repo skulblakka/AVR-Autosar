@@ -1,0 +1,5 @@
+<map id="Task_Schedule" name="Task_Schedule">
+<area shape="rect" id="node1" title="Reschedule current task." alt="" coords="5,35,117,61"/>
+<area shape="rect" id="node2" href="$_o_s_8h.html#affa6b1c021b2584262b95675f0cf32c0" title="Schedule task." alt="" coords="201,5,304,32"/>
+<area shape="rect" id="node3" href="$_resource_8h.html#a5143ec6b8f9eef90d3427f004df1630b" title="Release internal resource of the current task if one is assigned." alt="" coords="165,57,340,98"/>
+</map>

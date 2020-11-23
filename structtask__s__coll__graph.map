@@ -1,0 +1,5 @@
+<map id="task_s" name="task_s">
+<area shape="rect" id="node1" title="Data structure for task." alt="" coords="111,95,173,121"/>
+<area shape="rect" id="node2" href="$structresource__s.html" title="Data structure for OS resource." alt="" coords="5,5,92,32"/>
+<area shape="rect" id="node3" href="$structinternal_resource__s.html" title="Data structure for internal resource." alt="" coords="169,5,302,32"/>
+</map>

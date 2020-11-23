@@ -1,0 +1,5 @@
+<map id="ScheduleTable_StartScheduleTableAbs" name="ScheduleTable_StartScheduleTableAbs">
+<area shape="rect" id="node1" title="Start schedule table from absolute start." alt="" coords="5,27,203,69"/>
+<area shape="rect" id="node2" href="$_counter_8h.html#aeb11d2a298a9f7ab7b5f8621ab277735" title="Read current counter value." alt="" coords="263,5,436,32"/>
+<area shape="rect" id="node3" href="$_schedule_tables_8c.html#a404b221b51c4288b7a8f7fb717182260" title="Start schedule table from relative offset." alt="" coords="251,57,448,98"/>
+</map>

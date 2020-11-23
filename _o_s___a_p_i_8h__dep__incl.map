@@ -1,0 +1,49 @@
+<map id="/github/workspace/AutosarOS/include/OS_API.h" name="/github/workspace/AutosarOS/include/OS_API.h">
+<area shape="rect" id="node1" title="Operating System API." alt="" coords="4571,5,4748,47"/>
+<area shape="rect" id="node2" href="$_app_8c.html" title="User application code." alt="" coords="5,95,183,136"/>
+<area shape="rect" id="node3" href="$_alarm_8c.html" title="Implementation of alarm management." alt="" coords="207,95,384,136"/>
+<area shape="rect" id="node4" href="$_counter_8c.html" title="Implementation of counter management." alt="" coords="408,95,585,136"/>
+<area shape="rect" id="node5" href="$test_2_a_m_2_a_m1_2_app_8c.html" title="Application code for alarm management test procedure 1." alt="" coords="609,95,787,136"/>
+<area shape="rect" id="node6" href="$test_2_a_m_2_a_m2_2_app_8c.html" title="Application code for alarm management test procedure 2." alt="" coords="811,95,988,136"/>
+<area shape="rect" id="node7" href="$test_2_a_m_2_a_m3_2_app_8c.html" title="Application code for alarm management test procedure 3." alt="" coords="1012,95,1189,136"/>
+<area shape="rect" id="node8" href="$test_2_a_m_2_a_m4_2_app_8c.html" title="Application code for alarm management test procedure 4." alt="" coords="1213,95,1391,136"/>
+<area shape="rect" id="node9" href="$test_2_a_m_2_a_m5_2_app_8c.html" title="Application code for alarm management test procedure 5." alt="" coords="1415,95,1592,136"/>
+<area shape="rect" id="node10" href="$test_2_a_m_2_a_m6_2_app_8c.html" title="Application code for alarm management test procedure 6." alt="" coords="1616,95,1793,136"/>
+<area shape="rect" id="node11" href="$test_2_a_m_2_a_m7_2_app_8c.html" title="Application code for alarm management test procedure 7." alt="" coords="1817,95,1995,136"/>
+<area shape="rect" id="node12" href="$test_2_a_m_2_a_m8_2_app_8c.html" title="Application code for alarm management test procedure 8." alt="" coords="2019,95,2196,136"/>
+<area shape="rect" id="node13" href="$test_2_c_m_2_c_m1_2_app_8c.html" title="Application code for counter management test procedure 1." alt="" coords="2220,95,2397,136"/>
+<area shape="rect" id="node14" href="$test_2_e_m_2_e_m1_2_app_8c.html" title="Application code for event management test procedure 1." alt="" coords="2421,95,2599,136"/>
+<area shape="rect" id="node15" href="$test_2_e_m_2_e_m2_2_app_8c.html" title="Application code for event management test procedure 2." alt="" coords="2623,95,2800,136"/>
+<area shape="rect" id="node16" href="$test_2_e_m_2_e_m3_2_app_8c.html" title="Application code for event management test procedure 3." alt="" coords="2824,95,3001,136"/>
+<area shape="rect" id="node17" href="$test_2_e_m_2_e_m4_2_app_8c.html" title="Application code for event management test procedure 4." alt="" coords="3025,95,3203,136"/>
+<area shape="rect" id="node18" href="$test_2_e_m_2_e_m5_2_app_8c.html" title="Application code for event management test procedure 5." alt="" coords="3227,95,3404,136"/>
+<area shape="rect" id="node19" href="$test_2_hooks_2_hooks1_2_app_8c.html" title="Application code for hook test procedure 1." alt="" coords="3429,95,3623,136"/>
+<area shape="rect" id="node20" href="$test_2_hooks_2_hooks2_2_app_8c.html" title="Application code for hook test procedure 2." alt="" coords="3647,95,3842,136"/>
+<area shape="rect" id="node21" href="$test_2_i_m_2_i_m1_2_app_8c.html" title="Application code for interrupt management test procedure 1." alt="" coords="3867,95,4044,136"/>
+<area shape="rect" id="node22" href="$test_2_i_m_2_i_m2_2_app_8c.html" title="Application code for interrupt management test procedure 2." alt="" coords="4068,95,4245,136"/>
+<area shape="rect" id="node23" href="$test_2_r_m_2_r_m1_2_app_8c.html" title="Application code for resource management test procedure 1." alt="" coords="4269,95,4447,136"/>
+<area shape="rect" id="node24" href="$test_2_r_m_2_r_m2_2_app_8c.html" title="Application code for resource management test procedure 2." alt="" coords="4471,95,4648,136"/>
+<area shape="rect" id="node25" href="$test_2_r_m_2_r_m3_2_app_8c.html" title="Application code for resource management test procedure 3." alt="" coords="4672,95,4849,136"/>
+<area shape="rect" id="node26" href="$test_2_r_m_2_r_m4_2_app_8c.html" title="Application code for resource management test procedure 4." alt="" coords="4873,95,5051,136"/>
+<area shape="rect" id="node27" href="$test_2_r_m_2_r_m5_2_app_8c.html" title="Application code for resource management test procedure 5." alt="" coords="5075,95,5252,136"/>
+<area shape="rect" id="node28" href="$test_2_r_m_2_r_m6_2_app_8c.html" title="Application code for resource management test procedure 6." alt="" coords="5276,95,5453,136"/>
+<area shape="rect" id="node29" href="$test_2_s_t_2_s_t1_2_app_8c.html" title="Application code for schedule tables test procedure 1." alt="" coords="5477,95,5655,136"/>
+<area shape="rect" id="node30" href="$test_2_s_t_2_s_t2_2_app_8c.html" title="Application code for schedule tables test procedure 2." alt="" coords="5679,95,5856,136"/>
+<area shape="rect" id="node31" href="$test_2_s_t_2_s_t3_2_app_8c.html" title="Application code for schedule tables test procedure 3." alt="" coords="5880,95,6057,136"/>
+<area shape="rect" id="node32" href="$test_2_t_m_2_t_m1_2_app_8c.html" title="Application code for task management test procedure 1." alt="" coords="6081,95,6259,136"/>
+<area shape="rect" id="node33" href="$test_2_t_m_2_t_m10_2_app_8c.html" title="Application code for task management test procedure 10." alt="" coords="6283,95,6460,136"/>
+<area shape="rect" id="node34" href="$test_2_t_m_2_t_m11_2_app_8c.html" title="Application code for task management test procedure 11." alt="" coords="6484,95,6661,136"/>
+<area shape="rect" id="node35" href="$test_2_t_m_2_t_m12_2_app_8c.html" title="Application code for task management test procedure 12." alt="" coords="6685,95,6863,136"/>
+<area shape="rect" id="node36" href="$test_2_t_m_2_t_m13_2_app_8c.html" title="Application code for task management test procedure 13." alt="" coords="6887,95,7064,136"/>
+<area shape="rect" id="node37" href="$test_2_t_m_2_t_m14_2_app_8c.html" title="Application code for task management test procedure 14." alt="" coords="7088,95,7265,136"/>
+<area shape="rect" id="node38" href="$test_2_t_m_2_t_m15_2_app_8c.html" title="Application code for task management test procedure 15." alt="" coords="7289,95,7467,136"/>
+<area shape="rect" id="node39" href="$test_2_t_m_2_t_m16_2_app_8c.html" title="Application code for task management test procedure 16." alt="" coords="7491,95,7668,136"/>
+<area shape="rect" id="node40" href="$test_2_t_m_2_t_m2_2_app_8c.html" title="Application code for task management test procedure 2." alt="" coords="7692,95,7869,136"/>
+<area shape="rect" id="node41" href="$test_2_t_m_2_t_m3_2_app_8c.html" title="Application code for task management test procedure 3." alt="" coords="7893,95,8071,136"/>
+<area shape="rect" id="node42" href="$test_2_t_m_2_t_m4_2_app_8c.html" title="Application code for task management test procedure 4." alt="" coords="8095,95,8272,136"/>
+<area shape="rect" id="node43" href="$test_2_t_m_2_t_m5_2_app_8c.html" title="Application code for task management test procedure 5." alt="" coords="8296,95,8473,136"/>
+<area shape="rect" id="node44" href="$test_2_t_m_2_t_m6_2_app_8c.html" title="Application code for task management test procedure 6." alt="" coords="8497,95,8675,136"/>
+<area shape="rect" id="node45" href="$test_2_t_m_2_t_m7_2_app_8c.html" title="Application code for task management test procedure 7." alt="" coords="8699,95,8876,136"/>
+<area shape="rect" id="node46" href="$test_2_t_m_2_t_m8_2_app_8c.html" title="Application code for task management test procedure 8." alt="" coords="8900,95,9077,136"/>
+<area shape="rect" id="node47" href="$test_2_t_m_2_t_m9_2_app_8c.html" title="Application code for task management test procedure 9." alt="" coords="9101,95,9279,136"/>
+</map>

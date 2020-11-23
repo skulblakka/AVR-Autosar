@@ -1,0 +1,5 @@
+<map id="Counter_IncrementCounter" name="Counter_IncrementCounter">
+<area shape="rect" id="node1" title="Increment counter." alt="" coords="5,31,183,57"/>
+<area shape="rect" id="node2" href="$_alarm_8h.html#a16991e03125513f2cc79de53cc24939e" title="Evaluate alarms with user generated counter." alt="" coords="247,5,393,32"/>
+<area shape="rect" id="node3" href="$_schedule_tables_8h.html#af2892249c968d68a721b570d41cddae5" title="Handle tick." alt="" coords="231,56,409,83"/>
+</map>

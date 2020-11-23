@@ -1,0 +1,12 @@
+var searchData=
+[
+  ['alarm_5fcancelalarm_466',['Alarm_CancelAlarm',['../_alarm_8h.html#a0ea4253cac425127211247bdc6754cf0',1,'Alarm_CancelAlarm(AlarmType alarmID):&#160;Alarm.c'],['../_alarm_8c.html#a0ea4253cac425127211247bdc6754cf0',1,'Alarm_CancelAlarm(AlarmType alarmID):&#160;Alarm.c']]],
+  ['alarm_5fevaluatealarm_467',['Alarm_evaluateAlarm',['../_alarm_8h.html#a16991e03125513f2cc79de53cc24939e',1,'Alarm_evaluateAlarm(CounterType counter):&#160;Alarm.c'],['../_alarm_8c.html#a16991e03125513f2cc79de53cc24939e',1,'Alarm_evaluateAlarm(CounterType counter):&#160;Alarm.c']]],
+  ['alarm_5fevaluatesystickalarm_468',['Alarm_evaluateSysTickAlarm',['../_alarm_8h.html#a8c55950dc5125c9e95b77e32ca21f2df',1,'Alarm_evaluateSysTickAlarm(void):&#160;Alarm.c'],['../_alarm_8c.html#a8c55950dc5125c9e95b77e32ca21f2df',1,'Alarm_evaluateSysTickAlarm(void):&#160;Alarm.c']]],
+  ['alarm_5fgetalarm_469',['Alarm_GetAlarm',['../_alarm_8h.html#a2c3420effc6013d180421e31c4208f33',1,'Alarm_GetAlarm(AlarmType alarmID, TickRefType tick):&#160;Alarm.c'],['../_alarm_8c.html#a2c3420effc6013d180421e31c4208f33',1,'Alarm_GetAlarm(AlarmType alarmID, TickRefType tick):&#160;Alarm.c']]],
+  ['alarm_5fgetalarmbase_470',['Alarm_GetAlarmBase',['../_alarm_8h.html#a1e9b1c2d85346f81c818513d51717627',1,'Alarm_GetAlarmBase(AlarmType alarmID, AlarmBaseRefType info):&#160;Alarm.c'],['../_alarm_8c.html#a1e9b1c2d85346f81c818513d51717627',1,'Alarm_GetAlarmBase(AlarmType alarmID, AlarmBaseRefType info):&#160;Alarm.c']]],
+  ['alarm_5fsetabsalarm_471',['Alarm_SetAbsAlarm',['../_alarm_8h.html#aae5baf9d0b2d1fb1d0e9c00d4c58bf5c',1,'Alarm_SetAbsAlarm(AlarmType alarmID, TickType start, TickType cycle):&#160;Alarm.c'],['../_alarm_8c.html#aae5baf9d0b2d1fb1d0e9c00d4c58bf5c',1,'Alarm_SetAbsAlarm(AlarmType alarmID, TickType start, TickType cycle):&#160;Alarm.c']]],
+  ['alarm_5fsetrelalarm_472',['Alarm_SetRelAlarm',['../_alarm_8h.html#af585503644ced8422d08468aef43516e',1,'Alarm_SetRelAlarm(AlarmType alarmID, TickType increment, TickType cycle):&#160;Alarm.c'],['../_alarm_8c.html#af585503644ced8422d08468aef43516e',1,'Alarm_SetRelAlarm(AlarmType alarmID, TickType increment, TickType cycle):&#160;Alarm.c']]],
+  ['alarm_5fstartup_473',['Alarm_startup',['../_alarm_8h.html#ae1a081469aa841183d88d03b6a095000',1,'Alarm_startup(void):&#160;Alarm.c'],['../_alarm_8c.html#ae1a081469aa841183d88d03b6a095000',1,'Alarm_startup(void):&#160;Alarm.c']]],
+  ['alarmcallback_474',['ALARMCALLBACK',['../_app_8c.html#a682eb5f3fcb583a8d52bcbaae6e674c0',1,'App.c']]]
+];

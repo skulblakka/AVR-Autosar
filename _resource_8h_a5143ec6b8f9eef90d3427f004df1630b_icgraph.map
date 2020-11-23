@@ -1,0 +1,7 @@
+<map id="Resource_ReleaseInternalResource" name="Resource_ReleaseInternalResource">
+<area shape="rect" id="node1" title="Release internal resource of the current task if one is assigned." alt="" coords="199,74,373,115"/>
+<area shape="rect" id="node2" href="$_events_8c.html#a5e88951085aea1840a10784dbe8f09e3" title="Wait for events." alt="" coords="14,5,142,32"/>
+<area shape="rect" id="node3" href="$_task_8c.html#a679a612f1b74b59c720da42532a242b1" title="Chain task." alt="" coords="18,56,138,83"/>
+<area shape="rect" id="node4" href="$_task_8c.html#afffcaa4fe03941f212ad993f56768c5d" title="Reschedule current task." alt="" coords="22,107,134,133"/>
+<area shape="rect" id="node5" href="$_task_8c.html#affaf32fa616fffead633971f27187a54" title="Terminate active task." alt="" coords="5,157,151,184"/>
+</map>

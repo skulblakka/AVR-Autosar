@@ -1,0 +1,6 @@
+<map id="OS_ShutdownOS" name="OS_ShutdownOS">
+<area shape="rect" id="node1" title="Shutdown operating system." alt="" coords="404,31,529,57"/>
+<area shape="rect" id="node2" href="$_o_s_8c.html#a1b0743c6aca633b6210d93a65f5a9703" title="Internal function for protection hook handling." alt="" coords="163,5,344,32"/>
+<area shape="rect" id="node4" href="$_o_s_8c.html#a3dc64407cc57b6fe5f8d7e63a9dde686" title="Call OS_ShutdownOS() with E_OS_STACKFAULT." alt="" coords="151,56,356,83"/>
+<area shape="rect" id="node3" href="$_o_s_8c.html#abe49956df32d79322d93eb548ff139f3" title="Task switch." alt="" coords="5,5,103,32"/>
+</map>

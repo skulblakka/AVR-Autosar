@@ -1,0 +1,19 @@
+<map id="/github/workspace/AutosarOS/include/Task.h" name="/github/workspace/AutosarOS/include/Task.h">
+<area shape="rect" id="node1" title="Task management." alt="" coords="245,5,422,47"/>
+<area shape="rect" id="node2" href="$_types_8h.html" title="Type definitions." alt="" coords="563,95,629,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="491,319,555,345"/>
+<area shape="rect" id="node11" href="$_o_c_b_8h.html" title="Operating System Control Block." alt="" coords="239,244,299,271"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,319,80,345"/>
+<area shape="rect" id="node4" href="$_task_types_8h.html" title="Types used for tasks." alt="" coords="611,244,746,271"/>
+<area shape="rect" id="node6" href="$_event_types_8h.html" title="Types used for events." alt="" coords="682,319,782,345"/>
+<area shape="rect" id="node7" href="$_resource_types_8h.html" title="Types used for resources." alt="" coords="323,244,485,271"/>
+<area shape="rect" id="node9" href="$_counter_types_8h.html" title="Types used for counter management." alt="" coords="822,244,973,271"/>
+<area shape="rect" id="node10" href="$_alarm_types_8h.html" title="Types used for alarm management." alt="" coords="473,169,613,196"/>
+<area shape="rect" id="node15" href="$_error_types_8h.html" title="Types and macros for error handling." alt="" coords="955,169,1088,196"/>
+<area shape="rect" id="node17" href="$_schedule_table_types_8h.html" title="Types for schedule tables." alt="" coords="688,169,880,196"/>
+<area shape="rect" id="node8" title=" " alt="" coords="392,319,467,345"/>
+<area shape="rect" id="node12" title=" " alt="" coords="299,319,367,345"/>
+<area shape="rect" id="node13" title=" " alt="" coords="104,319,168,345"/>
+<area shape="rect" id="node14" title=" " alt="" coords="192,319,275,345"/>
+<area shape="rect" id="node16" title=" " alt="" coords="997,244,1061,271"/>
+</map>

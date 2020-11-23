@@ -1,0 +1,6 @@
+<map id="Task_TerminateTask" name="Task_TerminateTask">
+<area shape="rect" id="node1" title="Terminate active task." alt="" coords="5,56,151,83"/>
+<area shape="rect" id="node2" href="$_o_s_8h.html#affa6b1c021b2584262b95675f0cf32c0" title="Schedule task." alt="" coords="235,5,337,32"/>
+<area shape="rect" id="node3" href="$_app_8c.html#a163fbc3284a1b8fb48403ee11dc9587a" title="PostTask hook function." alt="" coords="231,56,341,83"/>
+<area shape="rect" id="node4" href="$_resource_8h.html#a5143ec6b8f9eef90d3427f004df1630b" title="Release internal resource of the current task if one is assigned." alt="" coords="199,107,373,149"/>
+</map>

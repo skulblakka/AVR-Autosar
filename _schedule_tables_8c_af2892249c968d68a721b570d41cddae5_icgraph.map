@@ -1,0 +1,5 @@
+<map id="ScheduleTable_handleTick" name="ScheduleTable_handleTick">
+<area shape="rect" id="node1" title="Handle tick." alt="" coords="253,31,432,57"/>
+<area shape="rect" id="node2" href="$_counter_8c.html#affb8d46030e1259721e4c2c027a6258a" title="Increment counter." alt="" coords="17,5,194,32"/>
+<area shape="rect" id="node3" href="$_schedule_tables_8c.html#a7fc6f0af79090333fd1c0f6881fedffa" title="Handle system tick." alt="" coords="5,56,205,83"/>
+</map>

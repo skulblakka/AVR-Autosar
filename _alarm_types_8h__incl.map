@@ -1,0 +1,18 @@
+<map id="/github/workspace/AutosarOS/include/Types/AlarmTypes.h" name="/github/workspace/AutosarOS/include/Types/AlarmTypes.h">
+<area shape="rect" id="node1" title="Types used for alarm management." alt="" coords="323,5,531,47"/>
+<area shape="rect" id="node2" href="$_event_types_8h.html" title="Types used for events." alt="" coords="275,393,375,420"/>
+<area shape="rect" id="node3" href="$_o_c_b_8h.html" title="Operating System Control Block." alt="" coords="651,95,711,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="759,169,827,196"/>
+<area shape="rect" id="node5" title=" " alt="" coords="617,393,681,420"/>
+<area shape="rect" id="node6" title=" " alt="" coords="745,319,820,345"/>
+<area shape="rect" id="node7" href="$_types_8h.html" title="Type definitions." alt="" coords="393,169,460,196"/>
+<area shape="rect" id="node8" title=" " alt="" coords="753,244,828,271"/>
+<area shape="rect" id="node15" title=" " alt="" coords="513,169,577,196"/>
+<area shape="rect" id="node16" title=" " alt="" coords="601,169,684,196"/>
+<area shape="rect" id="node9" href="$_task_types_8h.html" title="Types used for tasks." alt="" coords="477,319,611,345"/>
+<area shape="rect" id="node10" href="$_resource_types_8h.html" title="Types used for resources." alt="" coords="569,244,730,271"/>
+<area shape="rect" id="node11" href="$_counter_types_8h.html" title="Types used for counter management." alt="" coords="250,319,401,345"/>
+<area shape="rect" id="node12" href="$_error_types_8h.html" title="Types and macros for error handling." alt="" coords="43,244,176,271"/>
+<area shape="rect" id="node14" href="$_schedule_table_types_8h.html" title="Types for schedule tables." alt="" coords="301,244,493,271"/>
+<area shape="rect" id="node13" title=" " alt="" coords="77,319,141,345"/>
+</map>

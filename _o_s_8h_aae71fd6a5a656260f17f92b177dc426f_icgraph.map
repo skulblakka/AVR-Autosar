@@ -1,0 +1,9 @@
+<map id="OS_DisableAllInterrupts" name="OS_DisableAllInterrupts">
+<area shape="rect" id="node1" title="Disable all interrupts." alt="" coords="577,43,739,69"/>
+<area shape="rect" id="node2" href="$_o_s_8c.html#abe49956df32d79322d93eb548ff139f3" title="Task switch." alt="" coords="5,5,103,32"/>
+<area shape="rect" id="node3" href="$_o_s_8c.html#a4b591b1fca55d9074d0d1048804a557a" title="Shutdown operating system." alt="" coords="404,43,529,69"/>
+<area shape="rect" id="node6" href="$_o_s_8c.html#a15eb292b594c9ca3240a8ce163833e54" title="Start operating system." alt="" coords="419,119,514,145"/>
+<area shape="rect" id="node4" href="$_o_s_8c.html#a1b0743c6aca633b6210d93a65f5a9703" title="Internal function for protection hook handling." alt="" coords="163,31,344,57"/>
+<area shape="rect" id="node5" href="$_o_s_8c.html#a3dc64407cc57b6fe5f8d7e63a9dde686" title="Call OS_ShutdownOS() with E_OS_STACKFAULT." alt="" coords="151,81,356,108"/>
+<area shape="rect" id="node7" href="$main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title=" " alt="" coords="228,132,279,159"/>
+</map>

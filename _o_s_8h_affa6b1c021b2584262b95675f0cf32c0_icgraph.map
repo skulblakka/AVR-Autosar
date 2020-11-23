@@ -1,0 +1,10 @@
+<map id="OS_Schedule" name="OS_Schedule">
+<area shape="rect" id="node1" title="Schedule task." alt="" coords="240,157,343,184"/>
+<area shape="rect" id="node2" href="$_events_8c.html#a530bdd936bb25ed74986f19e29ed6f73" title="Set events." alt="" coords="37,5,160,32"/>
+<area shape="rect" id="node3" href="$_events_8c.html#a5e88951085aea1840a10784dbe8f09e3" title="Wait for events." alt="" coords="35,56,163,83"/>
+<area shape="rect" id="node4" href="$_resource_8c.html#a4a0a84c250362495e1612c2266473d51" title="Release a resource." alt="" coords="5,107,192,133"/>
+<area shape="rect" id="node5" href="$_task_8c.html#a4eb83bf9933050772fb6c869cc26438b" title="Activate a task." alt="" coords="31,157,166,184"/>
+<area shape="rect" id="node6" href="$_task_8c.html#a679a612f1b74b59c720da42532a242b1" title="Chain task." alt="" coords="39,208,159,235"/>
+<area shape="rect" id="node7" href="$_task_8c.html#afffcaa4fe03941f212ad993f56768c5d" title="Reschedule current task." alt="" coords="43,259,155,285"/>
+<area shape="rect" id="node8" href="$_task_8c.html#affaf32fa616fffead633971f27187a54" title="Terminate active task." alt="" coords="26,309,171,336"/>
+</map>
