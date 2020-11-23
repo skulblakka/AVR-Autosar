@@ -238,9 +238,9 @@
 
 /**
  * @brief   Task definition
- * 
+ *
  * This will create a new task and all required data structures. Each task will need a function TASK(Name).
- * 
+ *
  * @note    While it is possible to configure the maximum number of activations for tasks of type #EXTENDED
  *          to be higher than 0 the system does not conform to the AUTOSAR standard in that case.
  *
@@ -273,7 +273,7 @@
 
 /**
  * @brief   Interrupt definition
- * 
+ *
  * This will create a new interrupt and declare its ISR. Each interrupt will need a function ISR(Name).
  *
  * The name must correspond to an interrupt vector of the processor.
@@ -449,7 +449,7 @@
  * #OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_BEGIN and #OS_CONFIG_SCHEDULE_TABLE_EXPIRY_POINTS_END.
  *
  * @note    While this implementation allows both the task actions and the event actions to be zero
- *          at the same time the system does not conform to the AUTOSAR standard it that configuration.
+ *          at the same time the system does not conform to the AUTOSAR standard in that configuration.
  *
  * @param   Offset                  Offset of the expiry point
  * @param   NumTaskActions          Number of task actions to create for expiry point
