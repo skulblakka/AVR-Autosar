@@ -69,6 +69,8 @@ extern pTaskFxn ptrCurrentFxnAddr;
  * Stack Pointer
  * *ptrCurrentStack
  * ```
+ *
+ * @warning This function clears the global interrupt enable bit.
  */
 extern void save_context(void);
 
