@@ -79,6 +79,10 @@ used to trace the program flow/order of execution._
 
 ## Known limitations
 
+* The system does not support relaxed linking (tail-call optimization). The
+  `-mrelax` option which may be automatically activated by Atmel Studio when
+  changing the device in the project settings MUST be disabled for correct
+  operation of the OS.
 * The system does not use ready queues for tasks. If multiple tasks with the
   same priority get activated they will be selected based on their order in the
   configuration not on the time of activation.
