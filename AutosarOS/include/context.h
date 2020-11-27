@@ -36,6 +36,9 @@ extern pTaskFxn ptrCurrentFxnAddr;
  * This function is used to save the current task context by saving the current processor state
  * onto the stack. The stack pointer is saved into the task context #ptrCurrentStack points to.
  *
+ * The changes made to the stack are described below. It is assumed the the function was called
+ * by OS_ScheduleC().
+ *
  * Upon entry the current stack pointer points to the return address to OS_ScheduleC() and the
  * return address to the caller of OS_ScheduleC().
  * ```
@@ -80,6 +83,9 @@ extern void save_context(void);
  * This function is used to restore the current task context by restoring the processor state
  * from the stack of the currently selected task.
  *
+ * The changes made to the stack are described below. It is assumed the the function was called
+ * by OS_ScheduleC().
+ *
  * Upon entry both task stacks look like this. It is assumed that the old/previous task was saved via
  * save_context() beforehand.
  * ```
@@ -121,6 +127,9 @@ extern void restore_context(void);
  * @brief   Initialize context of current task
  *
  * This function is used to initialize the context of the current task.
+ *
+ * The changes made to the stack are described below. It is assumed the the function was called
+ * by OS_ScheduleC().
  *
  * Upon entry the current stack pointer points to the return address to OS_ScheduleC().
  * ```
